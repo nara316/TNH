@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="AirportDTO" type="go.travel.dnh.domain.air.AirportDTO"/>
+        <typeAlias alias="AirlineDTO" type="go.travel.dnh.domain.air.AirlineDTO"/>
+        <typeAlias alias="AirGradeOptionDTO" type="go.travel.dnh.domain.air.AirGradeOptionDTO"/>
+        <typeAlias alias="AirProductDTO" type="go.travel.dnh.domain.air.AirProductDTO"/>
+    </typeAliases>
+</configuration>
