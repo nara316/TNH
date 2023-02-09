@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sea.story.mapper.MemberMapper">
-    <insert id="insertUser" parameterType="com.sea.story.domain.MemberVO">
-        INSERT INTO member (mem_id, mem_pwd, mem_name, mem_phone, mem_gender, mem_birth, mem_in_date, mem_fin_log)
+<mapper namespace="dnh">
+    <insert id="addMember" parameterType="go.travel.dnh.domain.member.MemberDAO">
+        INSERT INTO member (mem_id, mem_pwd, mem_name, mem_phone, mem_gender, mem_birth, mem_in_date, mem_up_date)
         VALUES ( #{mem_id}, #{mem_pwd}, #{mem_name}, #{mem_phone}, #{mem_gender}, #{mem_birth}, now(), now());
     </insert>
 
