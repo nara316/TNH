@@ -20,23 +20,39 @@
                th:text="${err}">전체 오류 메시지</p> </div>
 
         <div>
-            <label for="mem_id">로그인 ID</label>
+            <label for="mem_id">로그인 Email</label>
             <input type="text" id="mem_id" th:field="*{mem_id}" class="form-control"
                 th:errorclass="field-error">
             <div class="field-error" th:errors="*{mem_id}" />
         </div>
         <div>
-        <label for="mem_pwd">비밀번호</label>
-        <input type="password" id="mem_pwd" th:field="*{mem_pwd}" class="form-control"
+            <label for="mem_pwd">비밀번호</label>
+            <input type="password" id="mem_pwd" th:field="*{mem_pwd}" class="form-control"
                th:errorclass="field-error">
         <div class="field-error" th:errors="*{mem_pwd}" />
-    </div>
+        </div>
         <div>
-        <label for="mem_name">이름</label>
-        <input type="text" id="mem_name" th:field="*{mem_name}" class="form-control"
+            <label for="mem_name">이름</label>
+            <input type="text" id="mem_name" th:field="*{mem_name}" class="form-control"
              th:errorclass="field-error">
         <div class="field-error" th:errors="*{mem_name}" />
-    </div>
+        </div>
+        <div>
+            <label for="mem_phone">전화번호</label>
+            <input type="text" id="mem_phone" th:field="*{mem_phone}" class="form-control"
+                   th:errorclass="field-error">
+            <div class="field-error" th:errors="*{mem_phone}" />
+        </div>
+        <div class="gender-chk">
+            <label><input type="radio" checked="checked" name="mem_gender" value="남"/>남</label>
+            <label><input type="radio" name="mem_gender" value="녀"/>녀</label>
+        </div>
+        <div>
+            <label for="mem_birth">생년월일</label>
+            <input type="text" id="mem_birth" th:field="*{mem_birth}" class="form-control"
+                   th:errorclass="field-error">
+            <div class="field-error" th:errors="*{mem_birth}" />
+        </div>
         <hr class="my-4">
         <div class="row">
             <div class="col">
