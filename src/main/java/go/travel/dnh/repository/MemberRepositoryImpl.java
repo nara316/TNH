@@ -1,6 +1,6 @@
 package go.travel.dnh.repository;
 
-import go.travel.dnh.domain.member.MemberDAO;
+import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.domain.member.MemberDTO;
 import org.springframework.stereotype.Repository;
 
