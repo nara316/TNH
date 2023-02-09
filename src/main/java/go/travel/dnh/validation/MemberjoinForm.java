@@ -1,8 +1,10 @@
-package go.travel.dnh.domain.member;
+package go.travel.dnh.validation;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
@@ -10,16 +12,14 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberDTO {
+public class MemberjoinForm {
 
-    private Integer mno;
     private String mem_id;
     private String mem_pwd;
     private String mem_name;
     private String mem_phone;
     private String mem_gender;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date mem_birth;
-    private Date mem_in_date;
-    private Date mem_up_date;
 
 }
