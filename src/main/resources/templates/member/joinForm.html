@@ -20,23 +20,23 @@
                th:text="${err}">전체 오류 메시지</p> </div>
 
         <div>
-            <label for="memId">로그인 ID</label>
-            <input type="text" id="memId" th:field="*{memId}" class="form-control"
+            <label for="mem_id">로그인 ID</label>
+            <input type="text" id="mem_id" th:field="*{mem_id}" class="form-control"
                 th:errorclass="field-error">
-            <div class="field-error" th:errors="*{memId}" />
+            <div class="field-error" th:errors="*{mem_id}" />
         </div>
         <div>
-        <label for="memPwd">비밀번호</label>
-        <input type="password" id="memPwd" th:field="*{memPwd}" class="form-control"
+        <label for="mem_pwd">비밀번호</label>
+        <input type="password" id="mem_pwd" th:field="*{mem_pwd}" class="form-control"
                th:errorclass="field-error">
-        <div class="field-error" th:errors="*{memPwd}" />
+        <div class="field-error" th:errors="*{mem_pwd}" />
     </div>
         <div>
         control"
-        <label for="memName">이름</label>
-        <input type="text" id="memName" th:field="*{memName}" class="form-control"
+        <label for="mem_name">이름</label>
+        <input type="text" id="mem_name" th:field="*{mem_name}" class="form-control"
              th:errorclass="field-error">
-        <div class="field-error" th:errors="*{memName}" />
+        <div class="field-error" th:errors="*{mem_name}" />
     </div>
         <hr class="my-4">
         <div class="row">
