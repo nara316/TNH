@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>인덱스</title>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/script :: script">
+
 </head>
+
 <body>
-<h1>인덱스으으으</h1>
-<div class="join">
-  <button class="join-buttom" type="button"
-        th:onclick="|location.href='@{/member/join}'|">
-    회원 가입!
-  </button>
-</div>
+    <div th:replace="fragments/nav :: nav">
+    </div>
+
+    <div>
+        여기가 메인
+    </div>
+
+    <div th:replace="fragments/footer :: footer">
+    </div>
+
 </body>
+
+
 </html>
 

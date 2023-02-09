@@ -1,0 +1,12 @@
+
+<div th:fragment="nav">
+  <!-- 메뉴 영역입니다 -->
+  <div class="join">
+    <button class="join-buttom" type="button"
+            th:onclick="|location.href='@{/member/join}'|">
+      회원 가입!
+    </button>
+  </div>
+  <div>
+    <a href="/admin">관리자페이지로 이동쓰</a>
+  </div>
