@@ -8,5 +8,6 @@
         <typeAlias alias="AirlineDTO" type="go.travel.dnh.domain.air.AirlineDTO"/>
         <typeAlias alias="AirGradeOptionDTO" type="go.travel.dnh.domain.air.AirGradeOptionDTO"/>
         <typeAlias alias="AirProductDTO" type="go.travel.dnh.domain.air.AirProductDTO"/>
+        <typeAlias alias="MemberDTO" type="go.travel.dnh.domain.member.MemberDTO"/>
     </typeAliases>
 </configuration>
