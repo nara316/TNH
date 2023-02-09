@@ -1,15 +1,15 @@
 package go.travel.dnh.domain.member;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
 @Getter
 @Setter
-@Repository
-public class MemberDAO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class MemberDTO {
 
     private Integer mno;
     private String mem_id;
@@ -20,6 +20,5 @@ public class MemberDAO {
     private Date mem_birth;
     private Date mem_in_date;
     private Date mem_up_date;
-
 
 }
