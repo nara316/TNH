@@ -1,96 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>로그인 페이지</title>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/script :: script">
+
 </head>
+
 <body>
-  <div>
-    <form action="/login" method="post">
-      <ul>
-        <li>
-          <input type="text" name="email" placeholder="이메일 입력">
-        </li>
-        <li>
-          <input type="password" name="pass" placeholder="비밀번호 입력">
-        </li>
-        <li>
-          <button type="submit">로그인</button>
-        </li>
-      </ul>
-      <hr>
-        <ul>
-          <li>
-            <a href="/">회원가입</a>
-          </li>
-          <li>
-            <a href="/">아이디 찾기</a>
-          </li>
-          <li>
-            <a href="/">비밀번호 찾기</a>
-          </li>
-        </ul>
-      <hr>
-      <ul>
-        <li>
-          <a href="/">Google</a>
-        </li>
-        <li>
-          <a href="/">Naver</a>
-        </li>
-        <li>
-          <a href="/">Kakao</a>
-        </li>
-      </ul>
-    </form>
-  </div>
+<div th:replace="fragments/nav :: nav">
+</div>
+
+<div>
+  <form action="" th:action="@{/login/login}" th:object="${memberDTO}" method="post">
+    <ul>
+      <li>
+        <input type="text" name="email" th:field="*{mem_id}" placeholder="이메일 입력">
+      </li>
+      <li>
+        <input type="password" name="pass" th:field="*{mem_pwd}" placeholder="비밀번호 입력">
+      </li>
+      <li>
+        <button type="submit" >로그인</button>
+      </li>
+    </ul>
+    <hr>
+    <ul>
+      <li>
+        <a href="/">회원가입</a>
+      </li>
+      <li>
+        <a href="/">아이디 찾기</a>
+      </li>
+      <li>
+        <a href="/">비밀번호 찾기</a>
+      </li>
+    </ul>
+    <hr>
+    <ul>
+      <li>
+        <a href="/">Google</a>
+      </li>
+      <li>
+        <a href="/">Naver</a>
+      </li>
+      <li>
+        <a href="/">Kakao</a>
+      </li>
+    </ul>
+  </form>
+</div>
+
+<div th:replace="fragments/footer :: footer">
+</div>
+
 </body>
+
+
 </html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>로그인 페이지</title>
-</head>
-<body>
-  <div>
-    <form action="/login" method="post">
-      <ul>
-        <li>
-          <input type="text" name="email" placeholder="이메일 입력">
-        </li>
-        <li>
-          <input type="password" name="pass" placeholder="비밀번호 입력">
-        </li>
-        <li>
-          <button type="submit">로그인</button>
-        </li>
-      </ul>
-      <hr>
-        <ul>
-          <li>
-            <a href="/">회원가입</a>
-          </li>
-          <li>
-            <a href="/">아이디 찾기</a>
-          </li>
-          <li>
-            <a href="/">비밀번호 찾기</a>
-          </li>
-        </ul>
-      <hr>
-      <ul>
-        <li>
-          <a href="/">Google</a>
-        </li>
-        <li>
-          <a href="/">Naver</a>
-        </li>
-        <li>
-          <a href="/">Kakao</a>
-        </li>
-      </ul>
-    </form>
-  </div>
-</body>
-</html>
+
