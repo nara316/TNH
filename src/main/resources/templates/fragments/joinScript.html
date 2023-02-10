@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="joinScript">
+    <meta charset="UTF-8">
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .id_already {
+            color: red;
+            display: none;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script th:inline="javascript" >
+        let cntcheck = 0;
+        /*<![CDATA[*/
+
+        //인증번호 전송 메서드
+        function EmailSend() {
+
+            let mem_id =  $('#mem_id').val();
+            let input = $(".mail_check_input");
+            let inputBox = $(".mail_check_input_box");
+
+            if((cntcheck==1) || (mem_id=='')){
+                return false;
+            }
+
+            $.ajax({
+                type:'post',
+                data:{mem_id:mem_id},
+                url:"/member/mailCheck",
+                success:function(){
+                    input.attr("disabled",false);
+                    input.attr("oninput","mailNumCheck()");
+                }
+            });
+            $('#mem_id').attr("readonly",true);
+        }; //EmailSend() 메서드 종료
+
+        //이메일 인증번호 확인 메서드
+        function mailNumCheck(){
+            let checkInput = $(".mail_check_input").val();        // 사용자가 입력한 코드
+            let warn = $("#mail_check_input_box_warn");          // 비교 결과
+
+            $.ajax({
+                url: "emailNumCheck", //Controller에서 요청 받을 주소
+                type:'post', //POST 방식으로 전달
+                data:{checkInput:checkInput},
+                success:function(result){
+                    if(result === 1){
+                        warn.html("인증번호가 일치합니다.");
+                    } else {
+                        warn.html("인증번호를 다시 확인해주세요.");
+                    }
+                },
+                error:function(){
+                    alert("에러입니다");
+                }
+            });
+        }; //mailNumCheck 마무리
+
+        //이메일 중복 체크 메서드
+        function checkId() {
+            let mem = $('#mem_id').val();
+
+            if(mem=='') {
+                $('.id_already').css("display", "none");
+                return false;
+            }
+
+            $.ajax({
+                url: "/member/idCheck", //Controller에서 요청 받을 주소
+                type: 'post', //POST 방식으로 전달
+                data: {mem_id: mem},
+                success: function (cnt) { //컨트롤러에서 넘어온 cnt값을 받는다
+                    if (cnt == 1) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+                        $('.id_already').css("display","inline-block");
+                    } else {
+                        $('.id_already').css("display", "none");
+                    } cntcheck = cnt;
+                }, error: function () {
+                    alert("에러입니다");
+                }
+            });
+        }; //checkId() 메서드 종료
+
+        //비밀번호 확인 메서드
+        function checkPwd(){
+            let pwd = $('#mem_pwd').val(); //비밀번호 입력값
+            let pwdChk = $('#mem_pwd_check').val(); //비밀번호 확인 값
+            let pwdCorrectChk = $('.pwdCorrectChk_msg');
+
+            if(pwd == pwdChk){
+                pwdCorrectChk.html("비밀번호가 일치합니다.");
+            }else if(pwd != pwdChk){
+                pwdCorrectChk.html("비밀번호가 일치하지 않습니다");
+            }
+        }; //checkPwd() 메서드 종료
+
+        /*]]>*/
+    </script>
+</head>
+
+</html>
