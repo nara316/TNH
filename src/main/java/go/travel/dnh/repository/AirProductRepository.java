@@ -10,4 +10,10 @@ public interface AirProductRepository {
 
     int write(AirProductDTO dto);
 
+    int modify(AirProductDTO dto);
+
+    int delete(Integer ano);
+
+    AirProductDTO read(Integer ano);
+
 }

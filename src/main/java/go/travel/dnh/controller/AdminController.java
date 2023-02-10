@@ -5,9 +5,7 @@ import go.travel.dnh.service.AirProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,12 +16,13 @@ public class AdminController {
 
     private final AirProductService airProductService;
 
+//    admin 메인 페이지 이동
     @GetMapping("/main")
     public String adminHome(){
         return "admin/main";
     }
 
-
+//    항공권 리스트 페이지
     @GetMapping("/airlist")
     public String adminAirList(Model m){
         List<AirProductDTO> list = airProductService.getListAdmin();
@@ -31,11 +30,13 @@ public class AdminController {
         return "admin/air/list";
     }
 
+//    항공권 등록페이지
     @GetMapping("/airWrite")
     public String airWritePage(){
         return "admin/air/write";
     }
 
+//    항공권 등록하기 (admin 계정 생성 후 in_user/up_user 수정)
     @PostMapping("/airWrite")
     public String airWrite(AirProductDTO dto, Model m){
         String writer = "admin";
@@ -46,6 +47,27 @@ public class AdminController {
         m.addAttribute(dto);
         airProductService.write(dto);
         System.out.println(dto);
+        return "redirect:/admin/airlist";
+    }
+
+    @GetMapping("/airModify/{ano}")
+    public String air_modify_page(@PathVariable("ano")Integer ano, Model m) {
+        AirProductDTO dto = airProductService.read(ano);
+        m.addAttribute("list",dto);
+        System.out.println(dto);
+        return "admin/air/modify";
+    }
+    @PostMapping("/airModify")
+    public String air_modify(AirProductDTO dto) {
+        String writer = "admin2";
+        dto.setUp_user(writer);
+        airProductService.modify(dto);
+        return "redirect:/admin/airlist";
+    }
+
+    @GetMapping("/airRemove")
+    public String remove(@RequestParam("ano") Integer ano) {
+        airProductService.remove(ano);
         return "redirect:/admin/airlist";
     }
 }

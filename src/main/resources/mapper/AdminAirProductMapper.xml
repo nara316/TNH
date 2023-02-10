@@ -17,15 +17,21 @@
                ( #{al_code}, #{ar_from}, #{ar_to}, 'A02', #{ar_fl_no}, #{ar_from_date}, #{ar_time}, #{ar_to_date}, #{ar_price} * 1.5, #{ar_cnt},
                  #{ar_res_cnt}, #{ar_sales_state},#{in_user}, #{up_user})
     </insert>
-<!--    <update id="update" parameterType="AirProductDTO">-->
-<!--        update air_product-->
-<!--        set ar_price = #{ar_price}-->
-<!--          ,ar_sales_state = #{ar_sales_state}-->
-<!--          ,up_user = #{up_user}-->
-<!--          ,up_date = now()-->
-<!--        where ano = #{ano}-->
-<!--    </update>-->
-<!--    <delete id="delete" parameterType="String">-->
-<!--        delete from air_product where ano = #{ano}-->
-<!--    </delete>-->
+    <select id="select" parameterType="Integer" resultType="AirProductDTO">
+        select  ano, al_code, ar_from, ar_to, agop_code, ar_fl_no, ar_from_date, ar_time, ar_to_date, ar_price, ar_cnt, ar_res_cnt, ar_sales_state
+             , in_user, in_date, up_user, up_date
+        from air_product
+        where ano = #{ano};
+    </select>
+    <update id="update" parameterType="AirProductDTO">
+        update air_product
+        set ar_price = #{ar_price}
+          ,ar_sales_state = #{ar_sales_state}
+          ,up_user = #{up_user}
+          ,up_date = now()
+        where ano = #{ano}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        delete from air_product where ano = #{ano}
+    </delete>
 </mapper>
