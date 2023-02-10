@@ -16,4 +16,9 @@ public class MemberJoinRepositoryImpl implements MemberJoinRepository {
     public void joinMember(MemberDTO memberDTO) {
         memberJoinMapper.insertMember(memberDTO);
     }
+
+    @Override
+    public int findMember(String mem_id){
+        return memberJoinMapper.findMember(mem_id);
+    }
 }

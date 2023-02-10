@@ -8,4 +8,9 @@
         VALUES ( #{mem_id}, #{mem_pwd}, #{mem_name}, #{mem_phone}, #{mem_gender}, #{mem_birth}, now(), now());
     </insert>
 
+    <select id="findMember" parameterType="String" resultType="int">
+        select count(mem_id) from member
+        WHERE mem_id = #{mem_id};
+    </select>
+
 </mapper>

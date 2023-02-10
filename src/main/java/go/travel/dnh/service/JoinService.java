@@ -7,4 +7,6 @@ public interface JoinService {
 
     public void joinMember(MemberjoinForm form);
 
+    public int findMember(String mem_id);
+
 }

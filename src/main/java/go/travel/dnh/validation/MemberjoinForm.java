@@ -17,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class MemberjoinForm {
 
-    //@NotBlank
+    @NotBlank
     @Email
     private String mem_id;
 
