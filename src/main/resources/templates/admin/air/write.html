@@ -6,12 +6,13 @@
 
 </head>
 
-<body>
+<body class="flex">
+
 <div th:replace="admin/admin-fragments/nav :: nav">
 </div>
 
 
-<div>
+<div class="admin-content">
     <h1>항공권 상품등록</h1>
     <form th:action="@{/admin/airWrite}" method="post">
         <ul>
