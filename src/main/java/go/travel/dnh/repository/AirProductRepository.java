@@ -16,4 +16,6 @@ public interface AirProductRepository {
 
     AirProductDTO read(Integer ano);
 
+    List<AirProductDTO> airProductList();
+
 }

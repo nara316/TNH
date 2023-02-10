@@ -15,4 +15,6 @@ public interface AirProductService {
     int remove(Integer ano);
 
     AirProductDTO read(Integer ano);
+
+    List<AirProductDTO> getList();
 }
