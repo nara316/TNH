@@ -8,6 +8,4 @@ public class AirlineDTO {
     private String al_name;
     private String al_logo_name;
     private String al_logo_uri;
-    private Integer al_logo_size;
-    private String al_explain;
 }
