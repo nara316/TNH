@@ -7,4 +7,6 @@ public interface MemberJoinRepository {
     //회원가입 메서드
     public void joinMember(MemberDTO memberDTO);
 
+    public int findMember(String mem_id);
+
 }

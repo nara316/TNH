@@ -25,4 +25,8 @@ public class JoinServiceImpl implements JoinService{
 
         memberJoinRepository.joinMember(memberDTO);
     }
+
+    public int findMember(String mem_id){
+        return memberJoinRepository.findMember(mem_id);
+    }
 }
