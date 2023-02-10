@@ -8,4 +8,6 @@ public interface AirProductRepository {
 
     List<AirProductDTO> adminAirProductList();
 
+    int write(AirProductDTO dto);
+
 }

@@ -18,4 +18,9 @@ public class AirProductServiceImpl implements AirProductService{
     public List<AirProductDTO> getListAdmin() {
         return airProductRepository.adminAirProductList();
     }
+
+    @Override
+    public int write(AirProductDTO dto) {
+        return airProductRepository.write(dto);
+    }
 }

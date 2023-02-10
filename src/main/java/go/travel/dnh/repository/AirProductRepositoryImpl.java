@@ -17,4 +17,9 @@ public class AirProductRepositoryImpl implements AirProductRepository{
     public List<AirProductDTO> adminAirProductList() {
         return airProductAdminMapper.selectAllAirProduct();
     }
+
+    @Override
+    public int write(AirProductDTO dto) {
+        return airProductAdminMapper.insert(dto);
+    }
 }
