@@ -9,6 +9,10 @@ import java.util.List;
 public interface AdminAirProductMapper {
 
     List<AirProductDTO> selectAllAirProduct();
-
     int insert(AirProductDTO dto);
+
+    int update(AirProductDTO dto);
+
+    int delete(Integer ano);
+    AirProductDTO select(Integer ano);
 }

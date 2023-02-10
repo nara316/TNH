@@ -16,7 +16,6 @@ public class AirProductDTO {
     private String agop_code;
     private Integer ar_fl_no;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime ar_from_date;
     private Integer ar_time;
     private LocalDateTime ar_to_date;
@@ -26,11 +25,9 @@ public class AirProductDTO {
     private String ar_sales_state;
     private String in_user;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime in_date;
     private String up_user;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime up_date;
 
     private AirlineDTO AirlineDTO;

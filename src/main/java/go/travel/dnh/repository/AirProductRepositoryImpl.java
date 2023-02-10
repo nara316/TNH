@@ -22,4 +22,19 @@ public class AirProductRepositoryImpl implements AirProductRepository{
     public int write(AirProductDTO dto) {
         return airProductAdminMapper.insert(dto);
     }
+
+    @Override
+    public int modify(AirProductDTO dto) {
+        return airProductAdminMapper.update(dto);
+    }
+
+    @Override
+    public int delete(Integer ano) {
+        return airProductAdminMapper.delete(ano);
+    }
+
+    @Override
+    public AirProductDTO read(Integer ano) {
+        return airProductAdminMapper.select(ano);
+    }
 }

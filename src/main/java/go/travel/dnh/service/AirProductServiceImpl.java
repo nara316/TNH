@@ -23,4 +23,19 @@ public class AirProductServiceImpl implements AirProductService{
     public int write(AirProductDTO dto) {
         return airProductRepository.write(dto);
     }
+
+    @Override
+    public int modify(AirProductDTO dto) {
+        return airProductRepository.modify(dto);
+    }
+
+    @Override
+    public int remove(Integer ano) {
+        return airProductRepository.delete(ano);
+    }
+
+    @Override
+    public AirProductDTO read(Integer ano) {
+        return airProductRepository.read(ano);
+    }
 }

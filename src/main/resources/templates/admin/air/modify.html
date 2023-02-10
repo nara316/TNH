@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/admin-fragments/script :: script">
+
+</head>
+
+<body>
+<div th:replace="admin/admin-fragments/nav :: nav">
+</div>
+
+
+<div>
+    <h1>항공권 상품수정</h1>
+    <form role="form" th:object="${airProductDTO}"
+            th:action="@{/admin/airModify}" method="post">
+        <ul>
+            <li>
+                <input type="hidden" name="ano" th:value="${list.ano}">
+            </li>
+            <li>
+                <label>가격</label>
+                <input type="text" name="ar_price" th:value="${list.ar_price}">
+            </li>
+            <li>
+                <label>판매상태</label>
+                <input type="text" name="ar_sales_state" th:value="${list.ar_sales_state}">
+            </li>
+            <li>
+                <button type="submit">저장하기</button>
+            </li>
+        </ul>
+
+    </form>
+</div>
+
+
+</body>
+
+
+</html>
+
+
+
+
+
