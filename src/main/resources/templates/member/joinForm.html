@@ -11,21 +11,18 @@
     <form action="" th:action th:object="${memberDTO}" method="post">
         <div>
             <label for="mem_id">로그인 Email</label>
-            <input type="text" id="mem_id" th:field="*{mem_id}" class="form-control" oninput="checkId()"
-                th:errorclass="field-error">
+            <input type="text" id="mem_id" th:field="*{mem_id}" class="form-control" oninput="checkId()">
             <span class="mail_check_button" onclick='EmailSend()'>인증번호 전송</span><br>
             <span class="id_already">이미 존재하는 이메일입니다.</span>
-            <div class="field-error" th:errors="*{mem_id}" />
+            <span class="idChk_msg"></span>
         </div>
         <div>
             <input class="mail_check_input" disabled="disabled">
-            <span id="mail_check_input_box_warn"></span>
+            <span class="mailChkmsg"></span>
         </div>
         <div>
             <label for="mem_pwd">비밀번호</label>
-            <input type="password" name="mem_pwd" id="mem_pwd" th:field="*{mem_pwd}" class="form-control"
-               th:errorclass="field-error">
-        <div class="field-error" th:errors="*{mem_pwd}" />
+            <input type="password" name="mem_pwd" id="mem_pwd" th:field="*{mem_pwd}" class="form-control">
             <span class="pwdChk_msg"></span>
         </div>
         <div>
@@ -35,31 +32,27 @@
         </div>
         <div>
             <label for="mem_name">이름</label>
-            <input type="text" id="mem_name" th:field="*{mem_name}" class="form-control"
-             th:errorclass="field-error"><span class="nameChk_msg"></span>
-        <div class="field-error" th:errors="*{mem_name}" />
+            <input type="text" id="mem_name" th:field="*{mem_name}" class="form-control">
+            <span class="nameChk_msg"></span>
         </div>
         <div>
             <label for="mem_phone">전화번호</label>
-            <input type="text" id="mem_phone" th:field="*{mem_phone}" class="form-control" placeholder="01012345678"
-                   th:errorclass="field-error"><span class="phoneChk_msg"></span>
-            <div class="field-error" th:errors="*{mem_phone}" />
+            <input type="text" id="mem_phone" th:field="*{mem_phone}" class="form-control" placeholder="01012345678">
+            <span class="phoneChk_msg"></span>
         </div>
         <div class="gender-chk"> 성별
             <label><input type="radio" checked="checked" name="mem_gender" value="남"/>남</label>
-            <label><input type="radio" name="mem_gender" value="녀"/>녀</label>
+            <label><input type="radio" name="mem_gender" value="여"/>녀</label>
         </div>
         <div>
             <label for="mem_birth">생년월일</label>
-            <input type="text" id="mem_birth" th:field="*{mem_birth}" class="form-control" placeholder="1900-01-01"
-                   th:errorclass="field-error"><span class="birthChk_msg"></span>
-            <div class="field-error" th:errors="*{mem_birth}" />
+            <input type="text" id="mem_birth" th:field="*{mem_birth}" class="form-control" placeholder="1900-01-01">
+            <span class="birthChk_msg"></span>
         </div>
         <hr class="my-4">
         <div class="row">
             <div class="col">
-                <button>회원
-                    가입</button>
+                <input type="submit" value="회원가입" onclick="return check()"></input>
             </div>
         </div>
     </form>
