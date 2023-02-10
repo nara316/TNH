@@ -1,0 +1,19 @@
+
+.flex{display: flex;}
+.row{flex-direction: row;}
+.column{flex-direction: column;}
+.center{justify-content: center;}
+.between{justify-content: space-between;}
+.around{justify-content: space-around;}
+.start{justify-content: flex-start;}
+.end{justify-content: flex-end;}
+
+li{list-style: none;}
+a{text-decoration: none;}
+
+
+
+body>.admin-content{
+    padding-left: 20px;
+    padding-top: 40px;
+}

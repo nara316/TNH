@@ -6,12 +6,12 @@
 
 </head>
 
-<body>
+<body class="flex">
+
 <div th:replace="admin/admin-fragments/nav :: nav">
 </div>
 
-
-<div>
+<div class="admin-content">
     <h1>항공권 상품수정</h1>
     <form role="form" th:object="${airProductDTO}"
             th:action="@{/admin/airModify}" method="post">
