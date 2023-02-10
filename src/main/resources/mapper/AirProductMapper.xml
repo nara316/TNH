@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.sea.story.dao.AirProductMapper">
+<mapper namespace="go.travel.dnh.mapper.AirProductMapper">
 
     <!--    조인할 테이블 1 resultMap : 복잡한 결과매핑을 할때 사용함 (Map은 Mapping을 의미) -->
     <!--    최종적으로 필요한 컬럼만 갖다 써도 무방한듯. DTO처럼 각 테이블 전체 칼럼을 쓰지 않아도 됨 -->
@@ -30,9 +30,9 @@
         <result column="ar_to" property="ar_to"/>
         <result column="agop_code" property="agop_code"/>
         <result column="ar_fl_no" property="ar_fl_no"/>
-        <result column="ar_date" property="ar_from_date"/>
+        <result column="ar_from_date" property="ar_from_date"/>
         <result column="ar_time" property="ar_time"/>
-        <result column="ar_date" property="ar_to_date"/>
+        <result column="ar_to_date" property="ar_to_date"/>
         <result column="ar_price" property="ar_price"/>
         <result column="ar_res_cnt" property="ar_res_cnt"/>
         <!--        collection 은 1:N 조인할때 사용합니다. 위에 적어둔 조인할 테이블들 적어주면 됩니다. -->
@@ -51,8 +51,8 @@
              ,p.ar_fl_no ,p.ar_from_date, p.ar_time, p.ar_to_date
              ,ar_price ,ar_res_cnt
         from air_product p
-        where p.ar_date > "2022-12-31 23:59:59" and p.ar_sales_state = 'Y'
-        order by p.ar_date ;
+        where p.ar_from_date > "2022-12-31 23:59:59" and p.ar_sales_state = 'Y'
+        order by p.ar_from_date ;
     </select>
 
 </mapper>

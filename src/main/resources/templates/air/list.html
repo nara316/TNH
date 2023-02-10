@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/script :: script">
+
+</head>
+
+<body>
+<div th:replace="fragments/nav :: nav">
+</div>
+
+<div class="center view-size">
+  <!--항공권 상품목록-->
+  <div>
+    <table style="justify-content: center; ">
+      <thead>
+      <tr>
+        <td>항공사이미지</td>
+        <td>항공사이름</td>
+        <td>출발공항</td>
+        <td>도착공항</td>
+        <td>편명</td>
+        <td>출발날짜</td>
+        <td>도착날짜</td>
+        <td>소요시간</td>
+        <td>좌석등급</td>
+        <td>금액</td>
+        <td>남은수량</td>
+      </tr>
+      </thead>
+      <tr th:each="list : ${list}">
+        <td>
+          <img th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
+        </td>
+        <td>[[${list.airlineDTO.al_name}]]</td>
+        <td>[[${list.ar_from}]]</td>
+        <td>[[${list.ar_to}]]</td>
+        <td>[[${list.ar_fl_no}]]</td>
+        <td>[[${list.ar_from_date}]]</td>
+        <td>[[${list.ar_to_date}]]</td>
+        <td>[[${list.ar_time}]]</td>
+        <td>[[${list.airGradeOptionDTO.agop_name}]]</td>
+        <td>[[${list.ar_price}]]</td>
+        <td>잔여 [[${list.ar_res_cnt}]] 석 남음</td>
+
+      </tr>
+    </table>
+  </div>
+
+
+
+</div>
+
+<div th:replace="fragments/footer :: footer">
+</div>
+
+</body>
+
+
+</html>
