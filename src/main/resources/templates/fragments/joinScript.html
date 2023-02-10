@@ -16,6 +16,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script th:inline="javascript" >
         let cntcheck = 0;
+        let idCheck = false;
+        let pwdCheck = false;
         /*<![CDATA[*/
 
         //인증번호 전송 메서드
@@ -23,10 +25,18 @@
 
             let mem_id =  $('#mem_id').val();
             let input = $(".mail_check_input");
-            let inputBox = $(".mail_check_input_box");
+            let idChkMsg = $('.idChk_msg');
+            let mem_idPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
 
-            if((cntcheck==1) || (mem_id=='')){
+            if((cntcheck==1)){
                 return false;
+            }
+
+            if(!mem_idPattern.test(mem_id)){
+                idChkMsg.html("올바른 이메일 형식을 입력해주세요.");
+                return false;
+            }else{
+                idChkMsg.css("display", "none");
             }
 
             $.ajax({
@@ -44,7 +54,7 @@
         //이메일 인증번호 확인 메서드
         function mailNumCheck(){
             let checkInput = $(".mail_check_input").val();        // 사용자가 입력한 코드
-            let warn = $("#mail_check_input_box_warn");          // 비교 결과
+            let warn = $(".mailChkmsg");          // 비교 결과
 
             $.ajax({
                 url: "emailNumCheck", //Controller에서 요청 받을 주소
@@ -53,6 +63,7 @@
                 success:function(result){
                     if(result === 1){
                         warn.html("인증번호가 일치합니다.");
+                        idCheck=true;
                     } else {
                         warn.html("인증번호를 다시 확인해주세요.");
                     }
@@ -96,10 +107,52 @@
 
             if(pwd == pwdChk){
                 pwdCorrectChk.html("비밀번호가 일치합니다.");
+                pwdCheck=true;
             }else if(pwd != pwdChk){
-                pwdCorrectChk.html("비밀번호가 일치하지 않습니다");
+                pwdCorrectChk.html("비밀번호가 일치하지 않습니다.");
             }
         }; //checkPwd() 메서드 종료
+
+        //전체 유효성 검사 메서드
+        function check(){
+            //생년월일 정규식 체크
+            let birth = $('#mem_birth').val();
+            let birthPattern = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/
+            let birthChkMsg = $('.birthChk_msg');
+
+            let name = $('#mem_name').val();
+            let namePattern = /^[가-힣]{2,5}$/
+            let nameChkMsg = $('.nameChk_msg');
+
+            let phone = $('#mem_phone').val();
+            let phonePattern = /^[0-9]{10,11}$/
+            let phoneChkMsg = $('.phoneChk_msg');
+
+            if(!namePattern.test(name)){
+                nameChkMsg.html("이름은 2~5글자의 한글로 입력해주세요.");
+                return false;
+            } else {
+                nameChkMsg.css("display", "none");
+            }
+
+            if(!phonePattern.test(phone)){
+                phoneChkMsg.html("전화번호는 10~11 길이의 숫자로 입력해주세요.");
+                return false;
+            } else {
+                phoneChkMsg.css("display", "none");
+            }
+
+            if(!birthPattern.test(birth)){
+                birthChkMsg.html("생년월일을 형식에 맞게 입력해주세요. ex) 1900-01-01");
+                return false;
+            } else {
+                birthChkMsg.css("display", "none");
+            }
+
+            if((idCheck==false)||(pwdCheck==false)){
+                return false;
+            }
+        }; //check()메서드 종료
 
         /*]]>*/
     </script>
