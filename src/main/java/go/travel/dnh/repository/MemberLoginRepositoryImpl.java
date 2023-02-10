@@ -14,4 +14,12 @@ public class MemberLoginRepositoryImpl implements MemberLoginRepository {
         }
         return null;
     }
+
+    @Override
+    public MemberDTO findById(MemberDTO memberDTO) {
+        if(memberDTO!=null) {
+            return memberDTO;
+        }
+        return null;
+    }
 }

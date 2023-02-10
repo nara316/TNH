@@ -3,6 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="go.travel.dnh.repository.MemberLoginRepository">
     <select id="findByMember" resultType="MemberDTO" parameterType="MemberDTO">
-        select * from member where mem_id = #{mem_id} and mem_pwd =#{mem_pwd};
+        select * from member where mem_id = #{mem_id} and mem_pwd =#{mem_pwd}
+    </select>
+    <select id="findById" resultType="MemberDTO" parameterType="MemberDTO">
+        select * from member where mem_id = #{mem_id}
     </select>
 </mapper>

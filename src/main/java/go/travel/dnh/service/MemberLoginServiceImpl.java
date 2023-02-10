@@ -1,11 +1,9 @@
 package go.travel.dnh.service;
 
 
-import go.travel.dnh.domain.RequestUser;
 import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.repository.MemberLoginRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,9 +15,18 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     @Override
     public String login(MemberDTO memberDTO) {
         MemberDTO user = memberLoginRepository.findByMember(memberDTO);
-        if(user!=null){
+        if (user != null) {
             return "success";
         }
-            return "fail";
+        return "fail";
     }
+
+    @Override
+    public MemberDTO findById(MemberDTO memberDTO) {
+        if (memberDTO != null) {
+            return memberDTO;
+        }
+        return null;
+    }
+
 }
