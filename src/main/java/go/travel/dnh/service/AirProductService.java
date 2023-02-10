@@ -8,4 +8,6 @@ public interface AirProductService {
 
     List<AirProductDTO> getListAdmin();
 
+    int write(AirProductDTO dto);
+
 }

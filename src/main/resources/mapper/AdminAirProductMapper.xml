@@ -9,12 +9,14 @@
         from air_product
         order by ano
     </select>
-<!--    <insert id="insert" parameterType="AirProductDTO">-->
-<!--        insert into air_product (ano, al_code, ar_from, ar_to, agop_code, ar_date, ar_fl_no, ar_time, ar_price, ar_cnt,-->
-<!--                                 ar_res_cnt, ar_sales_state, in_user,up_user)-->
-<!--        values (#{ano}, #{al_code}, #{ar_from}, #{ar_to}, #{agop_code}, #{ar_date}, #{ar_fl_no}, #{ar_time}, #{ar_price}, #{ar_cnt},-->
-<!--                #{ar_res_cnt}, #{ar_sales_state},#{in_user}, #{up_user})-->
-<!--    </insert>-->
+    <insert id="insert" parameterType="AirProductDTO">
+        insert into air_product ( al_code, ar_from, ar_to, agop_code, ar_fl_no, ar_from_date, ar_time, ar_to_date, ar_price, ar_cnt,
+                                 ar_res_cnt, ar_sales_state, in_user,up_user)
+        values ( #{al_code}, #{ar_from}, #{ar_to}, 'A01', #{ar_fl_no}, #{ar_from_date}, #{ar_time}, #{ar_to_date}, #{ar_price}, #{ar_cnt},
+                #{ar_res_cnt}, #{ar_sales_state},#{in_user}, #{up_user}),
+               ( #{al_code}, #{ar_from}, #{ar_to}, 'A02', #{ar_fl_no}, #{ar_from_date}, #{ar_time}, #{ar_to_date}, #{ar_price} * 1.5, #{ar_cnt},
+                 #{ar_res_cnt}, #{ar_sales_state},#{in_user}, #{up_user})
+    </insert>
 <!--    <update id="update" parameterType="AirProductDTO">-->
 <!--        update air_product-->
 <!--        set ar_price = #{ar_price}-->
