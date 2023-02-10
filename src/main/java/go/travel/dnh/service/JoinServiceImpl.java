@@ -6,6 +6,7 @@ import go.travel.dnh.validation.MemberjoinForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
@@ -17,16 +18,22 @@ public class JoinServiceImpl implements JoinService{
 
     private final MemberJoinRepository memberJoinRepository;
     private final JavaMailSender mailSender;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private String answerNum;
     private int result;
+    private String rawPwd;
+    private String encodePwd;
 
     public void joinMember(MemberjoinForm form){
+
+        rawPwd = form.getMem_pwd();
+        encodePwd = bCryptPasswordEncoder.encode(rawPwd);
 
        //성공로직
        MemberDTO memberDTO = new MemberDTO();
        memberDTO.setMem_id(form.getMem_id());
-       memberDTO.setMem_pwd(form.getMem_pwd());
+       memberDTO.setMem_pwd(encodePwd);
        memberDTO.setMem_name(form.getMem_name());
        memberDTO.setMem_phone(form.getMem_phone());
        memberDTO.setMem_gender(form.getMem_gender());
