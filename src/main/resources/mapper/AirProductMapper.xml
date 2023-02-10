@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.sea.story.dao.AirProductMapper">
+
+    <!--    조인할 테이블 1 resultMap : 복잡한 결과매핑을 할때 사용함 (Map은 Mapping을 의미) -->
+    <!--    최종적으로 필요한 컬럼만 갖다 써도 무방한듯. DTO처럼 각 테이블 전체 칼럼을 쓰지 않아도 됨 -->
+    <resultMap id="AirlineDTO" type="AirlineDTO">
+        <result column="al_name" property="al_name"/>
+        <result column="al_logo_uri" property="al_logo_uri"/>
+        <result column="al_logo_name" property="al_logo_name"/>
+    </resultMap>
+    <!--조인할 테이블 2-->
+    <resultMap id="AirportDTO" type="AirportDTO">
+        <result column="ap_code" property="ap_code"/>
+        <result column="ap_code_name" property="ap_code_name"/>
+    </resultMap>
+    <!--조인할 테이블 3-->
+    <resultMap id="AirGradeOptionDTO" type="AirGradeOptionDTO">
+        <result column="agop_code" property="agop_code"/>
+        <result column="agop_name" property="agop_name"/>
+    </resultMap>
+    <!--메인테이블-->
+    <resultMap id="AirProductDTO" type="AirProductDTO">
+        <result column="ano" property="ano"/>
+        <result column="al_code" property="al_code"/>
+        <result column="ar_from" property="ar_from"/>
+        <result column="ar_to" property="ar_to"/>
+        <result column="agop_code" property="agop_code"/>
+        <result column="ar_fl_no" property="ar_fl_no"/>
+        <result column="ar_date" property="ar_from_date"/>
+        <result column="ar_time" property="ar_time"/>
+        <result column="ar_date" property="ar_to_date"/>
+        <result column="ar_price" property="ar_price"/>
+        <result column="ar_res_cnt" property="ar_res_cnt"/>
+        <!--        collection 은 1:N 조인할때 사용합니다. 위에 적어둔 조인할 테이블들 적어주면 됩니다. -->
+        <collection property="airlineDTO" resultMap="AirlineDTO"/>
+        <collection property="airportDTO" resultMap="AirportDTO"/>
+        <collection property="airGradeOptionDTO" resultMap="AirGradeOptionDTO"/>
+    </resultMap>
+
+    <select id="selectPro"  resultMap="AirProductDTO">
+        select p.ano ,(select al_logo_uri from air_line al where al.al_code = p.al_code) al_logo_uri
+             ,(select al_logo_name from air_line al where al.al_code = p.al_code ) al_logo_name
+             ,(select al_name from air_line al where al.al_code = p.al_code ) al_name
+             ,(select ap_code_name from airport ap1 where ap1.ap_code = p.ar_from ) ar_from
+             ,(select ap_code_name from airport ap2 where ap2.ap_code = p.ar_to ) ar_to
+             ,(select agop_name from air_grade_option ago where ago.agop_code = p.agop_code) agop_name
+             ,p.ar_fl_no ,p.ar_from_date, p.ar_time, p.ar_to_date
+             ,ar_price ,ar_res_cnt
+        from air_product p
+        where p.ar_date > "2022-12-31 23:59:59" and p.ar_sales_state = 'Y'
+        order by p.ar_date ;
+    </select>
+
+</mapper>

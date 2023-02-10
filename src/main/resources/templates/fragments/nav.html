@@ -1,15 +1,43 @@
 
 <div th:fragment="nav">
   <!-- 메뉴 영역입니다 -->
-  <div class="join">
-    <button class="join-buttom" type="button"
-            th:onclick="|location.href='@{/member/join}'|">
-      회원 가입!
-    </button>
+  <div class="flex between view-size menu">
+    <section>
+      <!--top logo-->
+      <div id="logo">
+        <a href="/" class="flex">
+          <img src="/imgs/logo.png" style="width:120px; height:80px;">
+        </a>
+      </div>
+    </section>
+
+    <section id="user-menu">
+      <!--유저메뉴-->
+      <div class="center">
+        <ul class="flex center">
+          <li class="join">
+            <button class="join-buttom" type="button"
+                    th:onclick="|location.href='@{/member/join}'|">
+              회원 가입!
+            </button>
+          </li>
+          <li>
+            <a th:href="@{/login/loginForm}">로그인</a>
+          </li>
+          <li sec:authorize="isAuthenticated()">
+            <span sec:authentication="name"></span>
+          </li>
+          <li sec:authorize="isAuthenticated()">
+            <a href="/">로그아웃</a>
+          </li>
+          <li>
+            <a href="/admin/main">관리자페이지</a>
+          </li>
+        </ul>
+      </div>
+    </section>
   </div>
-  <div>
-    <a href="/admin/main">관리자페이지로 이동쓰</a>
-  </div>
-  <div>
-    <a th:href="@{/login/loginForm}">로그인</a>
-  </div>
+    <div>
+      <!--메인메뉴-->
+    </div>
+</div>

@@ -38,4 +38,9 @@ public class AirProductServiceImpl implements AirProductService{
     public AirProductDTO read(Integer ano) {
         return airProductRepository.read(ano);
     }
+
+    @Override
+    public List<AirProductDTO> getList() {
+        return airProductRepository.airProductList();
+    }
 }
