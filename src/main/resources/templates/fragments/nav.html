@@ -1,43 +1,50 @@
 
 <div th:fragment="nav">
   <!-- 메뉴 영역입니다 -->
-  <div class="flex between view-size menu">
-    <section>
-      <!--top logo-->
-      <div id="logo">
-        <a href="/" class="flex">
-          <img src="/imgs/logo.png" style="width:120px; height:80px;">
-        </a>
-      </div>
-    </section>
+  <div class="menu view-size">
+    <div class="flex between view-size">
+      <section>
+        <!--top logo-->
+        <div id="logo">
+          <a href="/" class="flex">
+            <img src="/imgs/logo.png" style="width:120px; height:80px;">
+          </a>
+        </div>
+      </section>
 
-    <section id="user-menu">
-      <!--유저메뉴-->
-      <div class="center">
-        <ul class="flex center">
-          <li class="join">
-            <button class="join-buttom" type="button"
-                    th:onclick="|location.href='@{/member/join}'|">
-              회원 가입!
-            </button>
-          </li>
-          <li>
-            <a th:href="@{/login/loginForm}">로그인</a>
-          </li>
-          <li sec:authorize="isAuthenticated()">
-            <span sec:authentication="name"></span>
-          </li>
-          <li sec:authorize="isAuthenticated()">
-            <a href="/">로그아웃</a>
-          </li>
-          <li>
-            <a href="/admin/main">관리자페이지</a>
-          </li>
-        </ul>
-      </div>
-    </section>
-  </div>
+      <section id="user-menu">
+        <!--유저메뉴-->
+        <div class="center">
+          <ul class="flex center">
+            <li class="join">
+              <button class="join-buttom" type="button"
+                      th:onclick="|location.href='@{/member/join}'|">
+                회원 가입!
+              </button>
+            </li>
+            <li>
+              <a th:href="@{/login/loginForm}">로그인</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+              <span sec:authentication="name"></span>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+              <a href="/">로그아웃</a>
+            </li>
+            <li>
+              <a href="/admin/main">관리자페이지</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
     <div>
       <!--메인메뉴-->
+      <ul class="flex center">
+        <li>
+          <a href="/air/list">항공권리스트</a>
+        </li>
+      </ul>
     </div>
+  </div>
 </div>
