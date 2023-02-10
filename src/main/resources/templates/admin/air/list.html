@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/admin-fragments/script :: script">
+
+</head>
+
+<body>
+<div th:replace="admin/admin-fragments/nav :: nav">
+</div>
+
+
+  <div>
+    상품리스트
+    <table>
+      <thead>
+        <tr>
+          <th>항공권상품번호</th>
+          <th>항공사코드</th>
+          <th>출발공항코드</th>
+          <th>도착공항코드</th>
+          <th>좌석등급코드</th>
+          <th>편명</th>
+          <th>출발시간</th>
+          <th>소요시간(분)</th>
+          <th>도착시간</th>
+          <th>가격</th>
+          <th>판매갯수</th>
+          <th>남은갯수</th>
+          <th>판매상태</th>
+          <th>등록자</th>
+          <th>등록일</th>
+          <th>수정자</th>
+          <th>수정일</th>
+        </tr>
+      </thead>
+            <tr th:each="list : ${list}">
+              <td>[[${list.ano}]]</td>
+              <td>[[${list.al_code}]]</td>
+              <td>[[${list.ar_from}]]</td>
+              <td>[[${list.ar_to}]]</td>
+              <td>[[${list.agop_code}]]</td>
+              <td>[[${list.ar_fl_no}]]</td>
+              <td>[[${list.ar_from_date}]]</td>
+              <td>[[${list.ar_time}]]</td>
+              <td>[[${list.ar_to_date}]]</td>
+              <td>[[${list.ar_price}]]</td>
+              <td>[[${list.ar_cnt}]]</td>
+              <td>[[${list.ar_res_cnt}]]</td>
+              <td>[[${list.ar_sales_state}]]</td>
+              <td>[[${list.in_user}]]</td>
+              <td>[[${list.in_date}]]</td>
+              <td>[[${list.up_user}]]</td>
+              <td>[[${list.up_date}]]</td>
+            </tr>
+    </table>
+  </div>
+
+
+</body>
+
+
+</html>
+
+
+
+
+

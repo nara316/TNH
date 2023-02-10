@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="go.travel.dnh.mapper.AdminAirProductMapper">
+    <select id="selectAllAirProduct" parameterType="map" resultType="AirProductDTO">
+        select ano, al_code, ar_from, ar_to, agop_code, ar_fl_no, ar_from_date, ar_time, ar_to_date, ar_price, ar_cnt,
+               ar_res_cnt, ar_sales_state, in_user, in_date, up_user, up_date
+        from air_product
+        order by ano
+    </select>
+<!--    <insert id="insert" parameterType="AirProductDTO">-->
+<!--        insert into air_product (ano, al_code, ar_from, ar_to, agop_code, ar_date, ar_fl_no, ar_time, ar_price, ar_cnt,-->
+<!--                                 ar_res_cnt, ar_sales_state, in_user,up_user)-->
+<!--        values (#{ano}, #{al_code}, #{ar_from}, #{ar_to}, #{agop_code}, #{ar_date}, #{ar_fl_no}, #{ar_time}, #{ar_price}, #{ar_cnt},-->
+<!--                #{ar_res_cnt}, #{ar_sales_state},#{in_user}, #{up_user})-->
+<!--    </insert>-->
+<!--    <update id="update" parameterType="AirProductDTO">-->
+<!--        update air_product-->
+<!--        set ar_price = #{ar_price}-->
+<!--          ,ar_sales_state = #{ar_sales_state}-->
+<!--          ,up_user = #{up_user}-->
+<!--          ,up_date = now()-->
+<!--        where ano = #{ano}-->
+<!--    </update>-->
+<!--    <delete id="delete" parameterType="String">-->
+<!--        delete from air_product where ano = #{ano}-->
+<!--    </delete>-->
+</mapper>
