@@ -12,10 +12,14 @@
 
 <div class="center view-size">
   <!--항공권 상품목록-->
+  <br>
+  <br>
+  <br>
   <div>
     <table style="justify-content: center; ">
       <thead>
       <tr>
+        <td>상품번호</td>
         <td>항공사이미지</td>
         <td>항공사이름</td>
         <td>출발공항</td>
@@ -29,7 +33,8 @@
         <td>남은수량</td>
       </tr>
       </thead>
-      <tr th:each="list : ${list}">
+      <tr th:each="list : ${list.list}">
+        <td>[[${list.ano}]]</td>
         <td>
           <img th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
         </td>
@@ -46,7 +51,29 @@
 
       </tr>
     </table>
-  </div>
+    <!--상품목록 끝-->
+
+    <div class="paging">
+    <!--페이징-->
+      <h1>페이징처리할거야</h1>
+
+
+    </div>
+
+
+    <div>
+      <br>
+      <h1>
+        pagination
+      </h1>
+      <p>전체 데이터 수 : [[${list.pagination.totalRecordCount}]]</p>
+      <p>전체 페이지 수 : [[${list.pagination.totalPageCount}]]</p>
+      <p>시작 페이지 : [[${list.pagination.startPage}]]</p>
+      <p>끝 페이지 : [[${list.pagination.endPage}]]</p>
+      <p>Limit 시작 : [[${list.pagination.limitStart}]]</p>
+      <p>이전 페이지 존재 여부 : [[${list.pagination.existPrevPage}]]</p>
+      <p>다음 페이지 존재 여부 : [[${list.pagination.existNextPage}]]</p>
+    </div>
 
 
 
@@ -55,7 +82,69 @@
 <div th:replace="fragments/footer :: footer">
 </div>
 
+</div>
 </body>
+
+<script th:inline="javascript">
+
+  window.onload = () => {
+    drawPage(pagination, params);
+  }
+
+  const pagination = [[ ${list.pagination} ]];
+  const params = [[ ${sch} ]];
+
+  // 페이지 HTML draw
+  function drawPage(pagination, params) {
+
+    if ( !pagination || !params ) {
+      document.querySelector('.paging').innerHTML = '';
+      throw new Error('Missing required parameters...');
+    }
+
+    let html = '';
+
+    // 첫 페이지, 이전 페이지
+    if (pagination.existPrevPage) {
+      html += `
+            <a href="javascript:void(0);" onclick="movePage(1)">첫 페이지</a>
+            <a href="javascript:void(0);" onclick="movePage( params.pageNum - 1)">이전 페이지</a>
+        `;
+    }
+
+    // 페이지 번호
+    html += '<p>';
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+      html += (i !== params.pageNum)
+              ? `<a href="javascript:void(0);" onclick="movePage(${i});">${i}</a>`
+              : `<span class="on">${i}</span>`
+    }
+    html += '</p>';
+
+    // 다음 페이지, 마지막 페이지
+    if (pagination.existNextPage) {
+      html += `
+            <a href="javascript:void(0);" onclick="movePage( params.pageNum + 1);" class="page_bt next">다음 페이지</a>
+            <a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">마지막 페이지</a>
+        `;
+    }
+
+    document.querySelector('.paging').innerHTML = html;
+  }
+
+
+  // 페이지 이동
+  function movePage(pageNum) {
+    const queryParams = {
+      pageNum: (pageNum) ? pageNum : 1,
+      amount: 5,
+      pageSize: 10
+    }
+    location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+  }
+
+  /*]]>*/
+</script>
 
 
 </html>
