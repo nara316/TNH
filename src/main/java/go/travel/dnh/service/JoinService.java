@@ -15,4 +15,6 @@ public interface JoinService {
 
     public void Sendmail(String mem_id);
 
+    public String sendPwdMail(String mem_id);
+
 }

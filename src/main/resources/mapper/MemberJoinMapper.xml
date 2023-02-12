@@ -13,4 +13,9 @@
         WHERE mem_id = #{mem_id};
     </select>
 
+    <update id="updatePwd" parameterType="map">
+        UPDATE member
+        SET mem_pwd = #{mem_pwd}
+        WHERE mem_id = #{mem_id};
+    </update>
 </mapper>
