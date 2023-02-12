@@ -9,4 +9,6 @@ public interface MemberJoinRepository {
 
     public int findMember(String mem_id);
 
+    public void updatePwd(String mem_id,String mem_pwd);
+
 }

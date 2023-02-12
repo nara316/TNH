@@ -74,6 +74,40 @@ public class JoinServiceImpl implements JoinService{
         System.out.println(answerNum);
     }
 
+    public String sendPwdMail(String mem_id){
+
+        String randomPwd = randomNum(); //인코딩 전 비밀번호
+        String mem_pwd;    // 인코딩 후 비밀번호
+
+        //이메일 보낼 문구
+//        String setFrom = "skfk6352@naver.com";
+//        String toMail = mem_id;
+//        String title = "바다이야기 임시 비밀번호 입니다.";
+//        String content =
+//                "임시 비밀번호는" + resultNum + "입니다." +
+//                        "<br>" +
+//                        "임시 비밀번호로 로그인한 뒤 반드시 마이페이지에서 비밀번호를 변경해주세요";
+//        try {
+//            MimeMessage message = mailSender.createMimeMessage();
+//            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+//            helper.setFrom(setFrom);
+//            helper.setTo(toMail);
+//            helper.setSubject(title);
+//            helper.setText(content,true);
+//            mailSender.send(message);
+//        }catch(Exception e) {
+//            e.printStackTrace();
+//        }
+        System.out.println("임시비밀번호" + randomPwd);
+
+        mem_pwd = bCryptPasswordEncoder.encode(randomPwd);        // 비밀번호 인코딩
+        memberJoinRepository.updatePwd(mem_id,mem_pwd);
+
+        return randomPwd;
+
+    }
+
+
     public String randomNum() {
         Random random = new Random();
         int num = 0;

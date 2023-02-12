@@ -12,7 +12,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/admin")
 public class MemberAdaminController {
 
     private final MemberAdminService memberAdminService;

@@ -61,4 +61,26 @@ public class JoinController {
     public int emailNumCheck(String checkInput){
         return joinService.mailNumCheck(checkInput);
     }
+
+    @GetMapping("/find")
+    public String pwdFind(String mem_id) {
+
+        return "member/pwdFindForm";
+    }
+
+    @PostMapping ("/find")
+    public String pwdFindPost(String mem_id) {
+
+        return "member/pwdFindForm";
+    }
+
+    //메일 보내면서 패스워드 바꾸는 메서드
+    @PostMapping("/pwdFind")
+    @ResponseBody
+    public String pwdFindEmail(String mem_id){
+
+        String randomPwd = joinService.sendPwdMail(mem_id);
+
+        return randomPwd;
+    }
 }
