@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.internet.MimeMessage;
 import java.util.Random;
@@ -25,6 +26,7 @@ public class JoinServiceImpl implements JoinService{
     private String rawPwd;
     private String encodePwd;
 
+    @Transactional
     public void joinMember(MemberjoinForm form){
 
         rawPwd = form.getMem_pwd();
@@ -40,6 +42,9 @@ public class JoinServiceImpl implements JoinService{
        memberDTO.setMem_birth(form.getMem_birth());
 
         memberJoinRepository.joinMember(memberDTO);
+
+        int mno = memberDTO.getMno();
+        memberJoinRepository.insertMemberRole(mno);
     }
 
     public int findMember(String mem_id){

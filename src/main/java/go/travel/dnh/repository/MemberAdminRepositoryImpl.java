@@ -17,4 +17,8 @@ public class MemberAdminRepositoryImpl implements MemberAdminRepository{
     public List<MemberDTO> getMemberList() {
         return memberAdminMapper.getMemberList();
     }
+
+    public void deleteMember(Integer mno){
+        memberAdminMapper.deleteMember(mno);
+    }
 }

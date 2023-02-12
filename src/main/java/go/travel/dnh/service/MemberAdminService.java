@@ -7,4 +7,5 @@ import java.util.List;
 public interface MemberAdminService {
 
     public List<MemberDTO> getMemberList();
+    public void deleteMember(Integer mno);
 }
