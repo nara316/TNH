@@ -1,6 +1,8 @@
 package go.travel.dnh.service;
 
 import go.travel.dnh.domain.air.AirProductDTO;
+import go.travel.dnh.domain.air.PagingResponse;
+import go.travel.dnh.domain.air.SearchDTO;
 
 import java.util.List;
 
@@ -16,5 +18,5 @@ public interface AirProductService {
 
     AirProductDTO read(Integer ano);
 
-    List<AirProductDTO> getList();
+    PagingResponse<AirProductDTO> getList(SearchDTO sch);
 }

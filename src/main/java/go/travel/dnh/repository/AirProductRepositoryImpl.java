@@ -1,11 +1,15 @@
 package go.travel.dnh.repository;
 
 import go.travel.dnh.domain.air.AirProductDTO;
+import go.travel.dnh.domain.air.Pagination;
+import go.travel.dnh.domain.air.PagingResponse;
+import go.travel.dnh.domain.air.SearchDTO;
 import go.travel.dnh.mapper.AdminAirProductMapper;
 import go.travel.dnh.mapper.AirProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -41,7 +45,18 @@ public class AirProductRepositoryImpl implements AirProductRepository{
     }
 
     @Override
-    public List<AirProductDTO> airProductList() {
-        return airProductMapper.selectPro();
+    public PagingResponse<AirProductDTO> airProductList(SearchDTO sch) {
+
+        int count = airProductMapper.count(sch);
+        if (count < 1) {
+            return new PagingResponse<>(Collections.emptyList(), null);
+        }
+
+        Pagination pagination = new Pagination(count, sch);
+        sch.setPagination(pagination);
+
+        List<AirProductDTO> list = airProductMapper.selectPro(sch);
+        return new PagingResponse<>(list, pagination);
+
     }
 }

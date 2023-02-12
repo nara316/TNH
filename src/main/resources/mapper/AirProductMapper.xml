@@ -41,8 +41,8 @@
         <collection property="airGradeOptionDTO" resultMap="AirGradeOptionDTO"/>
     </resultMap>
 
-    <select id="selectPro"  resultMap="AirProductDTO">
-        select p.ano ,(select al_logo_uri from air_line al where al.al_code = p.al_code) al_logo_uri
+    <sql id="productColumns">
+        p.ano ,(select al_logo_uri from air_line al where al.al_code = p.al_code) al_logo_uri
              ,(select al_logo_name from air_line al where al.al_code = p.al_code ) al_logo_name
              ,(select al_name from air_line al where al.al_code = p.al_code ) al_name
              ,(select ap_code_name from airport ap1 where ap1.ap_code = p.ar_from ) ar_from
@@ -50,9 +50,20 @@
              ,(select agop_name from air_grade_option ago where ago.agop_code = p.agop_code) agop_name
              ,p.ar_fl_no ,p.ar_from_date, p.ar_time, p.ar_to_date
              ,ar_price ,ar_res_cnt
+    </sql>
+    <!--상품 리스트 조회-->
+    <select id="selectPro" parameterType="SearchDTO" resultMap="AirProductDTO">
+        select
+            <include refid="productColumns"/>
         from air_product p
-        where p.ar_from_date > "2022-12-31 23:59:59" and p.ar_sales_state = 'Y'
-        order by p.ar_from_date ;
+        where p.ar_from_date > now() and p.ar_sales_state = 'Y'
+        order by p.ano
+        limit #{pagination.limitStart}, #{amount}
     </select>
 
+    <!--게시글 수 카운팅-->
+    <select id="count" parameterType="SearchDTO" resultType="int">
+        select COUNT(*)
+        from air_product
+    </select>
 </mapper>

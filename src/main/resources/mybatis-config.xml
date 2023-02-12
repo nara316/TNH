@@ -7,7 +7,9 @@
         <typeAlias alias="AirportDTO" type="go.travel.dnh.domain.air.AirportDTO"/>
         <typeAlias alias="AirlineDTO" type="go.travel.dnh.domain.air.AirlineDTO"/>
         <typeAlias alias="AirGradeOptionDTO" type="go.travel.dnh.domain.air.AirGradeOptionDTO"/>
+        <typeAlias alias="AirGradeOptionDTO" type="go.travel.dnh.domain.air.AirGradeOptionDTO"/>
         <typeAlias alias="AirProductDTO" type="go.travel.dnh.domain.air.AirProductDTO"/>
+        <typeAlias alias="SearchDTO" type="go.travel.dnh.domain.air.SearchDTO"/>
         <typeAlias alias="MemberDTO" type="go.travel.dnh.domain.member.MemberDTO"/>
         <typeAlias alias="User" type="go.travel.dnh.mapper.UserMapper"/>
     </typeAliases>
