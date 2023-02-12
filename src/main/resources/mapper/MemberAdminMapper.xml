@@ -4,9 +4,15 @@
 
 <mapper namespace="go.travel.dnh.mapper.MemberAdminMapper">
     <select id="getMemberList" resultType="MemberDTO">
-        select mno, mem_id, mem_pwd, mem_name, mem_phone, mem_gender, mem_birth, mem_in_date
-        from member
-        order by mno
+        select M.mno, M.mem_id, M.mem_pwd, M.mem_name, M.mem_phone, M.mem_gender, M.mem_birth, M.mem_in_date, MR.role_set
+        from member M
+        inner join member_role MR
+        on M.mno = MR.mno
+        order by M.mno
     </select>
+
+    <delete id="deleteMember">
+        delete from member where mno = #{mno}
+    </delete>
 
 </mapper>

@@ -21,5 +21,6 @@ public class MemberDTO {
     private Date mem_birth;
     private Date mem_in_date;
     private Date mem_up_date;
+    private String role_set;
 
 }

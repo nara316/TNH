@@ -11,7 +11,11 @@ public interface MemberJoinMapper {
 
     void insertMember(MemberDTO memberDTO);
 
+    void insertMemberRole(Integer mno);
+
     int findMember(String mem_id);
 
     void updatePwd(Map map);
+
+
 }

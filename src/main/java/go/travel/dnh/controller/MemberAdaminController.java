@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,4 +28,14 @@ public class MemberAdaminController {
 
         return "admin/member/list";
     }
+
+    @GetMapping("/memberList/{mno}")
+    public String remove(@PathVariable("mno") Integer mno) {
+
+        memberAdminService.deleteMember(mno);
+
+        return "redirect:/admin/memberList";
+    }
+
+
 }

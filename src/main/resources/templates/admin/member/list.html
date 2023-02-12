@@ -24,6 +24,7 @@
             <th>회원성별</th>
             <th>회원생년월일</th>
             <th>회원등록일</th>
+            <th>회원등급</th>
         </tr>
         </thead>
         <tr th:each="ml : ${memberList}">
@@ -35,6 +36,12 @@
             <td th:text="${ml.mem_gender}"></td>
             <td th:text="${ml.mem_birth}"></td>
             <td th:text="${ml.mem_in_date}"></td>
+            <td th:text="${ml.role_set}"></td>
+            </td>
+            <td>
+                <a th:href="@{/admin/memberList/{mno}(mno=${ml.mno})}">
+                    <button type="button">삭제</button>
+                </a>
             </td>
         </tr>
     </table>

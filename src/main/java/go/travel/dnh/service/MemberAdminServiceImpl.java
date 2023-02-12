@@ -18,4 +18,9 @@ public class MemberAdminServiceImpl implements MemberAdminService {
        List<MemberDTO> memberList = memberAdminRepository.getMemberList();
        return memberList;
     }
+
+    @Override
+    public void deleteMember(Integer mno){
+        memberAdminRepository.deleteMember(mno);
+    }
 }

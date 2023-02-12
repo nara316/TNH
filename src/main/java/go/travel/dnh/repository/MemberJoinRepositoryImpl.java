@@ -21,10 +21,16 @@ public class MemberJoinRepositoryImpl implements MemberJoinRepository {
     }
 
     @Override
+    public void insertMemberRole(Integer mno){
+        memberJoinMapper.insertMemberRole(mno);
+    }
+
+    @Override
     public int findMember(String mem_id){
         return memberJoinMapper.findMember(mem_id);
     }
 
+    @Override
     public void updatePwd(String mem_id,String mem_pwd){
         Map map = new HashMap();
         map.put("mem_id", mem_id);
