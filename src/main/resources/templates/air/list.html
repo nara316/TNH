@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/script :: script">
-
+<link rel="stylesheet" href="/css/air/air-list.css">
 </head>
 
 <body>
@@ -53,11 +53,8 @@
     </table>
     <!--상품목록 끝-->
 
-    <div class="paging">
+    <div class="paging flex center">
     <!--페이징-->
-      <h1>페이징처리할거야</h1>
-
-
     </div>
 
 
@@ -107,25 +104,28 @@
     // 첫 페이지, 이전 페이지
     if (pagination.existPrevPage) {
       html += `
-            <a href="javascript:void(0);" onclick="movePage(1)">첫 페이지</a>
-            <a href="javascript:void(0);" onclick="movePage( params.pageNum - 1)">이전 페이지</a>
+            <a href="javascript:void(0);" onclick="movePage(1)">&lt;&lt;&nbsp;</a>
+            <a href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})" class="page_bt prev">&lt;&nbsp;</a>
         `;
     }
 
     // 페이지 번호
     html += '<p>';
     for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+      if (pagination.endPage > pagination.totalPageCount) {
+        pagination.endPage = pagination.totalPageCount;
+      }
       html += (i !== params.pageNum)
-              ? `<a href="javascript:void(0);" onclick="movePage(${i});">${i}</a>`
-              : `<span class="on">${i}</span>`
+              ? `<a href="javascript:void(0);" onclick="movePage(${i});">&nbsp;${i}&nbsp;</a>`
+              : `<span class="on">&nbsp;${i}&nbsp;</span>`
     }
     html += '</p>';
 
     // 다음 페이지, 마지막 페이지
     if (pagination.existNextPage) {
       html += `
-            <a href="javascript:void(0);" onclick="movePage( params.pageNum + 1);" class="page_bt next">다음 페이지</a>
-            <a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">마지막 페이지</a>
+            <a href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next">&nbsp;&gt;&nbsp;</a>
+            <a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">&gt;&gt;</a>
         `;
     }
 
@@ -137,8 +137,8 @@
   function movePage(pageNum) {
     const queryParams = {
       pageNum: (pageNum) ? pageNum : 1,
-      amount: 5,
-      pageSize: 10
+      amount: 2,
+      pageSize: 5
     }
     location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
   }
