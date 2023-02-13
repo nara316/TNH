@@ -10,4 +10,6 @@ public interface MemberAdminRepository {
     public List<MemberDTO> getMemberList();
 
     public void deleteMember(Integer mno);
+
+    public void deleteMemberRole(Integer mno);
 }

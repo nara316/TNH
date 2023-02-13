@@ -13,4 +13,6 @@ public interface MemberAdminMapper {
 
     //회원 삭제
     public void deleteMember(Integer mno);
+
+    public void deleteMemberRole(Integer mno);
 }
