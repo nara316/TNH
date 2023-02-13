@@ -29,28 +29,22 @@ public class Pagination {
             sch.setPageNum(totalPageCount);
         }
 
+
+
         // 첫 페이지 번호 계산
-        startPage = ((sch.getPageNum() - 1) / sch.getPageNum()) * sch.getPageNum() + 1;
+        startPage = ((sch.getPageNum() - 1) / sch.getPageSize()) * sch.getPageSize() + 1;
 
         // 끝 페이지 번호 계산
-        endPage = totalPageCount;
+        endPage = startPage + sch.getPageSize() - 1;
 
         // LIMIT 시작 위치 계산
         limitStart = (sch.getPageNum() - 1) * sch.getAmount();
 
         // 이전 페이지 존재 여부 확인
-        if(sch.getPageNum() == 1) {
-            existPrevPage = false;
-        } else {
-            existPrevPage = true;
-        }
+        existPrevPage = startPage != 1;
 
         // 다음 페이지 존재 여부 확인
-        if(sch.getPageNum() < endPage ){
-            existNextPage = true;
-        } else {
-            existNextPage = false;
-        }
+        existNextPage = (endPage * sch.getAmount()) < totalRecordCount;
     }
 
 }
