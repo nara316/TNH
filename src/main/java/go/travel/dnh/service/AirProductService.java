@@ -19,4 +19,6 @@ public interface AirProductService {
     AirProductDTO read(Integer ano);
 
     PagingResponse<AirProductDTO> getList(SearchDTO sch);
+
+    PagingResponse<AirProductDTO> getSearchList(SearchDTO sch);
 }

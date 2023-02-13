@@ -1,6 +1,5 @@
 package go.travel.dnh.domain.air;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +10,12 @@ public class SearchDTO {
     private int pageNum;
     private int amount;
     private int pageSize;
-    private String keyword;
-    private String searchType;
+    private String fromDate;
+    private String toDate;
+    private String from;
+    private String to;
     private Pagination pagination;
+
 
     public SearchDTO(){
         this.pageNum = 1;

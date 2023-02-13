@@ -10,6 +10,11 @@ import java.util.List;
 public interface AirProductMapper {
     List<AirProductDTO> selectPro(SearchDTO sch);
 
+    List<AirProductDTO> searchAir(SearchDTO sch);
+
     int count(SearchDTO sch);
+
+    int searchCnt(SearchDTO sch);
+
 
 }
