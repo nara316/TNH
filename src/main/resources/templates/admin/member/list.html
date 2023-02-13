@@ -18,7 +18,6 @@
         <tr>
             <th>회원번호</th>
             <th>회원ID</th>
-            <th>회원PWD</th>
             <th>회원이름</th>
             <th>회원전화번호</th>
             <th>회원성별</th>
@@ -30,7 +29,6 @@
         <tr th:each="ml : ${memberList}">
             <td th:text="${ml.mno}"></td>
             <td th:text="${ml.mem_id}"></td>
-            <td th:text="${ml.mem_pwd}"></td>
             <td th:text="${ml.mem_name}"></td>
             <td th:text="${ml.mem_phone}"></td>
             <td th:text="${ml.mem_gender}"></td>

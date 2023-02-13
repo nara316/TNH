@@ -18,7 +18,13 @@ public class MemberAdminRepositoryImpl implements MemberAdminRepository{
         return memberAdminMapper.getMemberList();
     }
 
+    @Override
     public void deleteMember(Integer mno){
         memberAdminMapper.deleteMember(mno);
+    }
+
+    @Override
+    public void deleteMemberRole(Integer mno){
+        memberAdminMapper.deleteMemberRole(mno);
     }
 }
