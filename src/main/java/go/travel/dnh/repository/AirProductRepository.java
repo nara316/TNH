@@ -20,4 +20,6 @@ public interface AirProductRepository {
 
     PagingResponse<AirProductDTO> airProductList(SearchDTO sch);
 
+    PagingResponse<AirProductDTO> airProductSch(SearchDTO sch);
+
 }

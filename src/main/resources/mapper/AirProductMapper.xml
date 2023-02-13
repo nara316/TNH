@@ -51,7 +51,25 @@
              ,p.ar_fl_no ,p.ar_from_date, p.ar_time, p.ar_to_date
              ,ar_price ,ar_res_cnt
     </sql>
-    <!--상품 리스트 조회-->
+    <!--상품 리스트 검색 조회-->
+    <select id="searchAir" parameterType="SearchDTO" resultMap="AirProductDTO">
+        select
+        <include refid="productColumns"/>
+        from air_product p
+        where date_format(p.ar_from_date, '%Y-%m-%d') = date_format( #{fromDate}, '%Y-%m-%d')
+            and p.ar_from = #{from} and p.ar_to = #{to}
+        order by p.ano
+        limit #{pagination.limitStart}, #{amount}
+    </select>
+
+    <select id="searchCnt" parameterType="SearchDTO" resultType="int">
+        select COUNT(*)
+        from air_product
+        where date_format(ar_from_date, '%Y-%m-%d') = date_format( #{fromDate}, '%Y-%m-%d')
+          and ar_from = #{from} and ar_to = #{to}
+    </select>
+
+    <!--상품 리스트 전체 조회-->
     <select id="selectPro" parameterType="SearchDTO" resultMap="AirProductDTO">
         select
             <include refid="productColumns"/>

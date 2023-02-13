@@ -45,4 +45,9 @@ public class AirProductServiceImpl implements AirProductService{
     public PagingResponse<AirProductDTO> getList(SearchDTO sch) {
         return airProductRepository.airProductList(sch);
     }
+
+    @Override
+    public PagingResponse<AirProductDTO> getSearchList(SearchDTO sch) {
+        return airProductRepository.airProductSch(sch);
+    }
 }
