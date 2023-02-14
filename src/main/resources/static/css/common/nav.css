@@ -1,7 +1,9 @@
 .menu {
     background: #EAFBFB;
-    height: 120px;
-    line-height: 120px;
+}
+
+.menu ul li {
+    padding: 0 5px;
 }
 
 #logo{
@@ -9,4 +11,9 @@
 }
 
 #user-menu {
+    line-height: 80px;
+}
+
+#main-menu {
+    line-height: 80px;
 }
