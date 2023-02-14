@@ -3,37 +3,13 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/script :: script">
-<link rel="stylesheet" href="/css/air/air-list.css">
+  <link rel="stylesheet" href="/css/air/air-list.css">
 </head>
 
 <body>
 <div th:replace="fragments/nav :: nav">
 </div>
 
-<div class="center view-size">
-  <!--항공권 검색-->
-  <form th:action="@{/air/search}" method="post" >
-    <ul>
-      <li>
-        <label>출발 날짜</label>
-        <input type="date" th:name="fromDate" th:value="${sch.fromDate}"/>
-      </li>
-      <li>
-        <label>출발 공항 코드</label>
-        <input type="text" th:name="from" th:value="${sch.from}">
-      </li>
-      <Li>
-        <label>도착 공항 코드</label>
-        <input type="text" th:name="to" th:value="${sch.to}">
-      </Li>
-
-    </ul>
-
-
-    <input type="submit" value="검색">
-  </form>
-
-</div>
 
 <div class="center view-size">
   <!--항공권 상품목록-->
@@ -79,7 +55,7 @@
     <!--상품목록 끝-->
 
     <div class="paging flex center">
-    <!--페이징-->
+      <!--페이징-->
     </div>
 
 
@@ -99,10 +75,10 @@
 
 
 
-</div>
+  </div>
 
-<div th:replace="fragments/footer :: footer">
-</div>
+  <div th:replace="fragments/footer :: footer">
+  </div>
 
 </div>
 </body>
@@ -162,7 +138,7 @@
   function movePage(pageNum) {
     const queryParams = {
       pageNum: (pageNum) ? pageNum : 1,
-      amount: 2,
+      amount: 10,
       pageSize: 5
     }
     location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();

@@ -1,6 +1,7 @@
 package go.travel.dnh.service;
 
 import go.travel.dnh.domain.air.AirProductDTO;
+import go.travel.dnh.domain.air.AirportDTO;
 import go.travel.dnh.domain.air.PagingResponse;
 import go.travel.dnh.domain.air.SearchDTO;
 
@@ -20,5 +21,8 @@ public interface AirProductService {
 
     PagingResponse<AirProductDTO> getList(SearchDTO sch);
 
-    PagingResponse<AirProductDTO> getSearchList(SearchDTO sch);
+    PagingResponse<AirProductDTO> getSearchFromList(SearchDTO sch);
+    PagingResponse<AirProductDTO> getSearchToList(SearchDTO sch);
+
+    List<AirportDTO> getListAirport();
 }

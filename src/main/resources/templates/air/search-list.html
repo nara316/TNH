@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/script :: script">
+<link rel="stylesheet" href="/css/air/air-list.css">
+</head>
+
+<body>
+<div th:replace="fragments/nav :: nav">
+</div>
+
+<div class="center view-size">
+  <!--항공권 검색-->
+  <form th:action="@{/air/search}" method="post" >
+    <ul>
+      <li>
+        <label>가는날</label>
+        <input type="date" th:name="fromDate" th:value="${sch.fromDate}"/>
+      </li>
+      <li>
+        <label>오는날</label>
+        <input type="date" th:name="toDate" th:value="${sch.toDate}"/>
+      </li>
+      <li>
+        <label>출발지 선택</label>
+        <select th:field="*{sch.from}">
+          <option value="">출발지 선택</option>
+          <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                   th:utext="${list.ap_name}"></option>
+        </select>
+      </li>
+      <li>
+        <label>도착지 선택</label>
+        <select th:field="*{sch.to}">
+          <option value="">도착지 선택</option>
+          <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                   th:utext="${list.ap_name}"></option>
+        </select>
+      </li>
+      <li>
+        <label>인원</label>
+        <input type="number" th:name="ea" th:value="${sch.ea}">
+      </li>
+      <li>
+        <label>좌석등급</label>
+        <label>이코노미</label>
+        <input type="radio" th:value="A01" th:field="${sch.airGrade}">
+        <label>비즈니스</label>
+        <input type="radio" th:value="A02" th:field="${sch.airGrade}">
+      </li>
+    </ul>
+    <input type="submit" value="검색">
+  </form>
+</div>
+
+<div class="center view-size">
+  <!--항공권 상품목록-->
+  <br>
+  <br>
+  <br>
+  <div>
+    <h1>여행가기</h1>
+    <table style="justify-content: center; ">
+      <thead>
+      <tr>
+        <td>상품번호</td>
+        <td>항공사이미지</td>
+        <td>항공사이름</td>
+        <td>출발공항</td>
+        <td>도착공항</td>
+        <td>편명</td>
+        <td>출발날짜</td>
+        <td>도착날짜</td>
+        <td>소요시간</td>
+        <td>좌석등급</td>
+        <td>금액</td>
+        <td>남은수량</td>
+      </tr>
+      </thead>
+      <tr th:each="list : ${airFrom.list}">
+        <td>[[${list.ano}]]</td>
+        <td>
+          <img th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
+        </td>
+        <td>[[${list.airlineDTO.al_name}]]</td>
+        <td>[[${list.ar_from}]]</td>
+        <td>[[${list.ar_to}]]</td>
+        <td>[[${list.ar_fl_no}]]</td>
+        <td>[[${list.ar_from_date}]]</td>
+        <td>[[${list.ar_to_date}]]</td>
+        <td>[[${list.ar_time}]]</td>
+        <td>[[${list.airGradeOptionDTO.agop_name}]]</td>
+        <td>[[${list.ar_price}]]</td>
+        <td>잔여 [[${list.ar_res_cnt}]] 석 남음</td>
+
+      </tr>
+    </table>
+    <!--상품목록 끝-->
+
+    <div class="paging pagingFrom flex center">
+    <!--페이징-->
+
+    </div>
+
+
+
+
+  </div>
+
+  <div>
+    <h1>돌아오기</h1>
+    <table style="justify-content: center; ">
+      <thead>
+      <tr>
+        <td>상품번호</td>
+        <td>항공사이미지</td>
+        <td>항공사이름</td>
+        <td>출발공항</td>
+        <td>도착공항</td>
+        <td>편명</td>
+        <td>출발날짜</td>
+        <td>도착날짜</td>
+        <td>소요시간</td>
+        <td>좌석등급</td>
+        <td>금액</td>
+        <td>남은수량</td>
+      </tr>
+      </thead>
+      <tr th:each="list : ${airTo.list}">
+        <td>[[${list.ano}]]</td>
+        <td>
+          <img th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
+        </td>
+        <td>[[${list.airlineDTO.al_name}]]</td>
+        <td>[[${list.ar_from}]]</td>
+        <td>[[${list.ar_to}]]</td>
+        <td>[[${list.ar_fl_no}]]</td>
+        <td>[[${list.ar_from_date}]]</td>
+        <td>[[${list.ar_to_date}]]</td>
+        <td>[[${list.ar_time}]]</td>
+        <td>[[${list.airGradeOptionDTO.agop_name}]]</td>
+        <td>[[${list.ar_price}]]</td>
+        <td>잔여 [[${list.ar_res_cnt}]] 석 남음</td>
+
+      </tr>
+    </table>
+    <!--상품목록 끝-->
+
+    <div class="paging pagingTo flex center">
+      <!--페이징-->
+
+    </div>
+
+
+
+
+  </div>
+
+<div th:replace="fragments/footer :: footer">
+</div>
+
+</div>
+</body>
+
+<script th:inline="javascript">
+
+  window.onload = () => {
+    drawPage(pagination1, params);
+    drawPage(pagination2, params);
+  }
+
+  const pagination1 = [[ ${airFrom.pagination} ]];
+  const pagination2 = [[ ${airTo.pagination} ]];
+  const params = [[ ${sch} ]];
+
+  // 페이지 HTML draw
+  function drawPage(pagination, params) {
+
+    if ( !pagination || !params ) {
+      document.querySelector('.paging').innerHTML = '';
+      throw new Error('Missing required parameters...');
+    }
+
+    let html = '';
+
+    // 첫 페이지, 이전 페이지
+    if (pagination.existPrevPage) {
+      html += `
+            <a href="javascript:void(0);" onclick="movePage(1)">&lt;&lt;&nbsp;</a>
+            <a href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})" class="page_bt prev">&lt;&nbsp;</a>
+        `;
+    }
+
+    // 페이지 번호
+    html += '<p>';
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+      if (pagination.endPage > pagination.totalPageCount) {
+        pagination.endPage = pagination.totalPageCount;
+      }
+      html += (i !== params.pageNum)
+              ? `<a href="javascript:void(0);" onclick="movePage(${i});">&nbsp;${i}&nbsp;</a>`
+              : `<span class="on">&nbsp;${i}&nbsp;</span>`
+    }
+    html += '</p>';
+
+    // 다음 페이지, 마지막 페이지
+    if (pagination.existNextPage) {
+      html += `
+            <a href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next">&nbsp;&gt;&nbsp;</a>
+            <a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">&gt;&gt;</a>
+        `;
+    }
+    if(pagination == pagination1) {
+      document.querySelector('.pagingFrom').innerHTML = html;
+    } else  if (pagination == pagination2) {
+      document.querySelector('.pagingTo').innerHTML = html;
+    }
+  }
+
+
+  // 페이지 이동
+  function movePage(pageNum) {
+    const queryParams = {
+      pageNum: (pageNum) ? pageNum : 1,
+      amount: 10,
+      pageSize: 5
+    }
+    location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+  }
+
+  /*]]>*/
+</script>
+
+
+</html>

@@ -1,9 +1,6 @@
 package go.travel.dnh.repository;
 
-import go.travel.dnh.domain.air.AirProductDTO;
-import go.travel.dnh.domain.air.Pagination;
-import go.travel.dnh.domain.air.PagingResponse;
-import go.travel.dnh.domain.air.SearchDTO;
+import go.travel.dnh.domain.air.*;
 import go.travel.dnh.mapper.AdminAirProductMapper;
 import go.travel.dnh.mapper.AirProductMapper;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +58,7 @@ public class AirProductRepositoryImpl implements AirProductRepository{
     }
 
     @Override
-    public PagingResponse<AirProductDTO> airProductSch(SearchDTO sch) {
+    public PagingResponse<AirProductDTO> airProductSchFrom(SearchDTO sch) {
         int count = airProductMapper.searchCnt(sch);
 
         if (count < 1) {
@@ -70,7 +67,25 @@ public class AirProductRepositoryImpl implements AirProductRepository{
         Pagination pagination = new Pagination(count, sch);
         sch.setPagination(pagination);
 
-        List<AirProductDTO> list = airProductMapper.searchAir(sch);
+        List<AirProductDTO> list = airProductMapper.searchAirFrom(sch);
         return new PagingResponse<>(list, pagination);
+    }
+
+    @Override
+    public PagingResponse<AirProductDTO> airProductSchTo(SearchDTO sch) {
+        int count = airProductMapper.searchCnt(sch);
+
+        if (count < 1) {
+            return new PagingResponse<>(Collections.emptyList(), null);
+        }
+        Pagination pagination = new Pagination(count, sch);
+        sch.setPagination(pagination);
+
+        List<AirProductDTO> list = airProductMapper.searchAirTo(sch);
+        return new PagingResponse<>(list, pagination);
+    }
+    @Override
+    public List<AirportDTO> airportList() {
+        return airProductMapper.selectAP();
     }
 }

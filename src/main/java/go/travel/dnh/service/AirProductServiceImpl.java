@@ -1,6 +1,7 @@
 package go.travel.dnh.service;
 
 import go.travel.dnh.domain.air.AirProductDTO;
+import go.travel.dnh.domain.air.AirportDTO;
 import go.travel.dnh.domain.air.PagingResponse;
 import go.travel.dnh.domain.air.SearchDTO;
 import go.travel.dnh.repository.AirProductRepository;
@@ -47,7 +48,16 @@ public class AirProductServiceImpl implements AirProductService{
     }
 
     @Override
-    public PagingResponse<AirProductDTO> getSearchList(SearchDTO sch) {
-        return airProductRepository.airProductSch(sch);
+    public PagingResponse<AirProductDTO> getSearchFromList(SearchDTO sch) {
+        return airProductRepository.airProductSchFrom(sch);
+    }
+    @Override
+    public PagingResponse<AirProductDTO> getSearchToList(SearchDTO sch) {
+        return airProductRepository.airProductSchTo(sch);
+    }
+
+    @Override
+    public List<AirportDTO> getListAirport() {
+        return airProductRepository.airportList();
     }
 }
