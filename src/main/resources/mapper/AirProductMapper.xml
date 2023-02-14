@@ -52,12 +52,25 @@
              ,ar_price ,ar_res_cnt
     </sql>
     <!--상품 리스트 검색 조회-->
-    <select id="searchAir" parameterType="SearchDTO" resultMap="AirProductDTO">
+    <select id="searchAirFrom" parameterType="SearchDTO" resultMap="AirProductDTO">
         select
         <include refid="productColumns"/>
         from air_product p
         where date_format(p.ar_from_date, '%Y-%m-%d') = date_format( #{fromDate}, '%Y-%m-%d')
             and p.ar_from = #{from} and p.ar_to = #{to}
+            and p.ar_res_cnt > #{ea}
+            and p.agop_code = #{airGrade}
+        order by p.ano
+        limit #{pagination.limitStart}, #{amount}
+    </select>
+    <select id="searchAirTo" parameterType="SearchDTO" resultMap="AirProductDTO">
+        select
+        <include refid="productColumns"/>
+        from air_product p
+        where date_format(p.ar_to_date, '%Y-%m-%d') = date_format( #{toDate}, '%Y-%m-%d')
+        and p.ar_from = #{to} and p.ar_to = #{from}
+        and p.ar_res_cnt > #{ea}
+        and p.agop_code = #{airGrade}
         order by p.ano
         limit #{pagination.limitStart}, #{amount}
     </select>
@@ -84,4 +97,11 @@
         select COUNT(*)
         from air_product
     </select>
+    
+    <select id="selectAP" parameterType="map" resultMap="AirportDTO">
+        select ap_code,
+               ap_name, ap_code_name
+        from airport
+    </select>
+    
 </mapper>
