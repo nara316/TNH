@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="pwdFindScript">
+    <meta charset="UTF-8">
+    <style>
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script th:inline="javascript" >
+        /*<![CDATA[*/
+
+        // 비밀번호 초기화 이메일 전송 메서드
+        function EmailSend() {
+            let mem_id = $('.find_mem_id').val(); //등록한 이메일
+
+            $.ajax({
+                url : "/member/idCheck",
+                type : "POST",
+                data : {mem_id : mem_id},
+                success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다
+                    if(cnt == 0){ //cnt가 0이 아니면 회원이 있는 거다
+                        alert("존재하지 않는 아이디 입니다.");
+                        return false;
+                    } else { // cnt가 0이면 회원이 없는거다
+                        $.ajax({
+                            url: "/member/pwdFind",
+                            type: 'POST',
+                            data: { mem_id: mem_id },
+                            success: function(randomPwd) {
+                                if(randomPwd!=null){
+                                    alert("메일이 발송되었습니다. 임시 비밀번호로 로그인해주세요.");
+                                }
+                            }
+                        });
+                    }
+                },
+                error:function(){
+                    alert("에러입니다");
+                }
+            });
+        }; //EmailSend 메서드 종료
+
+        /*]]>*/
+    </script>
+</head>
+
+</html>
