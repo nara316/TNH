@@ -52,6 +52,7 @@
              ,ar_price ,ar_res_cnt
     </sql>
     <!--상품 리스트 검색 조회-->
+    <!--가는편-->
     <select id="searchAirFrom" parameterType="SearchDTO" resultMap="AirProductDTO">
         select
         <include refid="productColumns"/>
@@ -63,6 +64,7 @@
         order by p.ano
         limit #{pagination.limitStart}, #{amount}
     </select>
+    <!--오는편-->
     <select id="searchAirTo" parameterType="SearchDTO" resultMap="AirProductDTO">
         select
         <include refid="productColumns"/>
