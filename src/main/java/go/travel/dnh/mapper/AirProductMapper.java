@@ -20,5 +20,4 @@ public interface AirProductMapper {
 
     List<AirportDTO> selectAP();
 
-
 }

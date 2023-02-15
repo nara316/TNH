@@ -88,4 +88,5 @@ public class AirProductRepositoryImpl implements AirProductRepository{
     public List<AirportDTO> airportList() {
         return airProductMapper.selectAP();
     }
+
 }

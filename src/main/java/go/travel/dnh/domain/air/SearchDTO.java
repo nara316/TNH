@@ -12,8 +12,8 @@ public class SearchDTO {
     private int pageSize;
     private String fromDate;
     private String toDate;
-    private String from;
-    private String to;
+    private Integer from;
+    private Integer to;
     private Integer ea;
     private String airGrade;
     private Pagination pagination;

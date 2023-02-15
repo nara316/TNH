@@ -25,4 +25,5 @@ public interface AirProductService {
     PagingResponse<AirProductDTO> getSearchToList(SearchDTO sch);
 
     List<AirportDTO> getListAirport();
+
 }

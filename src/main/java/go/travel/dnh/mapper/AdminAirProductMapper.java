@@ -1,6 +1,7 @@
 package go.travel.dnh.mapper;
 
 import go.travel.dnh.domain.air.AirProductDTO;
+import go.travel.dnh.domain.air.SearchDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface AdminAirProductMapper {
 
     int delete(Integer ano);
     AirProductDTO select(Integer ano);
+
 }

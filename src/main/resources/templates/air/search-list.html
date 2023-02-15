@@ -60,15 +60,19 @@
   <br>
   <br>
   <div>
-    <h1>여행가기</h1>
-    <table style="justify-content: center; ">
+    <p>가는 항공편</p>
+    <div class="flex">
+      <p th:utext="${fromAP}"/>
+      <img src="/imgs/air/icon/airplane.png">
+      <p th:utext="${toAP}"/>
+    </div>
+  </div>
+  <div>
+    <table class="center view-size">
       <thead>
       <tr>
-        <td>상품번호</td>
-        <td>항공사이미지</td>
-        <td>항공사이름</td>
-        <td>출발공항</td>
-        <td>도착공항</td>
+        <td></td>
+        <td>항공사</td>
         <td>편명</td>
         <td>출발날짜</td>
         <td>도착날짜</td>
@@ -79,19 +83,16 @@
       </tr>
       </thead>
       <tr th:each="list : ${airFrom.list}">
-        <td>[[${list.ano}]]</td>
         <td>
-          <img th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
+          <img style="width: 32px;" th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
         </td>
         <td>[[${list.airlineDTO.al_name}]]</td>
-        <td>[[${list.ar_from}]]</td>
-        <td>[[${list.ar_to}]]</td>
         <td>[[${list.ar_fl_no}]]</td>
-        <td>[[${list.ar_from_date}]]</td>
-        <td>[[${list.ar_to_date}]]</td>
-        <td>[[${list.ar_time}]]</td>
+        <td th:text="${#temporals.format(list.ar_from_date, 'yy-MM-dd HH:mm')}"></td>
+        <td th:text="${#temporals.format(list.ar_to_date, 'yy-MM-dd HH:mm')}"></td>
+        <td th:text="${list.ar_time + '분'}"></td>
         <td>[[${list.airGradeOptionDTO.agop_name}]]</td>
-        <td>[[${list.ar_price}]]</td>
+        <td th:text="${#numbers.formatInteger(list.ar_price, 3, 'COMMA') + '원'}"></td>
         <td>잔여 [[${list.ar_res_cnt}]] 석 남음</td>
 
       </tr>
@@ -109,15 +110,19 @@
   </div>
 
   <div>
-    <h1>돌아오기</h1>
-    <table style="justify-content: center; ">
+    <div>
+      <p>오는 항공편</p>
+      <div class="flex">
+        <p th:utext="${toAP}"/>
+        <img src="/imgs/air/icon/airplane.png">
+        <p th:utext="${fromAP}"/>
+      </div>
+    </div>
+    <table class="center view-size">
       <thead>
       <tr>
-        <td>상품번호</td>
-        <td>항공사이미지</td>
-        <td>항공사이름</td>
-        <td>출발공항</td>
-        <td>도착공항</td>
+        <td></td>
+        <td>항공사</td>
         <td>편명</td>
         <td>출발날짜</td>
         <td>도착날짜</td>
@@ -128,20 +133,18 @@
       </tr>
       </thead>
       <tr th:each="list : ${airTo.list}">
-        <td>[[${list.ano}]]</td>
-        <td>
-          <img th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
+        <td class="al-logo">
+          <img style="width: 32px;"  th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
         </td>
         <td>[[${list.airlineDTO.al_name}]]</td>
-        <td>[[${list.ar_from}]]</td>
-        <td>[[${list.ar_to}]]</td>
         <td>[[${list.ar_fl_no}]]</td>
-        <td>[[${list.ar_from_date}]]</td>
-        <td>[[${list.ar_to_date}]]</td>
-        <td>[[${list.ar_time}]]</td>
+        <td th:text="${#temporals.format(list.ar_from_date, 'yy-MM-dd HH:mm')}"></td>
+        <td th:text="${#temporals.format(list.ar_to_date, 'yy-MM-dd HH:mm')}"></td>
+        <td th:text="${list.ar_time + '분'}"></td>
         <td>[[${list.airGradeOptionDTO.agop_name}]]</td>
-        <td>[[${list.ar_price}]]</td>
+        <td th:text="${#numbers.formatInteger(list.ar_price, 3, 'COMMA') + '원'}"></td>
         <td>잔여 [[${list.ar_res_cnt}]] 석 남음</td>
+        <td></td>
 
       </tr>
     </table>

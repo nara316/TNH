@@ -43,15 +43,32 @@ public class AirController {
     public String air_search(@ModelAttribute("sch") final SearchDTO sch, HttpServletResponse res, Model m) throws IOException {
         PagingResponse<AirProductDTO> listFrom = airProductService.getSearchFromList(sch);
         PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
-        if(listFrom.getList().isEmpty()) {
+        List<AirportDTO> airportList = airProductService.getListAirport();
+        if(listFrom.getList().isEmpty() || listTo.getList().isEmpty()) {
             res.setContentType("text/html; charset=UTF-8");
             PrintWriter out = res.getWriter();
             out.println("<script>alert('해당 항공편은 존재하지 않습니다. 다시 검색해주세요'); </script>");
             out.flush();
-            return "air/list";
+            m.addAttribute("airport",airportList);
+            return "air/search";
         }
         m.addAttribute("airFrom", listFrom);
         m.addAttribute("airTo", listTo);
+        m.addAttribute("airport",airportList);
+
+        //여기 너무 하드코딩인데 바꾸고 십어요
+        String from = "";
+        String to = "";
+        for (int i = 0; i < airportList.size(); i++) {
+            if(sch.getFrom().equals(airportList.get(i).getAp_code())){
+                from = airportList.get(i).getAp_name();
+            } else if(sch.getTo().equals(airportList.get(i).getAp_code())){
+                to = airportList.get(i).getAp_name();
+            }
+        }
+        m.addAttribute("fromAP",from);
+        m.addAttribute("toAP",to);
+
         return "air/search-list";
     }
     @GetMapping("/search-list")
@@ -59,11 +76,11 @@ public class AirController {
         PagingResponse<AirProductDTO> listFrom = airProductService.getSearchFromList(sch);
         PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
         List<AirportDTO> airportList = airProductService.getListAirport();
+
         m.addAttribute("airFrom", listFrom);
         m.addAttribute("airTo", listTo);
         m.addAttribute("airport",airportList);
-        System.out.println(airportList);
-        return "air/search-list";
+        return "redirect:/air/search-list";
     }
 
 
