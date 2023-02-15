@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="orderScript">
+    <meta charset="UTF-8">
+    <style>
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <script th:inline="javascript">
+
+        const IMP = window.IMP; // 생략 가능
+        IMP.init("imp11477517");
+
+        /*<![CDATA[*/
+
+        function requestPay() {
+            IMP.request_pay({
+                pg: "inicis",
+                pay_method: "card",
+                merchant_uid: "ORD20180131-0000011",   // 주문번호
+                name: "노르웨이 회전 의자",
+                amount: 64900,                         // 숫자 타입
+                buyer_email: "gildong@gmail.com",
+                buyer_name: "홍길동",
+                buyer_tel: "010-4242-4242",
+                buyer_addr: "서울특별시 강남구 신사동",
+                buyer_postcode: "01181"
+            }, function (rsp) { // callback
+                if (rsp.success) {
+                   console.log("성공")
+                } else {
+                   console.log("실패")
+                }
+            });
+        }
+
+
+        /*]]>*/
+    </script>
+</head>
+
+</html>
