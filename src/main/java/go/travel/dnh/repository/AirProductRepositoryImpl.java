@@ -59,7 +59,7 @@ public class AirProductRepositoryImpl implements AirProductRepository{
 
     @Override
     public PagingResponse<AirProductDTO> airProductSchFrom(SearchDTO sch) {
-        int count = airProductMapper.searchCnt(sch);
+        int count = airProductMapper.searchCntFrom(sch);
 
         if (count < 1) {
             return new PagingResponse<>(Collections.emptyList(), null);
@@ -73,7 +73,7 @@ public class AirProductRepositoryImpl implements AirProductRepository{
 
     @Override
     public PagingResponse<AirProductDTO> airProductSchTo(SearchDTO sch) {
-        int count = airProductMapper.searchCnt(sch);
+        int count = airProductMapper.searchCntTo(sch);
 
         if (count < 1) {
             return new PagingResponse<>(Collections.emptyList(), null);

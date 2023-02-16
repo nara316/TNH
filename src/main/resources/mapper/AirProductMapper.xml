@@ -76,12 +76,22 @@
         order by p.ano
         limit #{pagination.limitStart}, #{amount}
     </select>
-
-    <select id="searchCnt" parameterType="SearchDTO" resultType="int">
+    <!--검색 카운트-->
+    <!--가는편-->
+    <select id="searchCntFrom" parameterType="SearchDTO" resultType="int">
         select COUNT(*)
         from air_product
         where date_format(ar_from_date, '%Y-%m-%d') = date_format( #{fromDate}, '%Y-%m-%d')
           and ar_from = #{from} and ar_to = #{to}
+          and agop_code = #{airGrade}
+    </select>
+    <!--오는편-->
+    <select id="searchCntTo" parameterType="SearchDTO" resultType="int">
+        select COUNT(*)
+        from air_product
+        where date_format(ar_from_date, '%Y-%m-%d') = date_format( #{toDate}, '%Y-%m-%d')
+          and ar_from = #{to} and ar_to = #{from}
+          and agop_code = #{airGrade}
     </select>
 
     <!--상품 리스트 전체 조회-->

@@ -1,21 +1,16 @@
 package go.travel.dnh.controller;
 
-import go.travel.dnh.domain.air.AirProductDTO;
-import go.travel.dnh.domain.air.AirportDTO;
-import go.travel.dnh.domain.air.PagingResponse;
-import go.travel.dnh.domain.air.SearchDTO;
+import go.travel.dnh.domain.air.*;
 import go.travel.dnh.service.AirProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -82,6 +77,21 @@ public class AirController {
         m.addAttribute("airport",airportList);
         return "redirect:/air/search-list";
     }
+
+    @GetMapping("/res-check")
+
+    public String check(@RequestParam("airFromCheck") String fromCheck, @RequestParam("airToCheck") String toCheck,
+                            @RequestParam("eaa") String eaa) {
+
+        System.out.println("from ano : "+fromCheck);
+        System.out.println("to ano : "+toCheck);
+        System.out.println("ea : "+eaa);
+
+
+
+        return "air/reservation";
+    }
+
 
 
 }

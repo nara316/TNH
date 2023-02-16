@@ -16,7 +16,8 @@ public interface AirProductMapper {
 
     int count(SearchDTO sch);
 
-    int searchCnt(SearchDTO sch);
+    int searchCntFrom(SearchDTO sch);
+    int searchCntTo(SearchDTO sch);
 
     List<AirportDTO> selectAP();
 
