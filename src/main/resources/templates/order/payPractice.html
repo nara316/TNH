@@ -11,8 +11,7 @@
 
         /*<![CDATA[*/
         let merchant_uid = [[${list.rno}]];
-        let total_price = [[${list.arp_count}]]*[[${list.arp_price}]];
-        let name = [[${list.ano}]]
+        let amount = [[${list.arp_count}]]*[[${list.arp_price}]];
         /*]]>*/
         IMP.init("imp11477517");
 
@@ -23,7 +22,7 @@
                 pay_method : 'card',
                 merchant_uid: merchant_uid, //주문번호
                 name : name,
-                amount : total_price, //숫자타입 (금액)
+                amount : amount, //숫자타입 (금액)
             }, function (rsp) { // callback
                 if (rsp.success) {
                     console.log(rsp);
@@ -32,14 +31,12 @@
                     $.ajax({
                         url: "/order/payment/complete",
                         method: "POST",
-                        // headers: { "Content-Type": "application/json" },
                         data: {
-                            imp_uid: rsp.imp_uid,            // 결제 고유번호 (알아서 생성되는 것 같다????)
-                            merchant_uid: rsp.merchant_uid   // 주문번호
+                            imp_uid: rsp.imp_uid,            // 결제 고유번호 (알아서 생성된다.)
+                            merchant_uid: rsp.merchant_uid,  // 주문번호
                         }
                     }).done(function (data) {
                         // 가맹점 서버 결제 API 성공시 로직
-                        //messageSend();
                         swal({
                             text: data,
                             closeOnClickOutside: false
@@ -50,7 +47,7 @@
                     })//done
                         .fail(function (data){
                             alert("결제가 실패하였습니다.");
-                            location.replace("/");
+                            //location.replace("/");
                         })
                 } else {
                     //실패 로직
