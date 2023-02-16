@@ -9,4 +9,6 @@ import java.util.List;
 public interface ReservationMapper {
 
     public List<ReservationDTO> getReservationList();
+
+    public ReservationDTO getReservation(int rno);
 }

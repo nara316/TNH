@@ -17,4 +17,9 @@ public class ReservationRepositoryImpl implements ReservationRepository{
     public List<ReservationDTO> getReservationList() {
         return reservationMapper.getReservationList();
     }
+
+    @Override
+    public ReservationDTO getReservation(int rno){
+        return reservationMapper.getReservation(rno);
+    }
 }

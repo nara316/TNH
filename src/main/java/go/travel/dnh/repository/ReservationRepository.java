@@ -8,4 +8,6 @@ public interface ReservationRepository {
 
     public List<ReservationDTO> getReservationList();
 
+    public ReservationDTO getReservation(int rno);
+
 }
