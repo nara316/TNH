@@ -23,14 +23,13 @@ public class MemberAdaminController {
     public String getMemberList(Model model){
         List<MemberDTO> memberList = memberAdminService.getMemberList();
 
-        //model.addAttribute("title", "회원목록조회");
         model.addAttribute("memberList", memberList);
 
         return "admin/member/list";
     }
 
     @GetMapping("/memberList/{mno}")
-    public String remove(@PathVariable("mno") Integer mno) {
+    public String remove(@PathVariable("mno") Integer mno, Model model) {
 
         memberAdminService.deleteMember(mno);
 

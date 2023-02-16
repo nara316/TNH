@@ -7,8 +7,14 @@
     <select id="getReservationList" resultType="ReservationDTO">
         select rno, ano, mno, arp_count, arp_price, arp_date
         from reservation
-        order by rno
+        order by rno;
     </select>
 
+    <!--예약 단건 조회-->
+    <select id="getReservation" parameterType="int" resultType="ReservationDTO">
+        select rno, ano, mno, arp_count, arp_price, arp_date
+        from reservation
+        where rno = #{rno};
+    </select>
 
 </mapper>

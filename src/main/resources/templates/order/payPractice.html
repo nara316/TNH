@@ -9,15 +9,21 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
 
+        /*<![CDATA[*/
+        let merchant_uid = [[${list.rno}]];
+        let total_price = [[${list.arp_count}]]*[[${list.arp_price}]];
+        let name = [[${list.ano}]]
+        /*]]>*/
+        IMP.init("imp11477517");
+
         function requestPay() {
-            IMP.init("imp11477517");
             IMP.request_pay({
                 //Name과 amount 만 있어도 결제 진행 가능
                 pg : 'kcp',
                 pay_method : 'card',
-                merchant_uid: "570191920230", //주문번호
-                name : '당근 10kg',
-                amount : 500, //숫자타입 (금액)
+                merchant_uid: merchant_uid, //주문번호
+                name : name,
+                amount : total_price, //숫자타입 (금액)
             }, function (rsp) { // callback
                 if (rsp.success) {
                     console.log(rsp);
@@ -26,7 +32,7 @@
                     $.ajax({
                         url: "/order/payment/complete",
                         method: "POST",
-                       // headers: { "Content-Type": "application/json" },
+                        // headers: { "Content-Type": "application/json" },
                         data: {
                             imp_uid: rsp.imp_uid,            // 결제 고유번호 (알아서 생성되는 것 같다????)
                             merchant_uid: rsp.merchant_uid   // 주문번호
@@ -72,19 +78,17 @@
             <th>총금액</th>
         </tr>
         </thead>
-        <tr th:each="rl : ${reservationList}">
-            <td th:text="${rl.rno}"></td>
-            <td th:text="${rl.ano}"></td>
-            <td th:text="${rl.mno}"></td>
-            <td th:text="${rl.arp_count}"></td>
-            <td th:text="${rl.arp_price}"></td>
-            <td th:text="${rl.arp_date}"></td>
-            <td th:text="${rl.arp_count}*${rl.arp_price}"></td>
+        <tr>
+            <td th:value="${list.rno}" th:text="${list.rno}"></td>
+            <td th:value="${list.ano}" th:text="${list.ano}"></td>
+            <td th:value="${list.mno}" th:text="${list.mno}"></td>
+            <td th:value="${list.arp_count}" th:text="${list.arp_count}"></td>
+            <td th:value="${list.arp_price}" th:text="${list.arp_price}"></td>
+            <td th:value="${list.arp_date}" th:text="${list.arp_date}"></td>
+            <td th:value="${list.arp_count}*${list.arp_price}" th:text="${list.arp_count}*${list.arp_price}"></td>
             </td>
             <td>
-            <a th:href="@{/order/orderList/{rno}(rno=${rl.rno})}">
-                <button type="button">결제하기</button>
-            </a>
+                <button onclick="requestPay()">결제하기</button>
             </td>
         </tr>
     </table>

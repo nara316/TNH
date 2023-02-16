@@ -1,5 +1,6 @@
 package go.travel.dnh.controller;
 
+import go.travel.dnh.domain.air.AirProductDTO;
 import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.domain.reservation.UIDDTO;
 import go.travel.dnh.service.PaymentService;
@@ -9,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -26,7 +24,10 @@ public class OrderController {
     private final ReservationService reservationService;
     private final PaymentService paymentService;
 
-    @GetMapping("/order")
+    private int orderPriceCheck;
+
+    //예약리스트 보여주는 메서드
+    @GetMapping("/orderList")
     public String orderForm(Model model) {
         List<ReservationDTO> reservationList = reservationService.getReservationList();
 
@@ -34,6 +35,16 @@ public class OrderController {
 
         return "order/practice";
     }
+
+    //예약상세로 가는 메서드
+    @GetMapping("/orderList/{rno}")
+    public String payPractice(@PathVariable("rno") Integer rno, Model model) {
+        ReservationDTO rev = reservationService.getReservation(rno);
+        orderPriceCheck = rev.getArp_price()* rev.getArp_count();
+        model.addAttribute("list",rev);
+        return "order/payPractice";
+    }
+
 
     //카드결제 성공 후
     @PostMapping("/payment/complete")
@@ -50,8 +61,6 @@ public class OrderController {
 
         //DB에서 실제 계산되어야 할 가격 가져오기
         try {
-
-            long orderPriceCheck = 1200;
 
             // 계산 된 금액과 실제 금액이 다를 때
             if (orderPriceCheck != amount) {
