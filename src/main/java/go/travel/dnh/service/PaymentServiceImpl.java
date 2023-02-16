@@ -3,12 +3,18 @@ package go.travel.dnh.service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import go.travel.dnh.domain.member.MemberDTO;
+import go.travel.dnh.domain.pay.PayDTO;
+import go.travel.dnh.domain.reservation.ReservationDTO;
+import go.travel.dnh.repository.PaymentRepository;
+import go.travel.dnh.repository.ReservationRepository;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -36,6 +42,9 @@ public class PaymentServiceImpl implements PaymentService{
     private class PaymentInfo{
         private int amount;
     }
+
+    private final PaymentRepository paymentRepository;
+    private final ReservationRepository reservationRepository;
 
 
     @Override
@@ -139,5 +148,23 @@ public class PaymentServiceImpl implements PaymentService{
 
         br.close();
         conn.disconnect();
+    }
+
+    @Override
+    @Transactional
+    public void insertPay(String imp_uid,int merchant_uid,int totalPrice) {
+
+        ReservationDTO dto = reservationRepository.getReservation(merchant_uid);
+        System.out.println(dto);
+
+        PayDTO payDTO = new PayDTO();
+        payDTO.setPno(imp_uid);
+        payDTO.setRno(dto.getRno());
+        payDTO.setMno(dto.getMno());
+        payDTO.setPay_tot_price(totalPrice);
+
+        System.out.println("진입성공6");
+        System.out.println(payDTO);
+        paymentRepository.insertPay(payDTO);
     }
 }

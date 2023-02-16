@@ -1,8 +1,6 @@
 package go.travel.dnh.controller;
 
-import go.travel.dnh.domain.air.AirProductDTO;
 import go.travel.dnh.domain.reservation.ReservationDTO;
-import go.travel.dnh.domain.reservation.UIDDTO;
 import go.travel.dnh.service.PaymentService;
 import go.travel.dnh.service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,7 @@ public class OrderController {
     private final ReservationService reservationService;
     private final PaymentService paymentService;
 
-    private int orderPriceCheck;
+    private int totalPrice;
 
     //예약리스트 보여주는 메서드
     @GetMapping("/orderList")
@@ -40,7 +38,7 @@ public class OrderController {
     @GetMapping("/orderList/{rno}")
     public String payPractice(@PathVariable("rno") Integer rno, Model model) {
         ReservationDTO rev = reservationService.getReservation(rno);
-        orderPriceCheck = rev.getArp_price()* rev.getArp_count();
+        totalPrice = rev.getArp_price() * rev.getArp_count();
         model.addAttribute("list",rev);
         return "order/payPractice";
     }
@@ -49,25 +47,25 @@ public class OrderController {
     //카드결제 성공 후
     @PostMapping("/payment/complete")
     @ResponseBody
-    public ResponseEntity<String> paymentComplete(String imp_uid) throws IOException {
+    public ResponseEntity<String> paymentComplete(String imp_uid,int merchant_uid) throws IOException {
 
-        System.out.println(imp_uid);
         //1. 아임포트 API키와 SECRET키로 토큰을 생성
         String token = paymentService.getToken();
 
-        System.out.println("토큰: " + token);
         //토큰으로 결제 완료된 주문정보를 가져온다.
         int amount = paymentService.paymentInfo(imp_uid, token);
 
+
         //DB에서 실제 계산되어야 할 가격 가져오기
         try {
-
             // 계산 된 금액과 실제 금액이 다를 때
-            if (orderPriceCheck != amount) {
+            if (totalPrice != amount) {
                 paymentService.paymentCancle(token,imp_uid, amount, "결제 금액 오류");
                 return new ResponseEntity<String>("결제 금액 오류, 결제 취소", HttpStatus.BAD_REQUEST);
             }
 
+            //int rno = merchant_uid;
+            paymentService.insertPay(imp_uid,merchant_uid,totalPrice);
             return new ResponseEntity<>("결제가 완료되었습니다.", HttpStatus.OK);
 
         } catch (Exception e) {

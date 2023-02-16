@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="go.travel.dnh.mapper.PaymentMapper">
+    <!--결제완료건 insert-->
+    <insert id="insert" parameterType="go.travel.dnh.domain.pay.PayDTO">
+        insert into Pay (pno, rno, mno, pay_tot_price, pay_date)
+        values ( #{pno},#{rno},#{mno},#{pay_tot_price}, now());
+    </insert>
+
+
+
+</mapper>
