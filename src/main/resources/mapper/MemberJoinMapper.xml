@@ -3,21 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="go.travel.dnh.mapper.MemberJoinMapper">
+    <!--회원DB insert-->
     <insert id="insertMember" parameterType="go.travel.dnh.domain.member.MemberDTO" useGeneratedKeys="true" keyProperty="mno">
         INSERT INTO member (mem_id, mem_pwd, mem_name, mem_phone, mem_gender, mem_birth, mem_in_date, mem_up_date)
         VALUES ( #{mem_id}, #{mem_pwd}, #{mem_name}, #{mem_phone}, #{mem_gender}, #{mem_birth}, now(), now());
     </insert>
 
+    <!--회원등급 insert-->
     <insert id="insertMemberRole" parameterType="Integer">
         insert into member_role (mno)
         values (#{mno});
     </insert>
 
+    <!--아이디 기반 회원 찾기-->
     <select id="findMember" parameterType="String" resultType="int">
         select count(mem_id) from member
         WHERE mem_id = #{mem_id};
     </select>
 
+    <!--패스워드 초기화-->
     <update id="updatePwd" parameterType="map">
         UPDATE member
         SET mem_pwd = #{mem_pwd}
