@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 여기에 공통 적용할 css 및 js 등등 입력하면 됩니다-->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+        function preventEvent() {
+            window.alert("회원정보를 먼저 입력해주세요.")
+        }
+        function check(){
+            //생년월일 정규식 체크
+            let birth = $('#mem_birth').val();
+            let birthPattern = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/
+            let birthChkMsg = $('.birthChk_msg');
+
+
+            let phone = $('#mem_phone').val();
+            let phonePattern = /^[0-9]{10,11}$/
+            let phoneChkMsg = $('.phoneChk_msg');
+
+
+            if(!phonePattern.test(phone)){
+                phoneChkMsg.html("전화번호는 10~11 길이의 숫자로 입력해주세요.");
+                return false;
+            } else {
+                phoneChkMsg.css("display", "none");
+            }
+
+            if(!birthPattern.test(birth)){
+                birthChkMsg.html("생년월일을 형식에 맞게 입력해주세요. ex) 1900-01-01");
+                return false;
+            } else {
+                birthChkMsg.css("display", "none");
+            }
+
+            return true;
+        };
+    </script>
+</head>
+
+<body>
+<section>
+    <!--top logo-->
+    <div id="logo" class="disable">
+        <a href="#" class="flex">
+            <img onclick="preventEvent()" src="/imgs/logo.png" style="width:120px; height:80px;">
+        </a>
+    </div>
+</section>
+<div>
+    <h2>회원 정보수정</h2>
+    <form th:object="${memberDTO}" method="post">
+        <div>
+            아이디<input type="text" th:placeholder="${session.socialEmail}" th:value="${session.socialEmail}" name="mem_id" id="mem_id" readonly>
+        </div><br>
+        <div>
+           비밀번호<input type="text" th:placeholder="${session.socialPwd}" th:value="${session.socialPwd}" name="mem_pwd" id="mem_pwd" readonly>
+        </div><br>
+        <div>
+            이름<input type="text" th:placeholder="${session.socialName}"  th:value="${session.socialName}" name="mem_name" id="mem_name" readonly>
+            <span class="nameChk_msg"></span>
+        </div><br>
+        <div>
+            핸드폰번호<input th:field="*{mem_phone}" id="mem_phone"></input>
+            <span class="phoneChk_msg"></span>
+        </div><br>
+        <div>
+            생년월일<input th:field="*{mem_birth}" id="mem_birth" ></input>
+            <span class="birthChk_msg"></span>
+        </div><br>
+        <div>
+            성별
+            <label><input type="radio" checked="checked" name="mem_gender" value="남"/>남</label>
+            <label><input type="radio" name="mem_gender" value="여"/>녀</label>
+        </div><br>
+        <button onclick="return check()"> </button>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer">
+</div>
+
+</body>
+
+
+</html>

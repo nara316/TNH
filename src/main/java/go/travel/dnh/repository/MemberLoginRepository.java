@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MemberLoginRepository {
     //로그인
     public MemberDTO findByMember(MemberDTO memberDTO);
-    public MemberDTO findById(MemberDTO memberDTO);
+    public MemberDTO findById(String mem_id);
 
 }

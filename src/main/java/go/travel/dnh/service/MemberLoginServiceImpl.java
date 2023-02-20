@@ -23,10 +23,12 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
     @Override
     public MemberDTO findById(MemberDTO memberDTO) {
-        if (memberDTO != null) {
-            return memberDTO;
-        }
-        return null;
+        return memberLoginRepository.findByMember(memberDTO);
+    }
+
+    @Override
+    public MemberDTO findById(String mem_id) {
+        return memberLoginRepository.findById(mem_id);
     }
 
 }

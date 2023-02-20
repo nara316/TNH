@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="go.travel.dnh.mapper.UserMapper">
-    <select id="readUser" parameterType="int" resultType="User">
-        SELECT * FROM user WHERE mno = #{mno}
+    <select id="readUser" parameterType="int" resultType="LoginUser">
+        SELECT * FROM member WHERE mno = #{mno}
     </select>
-
-    <select id="readAuthority" parameterType="int" resultType="String">
+    <select id="readAuthority" parameterType="int" resultType="org.springframework.security.core.authority.SimpleGrantedAuthority">
         SELECT role_set FROM member_role WHERE mno = #{mno}
     </select>
     <select id="findByMnoFromId" parameterType="String" resultType="int">
         select mno from member where mem_id = #{mem_id}
+    </select>
+    <select id="findById" parameterType="String" resultType="LoginUser">
+        select * from member where mem_id = #{mem_id}
+    </select>
+    <select id="existByUsername" parameterType="String" resultType="boolean">
+        select * from member where mem_id = #{mem_id}
     </select>
 </mapper>

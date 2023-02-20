@@ -5,21 +5,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class MemberLoginRepositoryImpl implements MemberLoginRepository {
+    private final MemberLoginRepository memberLoginRepository;
 
     @Override
     public MemberDTO findByMember(MemberDTO memberDTO) {
-        if(memberDTO!=null) {
-            return memberDTO;
-        }
-        return null;
+        return memberLoginRepository.findByMember(memberDTO);
     }
 
     @Override
-    public MemberDTO findById(MemberDTO memberDTO) {
-        if(memberDTO!=null) {
-            return memberDTO;
-        }
-        return null;
+    public MemberDTO findById(String mem_id) {
+        return memberLoginRepository.findById(mem_id);
     }
 }

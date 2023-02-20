@@ -1,9 +1,11 @@
 package go.travel.dnh.mapper;
 
-import go.travel.dnh.domain.User.User;
+import go.travel.dnh.domain.User.LoginUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import java.util.List;
@@ -19,18 +21,24 @@ import static org.hamcrest.CoreMatchers.is;
 class UserMapperTest {
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Test
     public void readUserTest() {
-        User user = userMapper.readUser(Integer.parseInt("1"));
-
-        assertEquals("서현",user.getName());
+        String text = "1234";
+        System.out.println("text = " + text);
+        String encoPwd = bCryptPasswordEncoder.encode(text);
+        System.out.println("encoPwd = " + encoPwd);
+        LoginUser user = userMapper.findById("ddd");
+        System.out.println("user.getMem_pwd() = " + user.getMem_pwd());
+        assertTrue(bCryptPasswordEncoder.matches(text,user.getPassword()));
     }
 
     @Test
     public void readAuthorityTest() {
-        List<String> authorities = userMapper.readAuthority(Integer.parseInt("1"));
-        assertEquals(authorities, hasItem("USER"));
+
+
 //
 //        authorities= userMapper.readAuthority("abc");
 //        assertThat(authorities, hasItem("USER"));

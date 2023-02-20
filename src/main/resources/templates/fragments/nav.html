@@ -22,16 +22,16 @@
                 회원 가입!
               </button>
             </li>
-            <li>
+            <li sec:authorize="isAnonymous()" >
               <a th:href="@{/login/loginForm}">로그인</a>
             </li>
             <li sec:authorize="isAuthenticated()">
               <span sec:authentication="name"></span>
             </li>
             <li sec:authorize="isAuthenticated()">
-              <a href="/">로그아웃</a>
+              <a th:href="@{/login/logout}" th:field="logout">로그아웃</a>
             </li>
-            <li>
+            <li >
               <a href="/admin/main">관리자페이지</a>
             </li>
           </ul>
