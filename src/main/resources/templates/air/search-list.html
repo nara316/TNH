@@ -55,9 +55,10 @@
       <input type="submit" value="검색">
     </form>
   </div>  <!--항공권 검색 끝-->
+
   <div>
     <!--항공권 상품목록-->
-    <form id="resForm" method="get" action="/air/res-check">
+    <form th:action="@{/air/res-check}" method="post" >
       <div>
         <!--가는 항공편-->
         <div>
@@ -89,8 +90,8 @@
             </thead>
             <tr th:each="list : ${airFrom.list}">
               <td>
-                <input type="checkbox" name="airFromCheck" onclick="checkFromOnlyOne(this)"
-                       th:value="${list.ano}">
+                <input type="checkbox" name="air_from_check" onclick="checkFromOnlyOne(this)"
+                       th:value="${list.ano}"  >
               </td>
               <td>
                 <img style="width: 32px;" th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
@@ -142,8 +143,8 @@
             </thead>
             <tr th:each="list : ${airTo.list}">
               <td>
-                <input type="checkbox" name="airToCheck" onclick="checkToOnlyOne(this)"
-                       th:value="${list.ano}">
+                <input type="checkbox" name="air_to_check" onclick="checkToOnlyOne(this)"
+                       th:value="${list.ano}" >
               </td>
               <td class="al-logo">
                 <img style="width: 32px;"  th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
@@ -166,7 +167,9 @@
       </div> <!-오는 항공편 끝--->
       <div>
         <!--예약하기 버튼-->
-        <input type="hidden" th:value="${sch.ea}" name="eaa">
+        <input type="hidden" th:value="${fromAP}" name="air_from"/>
+        <input type="hidden" th:value="${toAP}" name="air_to"/>
+        <input type="hidden" th:value="${sch.ea}" name="ea" />
         <input type="submit" />
       </div>
 
@@ -262,7 +265,7 @@
   function checkFromOnlyOne(element) {
 
     const checkboxes
-            = document.getElementsByName("airFromCheck");
+            = document.getElementsByName("air_from_check");
     checkboxes.forEach((cb) => {
       cb.checked = false;
     })
@@ -272,7 +275,7 @@
   function checkToOnlyOne(element) {
 
     const checkboxes
-            = document.getElementsByName("airToCheck");
+            = document.getElementsByName("air_to_check");
     checkboxes.forEach((cb) => {
       cb.checked = false;
     })

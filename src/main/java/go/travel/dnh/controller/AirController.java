@@ -2,15 +2,17 @@ package go.travel.dnh.controller;
 
 import go.travel.dnh.domain.air.*;
 import go.travel.dnh.service.AirProductService;
+import go.travel.dnh.validation.ReservationInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -67,7 +69,7 @@ public class AirController {
         return "air/search-list";
     }
     @GetMapping("/search-list")
-    public String air_list(@ModelAttribute("sch") final SearchDTO sch, Model m) {
+    public String air_list(@ModelAttribute("sch") final SearchDTO sch,@ModelAttribute("res") final ReservationInfo res ,Model m) {
         PagingResponse<AirProductDTO> listFrom = airProductService.getSearchFromList(sch);
         PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
         List<AirportDTO> airportList = airProductService.getListAirport();
@@ -78,20 +80,23 @@ public class AirController {
         return "redirect:/air/search-list";
     }
 
-    @GetMapping("/res-check")
-
-    public String check(@RequestParam("airFromCheck") String fromCheck, @RequestParam("airToCheck") String toCheck,
-                            @RequestParam("eaa") String eaa) {
-
-        System.out.println("from ano : "+fromCheck);
-        System.out.println("to ano : "+toCheck);
-        System.out.println("ea : "+eaa);
-
-
-
+    @PostMapping("/res-check")
+    public String check(@RequestParam(name = "air_from")String airFrom, @RequestParam(name = "air_to")String airTo,
+                        @RequestParam(name = "air_from_check")Integer airFromChk, @RequestParam(name = "air_to_check")Integer airToChk,
+                        @RequestParam(name = "ea")Integer ea) {
+        System.out.println("출발지 : "+airFrom);
+        System.out.println("도착지 : "+airTo);
+        System.out.println("가는편 ano : "+ airFromChk);
+        System.out.println("돌아오는편 ano : "+airToChk);
+        System.out.println("수량 : "+ea);
         return "air/reservation";
     }
 
+    @GetMapping("/res-check")
+    public  String resCheck(Model m ) {
+        m.addAttribute("res",new ReservationInfo());
+        return "air/reservation";
+    }
 
 
 }
