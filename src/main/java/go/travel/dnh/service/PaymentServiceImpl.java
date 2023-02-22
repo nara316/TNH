@@ -154,7 +154,7 @@ public class PaymentServiceImpl implements PaymentService{
 
     @Override
     @Transactional
-    public void insertPay(String imp_uid,int merchant_uid,int totalPrice) {
+    public void insertPay(String imp_uid,int merchant_uid,int totalPrice, String pay_method) {
 
         ReservationDTO dto = reservationRepository.getReservation(merchant_uid);
         System.out.println(dto);
@@ -164,8 +164,8 @@ public class PaymentServiceImpl implements PaymentService{
         payDTO.setRno(dto.getRno());
         payDTO.setMno(dto.getMno());
         payDTO.setPay_tot_price(totalPrice);
+        payDTO.setPay_method(pay_method);
 
-        System.out.println("진입성공6");
         System.out.println(payDTO);
         paymentRepository.insertPay(payDTO);
     }

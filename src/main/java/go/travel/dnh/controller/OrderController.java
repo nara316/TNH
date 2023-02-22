@@ -47,7 +47,7 @@ public class OrderController {
     //카드결제 성공 후
     @PostMapping("/payment/complete")
     @ResponseBody
-    public ResponseEntity<String> paymentComplete(String imp_uid,int merchant_uid) throws IOException {
+    public ResponseEntity<String> paymentComplete(String imp_uid,int merchant_uid,String pay_method) throws IOException {
 
         //1. 아임포트 API키와 SECRET키로 토큰을 생성
         String token = paymentService.getToken();
@@ -64,7 +64,7 @@ public class OrderController {
                 return new ResponseEntity<String>("결제 금액 오류, 결제 취소", HttpStatus.BAD_REQUEST);
             }
 
-            paymentService.insertPay(imp_uid,merchant_uid,totalPrice);
+            paymentService.insertPay(imp_uid,merchant_uid,totalPrice,pay_method);
             return new ResponseEntity<>("결제가 완료되었습니다.", HttpStatus.OK);
 
         } catch (Exception e) {

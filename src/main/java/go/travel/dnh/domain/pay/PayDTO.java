@@ -19,5 +19,6 @@ public class PayDTO {
     private Integer pay_tot_price;
     private Date pay_date;
     private String pay_state;
+    private String pay_method;
 
 }

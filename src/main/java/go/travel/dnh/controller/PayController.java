@@ -40,10 +40,6 @@ public class PayController {
     public int refund (String pno, String rf_reason) {
 
         //이미 환불완료된 건은 넘어가면 안된다.
-//        if(paymentService.readOneRefund(pno)!=1){
-//            result = paymentService.refund(pno,rf_reason);
-//            return result;
-//        }
         if(paymentService.readOneRefund(pno)==1){
            result = 1;
         } else {
