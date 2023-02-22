@@ -21,4 +21,6 @@ public interface AirProductMapper {
 
     List<AirportDTO> selectAP();
 
+    AirProductDTO selectRes(Integer ano);
+
 }

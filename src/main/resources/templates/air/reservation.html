@@ -10,14 +10,111 @@
 <div th:replace="fragments/nav :: nav">
 </div>
 
-<div class="center view-size">
-  <h1>잉잉</h1>
+
+<h1>예약정보입력</h1>
+<div>
+<form th:action="@{reservation}" method="post">
+  <div>
+    <!--예약정보-->
+    <table style="width: 100%;">
+      <thead>
+      <tr>
+        <td>여정</td>
+        <td>항공편</td>
+        <td>출발일시</td>
+        <td>도착일시</td>
+        <td>좌석구분</td>
+        <td th:text="'총요금('+${resInfo.ea}+')인'"/>
+        <td>요청좌석</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td th:utext="'[가는날] '+${resInfo.air_from}+
+          '<img src='+'/imgs/air/icon/airplane.png'+'>'+${resInfo.air_to}"/>
+        <td th:utext="'<img src='+${outPro.airlineDTO.al_logo_uri}+'/'+${outPro.airlineDTO.al_logo_name}+'>'
+            +${outPro.airlineDTO.al_name}+' '+${outPro.ar_fl_no}+'편'"/>
+        <td th:text="${outPro.ar_from_date}"/>
+        <td th:text="${outPro.ar_to_date}"/>
+        <td th:text="${outPro.airGradeOptionDTO.agop_name}"/>
+        <td th:text="${#numbers.formatInteger(outPro.ar_price * resInfo.ea, 3, 'COMMA')}"/>
+        <td th:text="${resInfo.ea}+'석'"/>
+      </tr>
+      <tr>
+        <td th:utext="'[오는날] '+${resInfo.air_to}+
+          '<img src='+'/imgs/air/icon/airplane.png'+'>'+${resInfo.air_from}"/>
+        <td th:utext="'<img src='+${inPro.airlineDTO.al_logo_uri}+'/'+${inPro.airlineDTO.al_logo_name}+'>'
+            +${inPro.airlineDTO.al_name}+' '+${inPro.ar_fl_no}+'편'"/>
+        <td th:text="${inPro.ar_from_date}"/>
+        <td th:text="${inPro.ar_to_date}"/>
+        <td th:text="${inPro.airGradeOptionDTO.agop_name}"/>
+        <td th:text="${#numbers.formatInteger(inPro.ar_price * resInfo.ea, 3, 'COMMA')}"/>
+        <td th:text="${resInfo.ea}+'석'"/>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <!--탑승객정보 입력-->
+    <h1>탑승객정보 입력</h1>
+    <table style="width: 100%;">
+      <thead>
+      <tr>
+        <td>No</td>
+        <td>한글 이름</td>
+        <td>영문 성</td>
+        <td>영문 이름</td>
+        <td>생년월일</td>
+        <td>성별</td>
+      </tr>
+      </thead>
+      <tbody>
+      <th:block th:each="num : ${#numbers.sequence(0,resInfo.getEa()-1)}">
+        <tr>
+          <td th:text="${num+1}"></td>
+          <td>
+            <input type="text" th:name="'detailList[' + ${num} + '].ko_name'" placeholder="예) 홍길동"  />
+          </td>
+          <td>
+            <input type="text" th:name="'detailList[' + ${num} + '].en_lname'" placeholder="예) HONG" />
+          </td>
+          <td>
+            <input type="text" th:name="'detailList[' + ${num} + '].en_fname'" placeholder="예) GILDONG"/>
+          </td>
+          <td>
+            <input type="text" th:name="'detailList[' + ${num} + '].birth'" placeholder="예) 19850101"/>
+          </td>
+          <td>
+            <select th:name="'detailList[' + ${num} + '].gender'"  >
+              <option>선택</option>
+              <option value="m">남</option>
+              <option value="f">여</option>
+            </select>
+          </td>
+        </tr>
+      </th:block>
+      </tbody>
+    </table>
+  </div>
+  <input type="hidden" th:value="${resInfo.air_from_check}" name="out_ano"/>
+  <input type="hidden" th:value="${resInfo.air_to_check}" name="in_ano"/>
+  <input type="hidden" th:value="${outPro.ar_price + inPro.ar_price}" name="arp_price"/>
+  <input type="hidden" th:value="${resInfo.ea}" name="arp_count">
+  <input type="submit"/>
+</form>
 </div>
 
-<div th:replace="fragments/footer :: footer">
+
+ <div th:replace="fragments/footer :: footer">
 </div>
 
 </body>
+
+
+<script>
+
+</script>
 
 
 </html>

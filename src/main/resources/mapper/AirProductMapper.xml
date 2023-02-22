@@ -115,5 +115,16 @@
                ap_name, ap_code_name
         from airport
     </select>
+
+    <select id="selectRes" resultMap="AirProductDTO">
+        select
+            (select al_logo_uri from air_line al where al.al_code = p.al_code) al_logo_uri
+            ,(select al_logo_name from air_line al where al.al_code = p.al_code ) al_logo_name
+            ,(select al_name from air_line al where al.al_code = p.al_code ) al_name
+            ,(select agop_name from air_grade_option ago where ago.agop_code = p.agop_code) agop_name
+            ,p.ar_fl_no ,p.ar_from_date, p.ar_to_date ,ar_price
+        from air_product p
+        where p.ano = #{ano}
+    </select>
     
 </mapper>
