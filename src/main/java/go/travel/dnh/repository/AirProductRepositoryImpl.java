@@ -112,4 +112,5 @@ public class AirProductRepositoryImpl implements AirProductRepository{
         return airReservationMapper.insertResDetail(detail);
     }
 
+
 }

@@ -3,7 +3,6 @@ package go.travel.dnh.domain.reservation;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,5 +21,4 @@ public class AirReservationDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime arp_date;
 
-    private List<ReservationDetail> detail;
 }
