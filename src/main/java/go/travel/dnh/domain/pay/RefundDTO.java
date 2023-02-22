@@ -11,13 +11,13 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PayDTO {
+public class RefundDTO {
 
+    private String rfno;
     private String pno;
-    private Integer rno;
     private Integer mno;
-    private Integer pay_tot_price;
-    private Date pay_date;
-    private String pay_state;
+    private String  rf_reason;
+    private Date rf_date;
+    private String rf_state;
 
 }
