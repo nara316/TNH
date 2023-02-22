@@ -5,8 +5,8 @@
 <mapper namespace="go.travel.dnh.mapper.PaymentMapper">
     <!--결제완료건 insert-->
     <insert id="insertPay" parameterType="PayDTO">
-        insert into Pay (pno, rno, mno, pay_tot_price, pay_date)
-        values ( #{pno},#{rno},#{mno},#{pay_tot_price}, now());
+        insert into Pay (pno, rno, mno, pay_tot_price, pay_date, pay_method)
+        values ( #{pno},#{rno},#{mno},#{pay_tot_price}, now(), #{pay_method});
     </insert>
 
     <!--전체 결제완료 목록 조회-->
