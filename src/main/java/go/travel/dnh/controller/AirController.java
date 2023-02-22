@@ -1,19 +1,20 @@
 package go.travel.dnh.controller;
 
 import go.travel.dnh.domain.air.*;
+import go.travel.dnh.domain.reservation.AirReservationDTO;
+import go.travel.dnh.domain.reservation.ReservationDetail;
 import go.travel.dnh.service.AirProductService;
 import go.travel.dnh.validation.ReservationInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/air")
@@ -23,24 +24,27 @@ public class AirController {
     private final AirProductService airProductService;
 
 
+    //항공권 전체 목록
     @GetMapping("/list")
     public String air_list_all(@ModelAttribute("sch") final SearchDTO sch, Model m) {
         PagingResponse<AirProductDTO> list = airProductService.getList(sch);
         m.addAttribute("air", list);
         return "air/list";
     }
+    //항공권 검색 페이지
     @GetMapping("/search")
     public String air_search(@ModelAttribute("sch") final SearchDTO sch, Model m) {
         List<AirportDTO> airportList = airProductService.getListAirport();
         m.addAttribute("airport",airportList);
         return "air/search";
     }
-
+    //항공권 검색
     @PostMapping("/search")
     public String air_search(@ModelAttribute("sch") final SearchDTO sch, HttpServletResponse res, Model m) throws IOException {
         PagingResponse<AirProductDTO> listFrom = airProductService.getSearchFromList(sch);
         PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
         List<AirportDTO> airportList = airProductService.getListAirport();
+
         if(listFrom.getList().isEmpty() || listTo.getList().isEmpty()) {
             res.setContentType("text/html; charset=UTF-8");
             PrintWriter out = res.getWriter();
@@ -68,34 +72,27 @@ public class AirController {
 
         return "air/search-list";
     }
-    @GetMapping("/search-list")
-    public String air_list(@ModelAttribute("sch") final SearchDTO sch,@ModelAttribute("res") final ReservationInfo res ,Model m) {
-        PagingResponse<AirProductDTO> listFrom = airProductService.getSearchFromList(sch);
-        PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
-        List<AirportDTO> airportList = airProductService.getListAirport();
 
-        m.addAttribute("airFrom", listFrom);
-        m.addAttribute("airTo", listTo);
-        m.addAttribute("airport",airportList);
-        return "redirect:/air/search-list";
-    }
-
+    // 예약정보 예약화면에 넘기기
     @PostMapping("/res-check")
-    public String check(@RequestParam(name = "air_from")String airFrom, @RequestParam(name = "air_to")String airTo,
-                        @RequestParam(name = "air_from_check")Integer airFromChk, @RequestParam(name = "air_to_check")Integer airToChk,
-                        @RequestParam(name = "ea")Integer ea) {
-        System.out.println("출발지 : "+airFrom);
-        System.out.println("도착지 : "+airTo);
-        System.out.println("가는편 ano : "+ airFromChk);
-        System.out.println("돌아오는편 ano : "+airToChk);
-        System.out.println("수량 : "+ea);
-        return "air/reservation";
+    public String check(@ModelAttribute("resInfo") final ReservationInfo resInfo,Model m) {
+        AirProductDTO outPro = airProductService.readRes(resInfo.getAir_from_check());
+        AirProductDTO inPro = airProductService.readRes(resInfo.getAir_to_check());
+
+        m.addAttribute("resInfo",resInfo);
+        m.addAttribute("outPro",outPro);
+        m.addAttribute("inPro", inPro);
+        return "/air/reservation";
     }
 
-    @GetMapping("/res-check")
-    public  String resCheck(Model m ) {
-        m.addAttribute("res",new ReservationInfo());
-        return "air/reservation";
+
+
+    //예약정보 저장하기
+
+    @PostMapping("/reservation")
+    public String reservation(AirReservationDTO dto, @ModelAttribute("reservationDetails") ReservationDetail reservationDetails, Model m) {
+        airProductService.reservation(dto,reservationDetails);
+        return "air/pay";
     }
 
 

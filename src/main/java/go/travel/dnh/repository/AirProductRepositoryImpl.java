@@ -1,8 +1,11 @@
 package go.travel.dnh.repository;
 
 import go.travel.dnh.domain.air.*;
+import go.travel.dnh.domain.reservation.AirReservationDTO;
+import go.travel.dnh.domain.reservation.ReservationDetail;
 import go.travel.dnh.mapper.AdminAirProductMapper;
 import go.travel.dnh.mapper.AirProductMapper;
+import go.travel.dnh.mapper.AirReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +18,7 @@ public class AirProductRepositoryImpl implements AirProductRepository{
 
     private final AdminAirProductMapper airProductAdminMapper;
     private final AirProductMapper airProductMapper;
+    private final AirReservationMapper airReservationMapper;
 
     @Override
     public List<AirProductDTO> adminAirProductList() {
@@ -87,6 +91,25 @@ public class AirProductRepositoryImpl implements AirProductRepository{
     @Override
     public List<AirportDTO> airportList() {
         return airProductMapper.selectAP();
+    }
+
+
+
+    ////예약
+    //선택한 항공권 정보 읽어오기
+    @Override
+    public AirProductDTO resRead(Integer ano) {
+        return airProductMapper.selectRes(ano);
+    }
+   //예약 저장하기
+    @Override
+    public int reservation(AirReservationDTO dto) {
+        return airReservationMapper.insertReservation(dto);
+    }
+   //예약 상세정보 저장하기
+    @Override
+    public int resDetail(ReservationDetail detail) {
+        return airReservationMapper.insertResDetail(detail);
     }
 
 }

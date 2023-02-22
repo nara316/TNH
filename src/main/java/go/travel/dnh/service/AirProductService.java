@@ -4,6 +4,8 @@ import go.travel.dnh.domain.air.AirProductDTO;
 import go.travel.dnh.domain.air.AirportDTO;
 import go.travel.dnh.domain.air.PagingResponse;
 import go.travel.dnh.domain.air.SearchDTO;
+import go.travel.dnh.domain.reservation.AirReservationDTO;
+import go.travel.dnh.domain.reservation.ReservationDetail;
 
 import java.util.List;
 
@@ -25,5 +27,13 @@ public interface AirProductService {
     PagingResponse<AirProductDTO> getSearchToList(SearchDTO sch);
 
     List<AirportDTO> getListAirport();
+
+
+    //예약
+
+    AirProductDTO readRes(Integer ano);
+
+    void reservation(AirReservationDTO dto, ReservationDetail detail);
+
 
 }
