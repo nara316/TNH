@@ -13,7 +13,7 @@
 
 <h1>예약정보입력</h1>
 <div>
-<form th:action="@{reservation}" method="post">
+<form th:action="@{reservation}" method="post" class="view-size">
   <div>
     <!--예약정보-->
     <table style="width: 100%;">
@@ -99,7 +99,7 @@
   </div>
   <input type="hidden" th:value="${resInfo.air_from_check}" name="out_ano"/>
   <input type="hidden" th:value="${resInfo.air_to_check}" name="in_ano"/>
-  <input type="hidden" th:value="${outPro.ar_price + inPro.ar_price}" name="arp_price"/>
+  <input type="hidden" th:value="${(outPro.ar_price + inPro.ar_price) * resInfo.ea}" name="arp_price"/>
   <input type="hidden" th:value="${resInfo.ea}" name="arp_count">
   <input type="submit"/>
 </form>

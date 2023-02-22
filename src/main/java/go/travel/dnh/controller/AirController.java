@@ -6,7 +6,6 @@ import go.travel.dnh.domain.reservation.ReservationDetail;
 import go.travel.dnh.service.AirProductService;
 import go.travel.dnh.validation.ReservationInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -92,8 +91,15 @@ public class AirController {
     @PostMapping("/reservation")
     public String reservation(AirReservationDTO dto, @ModelAttribute("reservationDetails") ReservationDetail reservationDetails, Model m) {
         airProductService.reservation(dto,reservationDetails);
-        return "air/pay";
+        AirProductDTO outDTO = airProductService.readRes(dto.getOut_ano());
+        AirProductDTO inDTO = airProductService.readRes(dto.getIn_ano());
+        AirReservationDTO resDTO = dto;
+        m.addAttribute("resDTO", resDTO);
+        m.addAttribute("outDTO", outDTO);
+        m.addAttribute("inDTO", inDTO);
+        return "air/order";
     }
+
 
 
 }

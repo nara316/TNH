@@ -78,7 +78,7 @@ public class AirProductServiceImpl implements AirProductService{
     @Transactional
     public void reservation(AirReservationDTO dto, ReservationDetail detail) {
 
-        Integer mno = 19;
+        Integer mno = 36;
         dto.setMno(mno);
         Integer ano = dto.getOut_ano();
         //rno 만들기
@@ -102,5 +102,6 @@ public class AirProductServiceImpl implements AirProductService{
         }
 
     }
+
 
 }

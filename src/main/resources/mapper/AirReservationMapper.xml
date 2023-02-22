@@ -5,6 +5,15 @@
 <mapper namespace="go.travel.dnh.mapper.AirReservationMapper">
 
 
+    <sql id="productColumns">
+        p.ano ,(select al_logo_uri from air_line al where al.al_code = p.al_code) al_logo_uri
+             ,(select al_logo_name from air_line al where al.al_code = p.al_code ) al_logo_name
+             ,(select al_name from air_line al where al.al_code = p.al_code ) al_name
+             ,(select ap_name from airport ap1 where ap1.ap_code = p.ar_from ) ar_from
+             ,(select ap_name from airport ap2 where ap2.ap_code = p.ar_to ) ar_to
+             ,p.ar_fl_no ,p.ar_from_date, p.ar_to_date
+             ,ar_price
+    </sql>
 
     <insert id="insertReservation" parameterType="AirReservationDTO">
         insert into reservation2
@@ -20,5 +29,6 @@
             (#{rno}, #{ko_name}, #{en_lname}, #{en_fname}, #{birth}, #{gender})
 
     </insert>
+
 
 </mapper>
