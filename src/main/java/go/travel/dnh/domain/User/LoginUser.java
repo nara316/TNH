@@ -1,22 +1,17 @@
 package go.travel.dnh.domain.User;
 
-import go.travel.dnh.domain.member.MemberDTO;
-import go.travel.dnh.mapper.UserMapper;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class LoginUser implements UserDetails {
-
+@NoArgsConstructor
+public class LoginUser implements UserDetails, OAuth2User{
 
     private Integer mno;
     private String mem_id;
@@ -26,15 +21,25 @@ public class LoginUser implements UserDetails {
     private String mem_gender;
     private Date mem_birth;
 
+    private Map<String,Object> attributes;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
     private Collection<? extends GrantedAuthority> authorities;
 
+    public LoginUser(Map<String, Object> attributes) {
+        this.attributes = attributes;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+     return authorities;
     }
 
     @Override
@@ -68,5 +73,8 @@ public class LoginUser implements UserDetails {
     }
 
 
-
+    @Override
+    public String getName() {
+        return null;
+    }
 }

@@ -20,6 +20,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         //소셜 로그인 후 기존 DB에 회원가입 되어있으면 있으면 index
+        //기존 DB에도 회원가입되어있는 id와 소셜로그인 했을 때 id가 같을경우엔 따로 등록할 필요 없이 서비스 이용 가능
         String email = httpSession.getAttribute("socialEmail").toString();
         if (userMapper.findById(email) != null) {
             UserDetails user = userMapper.findById(email);

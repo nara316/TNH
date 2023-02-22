@@ -31,6 +31,9 @@
             <li sec:authorize="isAuthenticated()">
               <a th:href="@{/login/logout}" th:field="logout">로그아웃</a>
             </li>
+            <li sec:authorize="isAuthenticated()" >
+              <a th:href="@{/login/mypage}">마이페이지</a>
+            </li>
             <li >
               <a href="/admin/main">관리자페이지</a>
             </li>

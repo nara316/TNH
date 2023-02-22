@@ -8,4 +8,7 @@
     <select id="findById" resultType="MemberDTO" parameterType="MemberDTO">
         select * from member where mem_id = #{mem_id}
     </select>
+    <update id="update" parameterType="MemberDTO">
+        update member set mem_pwd = #{mem_pwd}, mem_phone = #{mem_phone}, mem_up_date = now() where mem_id = #{mem_id}
+    </update>
 </mapper>
