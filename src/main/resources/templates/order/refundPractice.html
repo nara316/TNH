@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+
+        /*<![CDATA[*/
+        let pno = '[[${list.pno}]]';
+        let rf_reason;
+
+         /*]]>*/
+
+        const getselect = (target) => {
+            // 선택한 option의 value 값
+            rf_reason = target.value;
+
+            // option의 text 값
+           // console.log(target.options[target.selectedIndex].text);
+        }
+
+         function refundPay() {
+
+            if(rf_reason===undefined){
+                alert("취소사유를 선택해주세요!")
+                return false;
+            }
+
+             $.ajax({
+                 url: "/order/refund/complete",
+                 method: "POST",
+                 data: {
+                     pno : pno,
+                    rf_reason : rf_reason},
+                 success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다member
+                     if(result === 0){
+                         alert("취소완료");
+                         console.log(result);
+                         window.location.href = "/order/payList";
+                     } else {
+                         alert("이미 취소한 결제입니다.")
+                     }
+                 },
+                 error:function(){
+                     alert("에러입니다");
+                 }
+             });
+         }
+        /*]]>*/
+    </script>
+    <meta charset="UTF-8">
+    <title>Sample Payment</title>
+</head>
+<body>
+<div class="admin-content">
+    <table>
+        <thead>
+        <tr>
+            <th>결제번호</th>
+            <th>예약번호</th>
+            <th>회원번호</th>
+            <th>총금액</th>
+            <th>결제일시</th>
+            <th>결제상태</th>
+            <th>취소사유</th>
+        </tr>
+        </thead>
+        <tr>
+            <td th:value="${list.pno}" th:text="${list.pno}"></td>
+            <td th:value="${list.rno}" th:text="${list.rno}"></td>
+            <td th:value="${list.mno}" th:text="${list.mno}"></td>
+            <td th:value="${list.pay_tot_price}" th:text="${list.pay_tot_price}"></td>
+            <td th:value="${list.pay_date}" th:text="${list.pay_date}"></td>
+            <td th:value="${list.pay_state}" th:text="${list.pay_state}"></td>
+            <td>
+            <select id="rf_reason" onchange="getselect(this)">
+                <option value="none">=== 선택 ===</option>
+                <option value="단순변심">단순변심</option>
+                <option value="취소 후 재구매">취소 후 재구매</option>
+                <option value="항공편 결항">항공편 결항</option>
+                <option value="기타">기타</option>
+            </select>
+            </td>
+            <td>
+                <button onclick="refundPay()">결제취소</button>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.domain.pay.PayDTO;
+import go.travel.dnh.domain.pay.RefundDTO;
 import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.repository.PaymentRepository;
 import go.travel.dnh.repository.ReservationRepository;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -167,4 +169,42 @@ public class PaymentServiceImpl implements PaymentService{
         System.out.println(payDTO);
         paymentRepository.insertPay(payDTO);
     }
+
+    @Override
+    public List<PayDTO> readPayList() {
+        return paymentRepository.readPayList();
+    }
+
+    @Override
+    public PayDTO readPay(String pno) {
+        return paymentRepository.readPay(pno);
+    }
+
+    @Override
+    @Transactional
+    public int refund(String pno, String rf_reason) {
+        //pno로 db에 결제완료된 리스트가 있는지 확인하고 있으면 pay테이블은 update
+        //그리고 refund테이블에 Insert
+
+        PayDTO payDTO = paymentRepository.readPay(pno);
+
+        if(payDTO!=null){
+            paymentRepository.updatePayState(pno);
+
+            RefundDTO refundDTO = new RefundDTO();
+            refundDTO.setRfno(payDTO.getPno());
+            refundDTO.setPno(payDTO.getPno());
+            refundDTO.setMno(payDTO.getMno());
+            refundDTO.setRf_reason(rf_reason);
+
+            paymentRepository.insertRefund(refundDTO);
+        }
+        return 0;
+    }
+
+    @Override
+    public int readOneRefund(String pno) {
+        return paymentRepository.readOneRefund(pno);
+    }
+
 }

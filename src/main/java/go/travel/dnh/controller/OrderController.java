@@ -64,7 +64,6 @@ public class OrderController {
                 return new ResponseEntity<String>("결제 금액 오류, 결제 취소", HttpStatus.BAD_REQUEST);
             }
 
-            //int rno = merchant_uid;
             paymentService.insertPay(imp_uid,merchant_uid,totalPrice);
             return new ResponseEntity<>("결제가 완료되었습니다.", HttpStatus.OK);
 
