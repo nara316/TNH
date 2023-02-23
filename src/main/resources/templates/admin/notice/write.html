@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/admin-fragments/script :: script">
+
+</head>
+<style>
+    .layout {
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+    .layout > input{
+        width: 500px;
+        box-sizing: border-box;
+    }
+    .layout > textarea {
+        width: 100%;
+        margin-top: 10px;
+        min-height: 300px;
+    }
+</style>
+
+<body class="flex">
+<div th:replace="admin/admin-fragments/nav :: nav" >
+</div>
+<div class="layout">
+    <form action="/notice/write" method="post" enctype="multipart/form-data">
+        제목<input name="title" type="text"/><br>
+        내용<textarea name="content"></textarea><br>
+        <input type="file" name="file">
+        <button type="submit">작성</button>
+    </form>
+</div>
+
+</body>
+
+</html>

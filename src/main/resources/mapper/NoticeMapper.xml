@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="go.travel.dnh.mapper.NoticeBoardMapper">
+    <insert id="save" parameterType="NoticeDTO">
+        insert into notice (title,content,filename,filepath) values (#{title}, #{content},#{filename},#{filepath});
+    </insert>
+    <select id="findAll" resultType="NoticeDTO">
+        select * from notice order by nno desc
+    </select>
+    <select id="select" resultType="NoticeDTO" parameterType="Integer">
+        select * from notice where nno = #{nno}
+    </select>
+    <delete id="delete" parameterType="Integer">
+        delete from notice where nno = #{nno}
+    </delete>
+    <update id="update" parameterType="Integer">
+        update notice set title = #{title}, content = #{content}
+    </update>
+</mapper>

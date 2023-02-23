@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/admin-fragments/script :: script">
+
+</head>
+<style>
+    .layout {
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+    .layout > input{
+        width: 100px;
+        box-sizing: border-box;
+    }
+    .layout > textarea {
+        width: 100%;
+        margin-top: 10px;
+        min-height: 300px;
+    }
+</style>
+
+<body class="flex">
+<div th:replace="admin/admin-fragments/nav :: nav">
+</div>
+<div class="layout">
+    <form th:action="@{/notice/list/update/{nno}(nno=${board.nno})}" method="post">
+        <input name="title" type="text" th:value="${board.title}" />
+        <textarea name="content" th:text="${board.content}"></textarea>
+        <input type="file" name="file">
+        <button type="submit">수정</button>
+    </form>
+</div>
+
+</body>
+
+</html>

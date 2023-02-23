@@ -16,6 +16,7 @@
         <typeAlias alias="LoginUser" type="go.travel.dnh.domain.User.LoginUser"/>
         <typeAlias alias="SocialUser" type="go.travel.dnh.domain.User.SocialUser"/>
         <typeAlias alias="PayDTO" type="go.travel.dnh.domain.pay.PayDTO"/>
+        <typeAlias alias="NoticeDTO" type="go.travel.dnh.domain.notice.NoticeDTO"/>
     </typeAliases>
 </configuration>
 

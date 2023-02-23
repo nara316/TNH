@@ -1,7 +1,7 @@
 package go.travel.dnh.repository;
 
 import go.travel.dnh.domain.member.MemberDTO;
-import go.travel.dnh.security.JwtTokenProvider;
+
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -12,9 +12,7 @@ import org.springframework.stereotype.Service;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class MemberLoginRepositoryImplTest {
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
-    
+
     @Autowired
     MemberLoginRepository memberLoginRepository;
 
@@ -31,12 +29,12 @@ class MemberLoginRepositoryImplTest {
         System.out.println("실패");}
     }
     
-    @Test
-    void findUserFromToken() {
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZGQiLCJhdXRoIjoiUk9MRV9bVVNFUl0iLCJleHAiOjE2NzY1NTMzNzZ9.WFG4HStvxIkGtaa7ez8Ar1L2j_nvHhwEvkQOHEoK-T4";
-        Claims claims = jwtTokenProvider.parseClaims(token);
-        System.out.println("claims.getSubject() = " + claims.getSubject());
-        System.out.println("claims.getId() = " + claims.getId());
-        
-    }
+//    @Test
+//    void findUserFromToken() {
+//        String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZGQiLCJhdXRoIjoiUk9MRV9bVVNFUl0iLCJleHAiOjE2NzY1NTMzNzZ9.WFG4HStvxIkGtaa7ez8Ar1L2j_nvHhwEvkQOHEoK-T4";
+//        Claims claims = jwtTokenProvider.parseClaims(token);
+//        System.out.println("claims.getSubject() = " + claims.getSubject());
+//        System.out.println("claims.getId() = " + claims.getId());
+//
+//    }
 }
