@@ -28,40 +28,68 @@
                             <div class="col-lg-6 order-1">
                                 <div class="p-4 p-sm-6">
                                     <!-- Logo -->
-                                    <a href="index.html">
+                                    <a href="/">
                                         <img class="h-50px mb-4" src="/bootstrap/images/logo-icon.svg" alt="logo">
                                     </a>
                                     <!-- Title -->
                                     <h1 class="mb-2 h3">Create new account</h1>
-                                    <p class="mb-0">Already a member?<a href="sign-in.html"> Log in</a></p>
+                                    <p class="mb-0">Already a member?<a href="/login/loginForm"> Log in</a></p>
 
                                     <!-- Form START -->
-                                    <form class="mt-4 text-start">
+                                    <form class="mt-4 text-start" action="" th:action th:object="${memberDTO}" method="post">
                                         <!-- Email -->
                                         <div class="mb-3">
                                             <label class="form-label">Enter email id</label>
-                                            <input type="email" class="form-control">
+                                            <input type="email" id="mem_id" th:field="*{mem_id}" class="form-control" oninput="checkId()">
+                                            <span class="mail_check_button" onclick='EmailSend()'>인증번호 전송</span>
+                                            <span class="id_already">이미 존재하는 이메일입니다.</span>
+                                            <span class="idChk_msg"></span>
+                                        </div>
+                                        <!--emailcheck-->
+                                        <div class="mb-3">
+                                            <label class="form-label">Check email id</label>
+                                            <input class="form-control" id="mail_check_input" disabled="disabled">
+                                            <span class="mailChkmsg"></span>
                                         </div>
                                         <!-- Password -->
                                         <div class="mb-3 position-relative">
                                             <label class="form-label">Enter password</label>
-                                            <input class="form-control fakepassword" type="password" id="psw-input">
+                                            <input class="form-control fakepassword" type="password" id="psw-input" name="mem_pwd" th:field="*{mem_pwd}">
                                             <span class="position-absolute top-50 end-0 translate-middle-y p-0 mt-3">
 											<i class="fakepasswordicon fas fa-eye-slash cursor-pointer p-2"></i>
 										</span>
+                                            <span class="pwdChk_msg"></span>
                                         </div>
                                         <!-- Confirm Password -->
                                         <div class="mb-3">
                                             <label class="form-label">Confirm Password</label>
-                                            <input type="password" class="form-control">
+                                            <input type="password" id="mem_pwd_check" class="form-control" oninput="checkPwd()">
+                                            <span class="pwdCorrectChk_msg"></span>
                                         </div>
-                                        <!-- Remember me -->
+                                        <!--name-->
                                         <div class="mb-3">
-                                            <input type="checkbox" class="form-check-input" id="rememberCheck">
-                                            <label class="form-check-label" for="rememberCheck">Keep me signed in</label>
+                                            <label class="form-label">Enter name</label>
+                                            <input type="text" id="mem_name" th:field="*{mem_name}" class="form-control">
+                                            <span class="nameChk_msg"></span>
+                                        </div>
+                                        <!--name-->
+                                        <div class="mb-3">
+                                            <label class="form-label">Enter Mobile</label>
+                                            <input type="text" id="mem_phone" th:field="*{mem_phone}" class="form-control" placeholder="01012345678">
+                                            <span class="phoneChk_msg"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Choose gender</label><br>
+                                            <label><input type="radio" checked="checked" name="mem_gender" value="남"/>Male</label>
+                                            <label><input type="radio" name="mem_gender" value="여"/>Female</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Enter birth</label>
+                                            <input type="text" id="mem_birth" th:field="*{mem_birth}" class="form-control" placeholder="1900-01-01">
+                                            <span class="birthChk_msg"></span>
                                         </div>
                                         <!-- Button -->
-                                        <div><button type="submit" class="btn btn-primary w-100 mb-0">Sign up</button></div>
+                                        <div><button type="submit" class="btn btn-primary w-100 mb-0" onclick="return check()">Sign up</button></div>
 
                                         <!-- Divider -->
                                         <div class="position-relative my-4">
@@ -103,74 +131,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-<!--원래꺼>
-<div class="container">
-    <div class="py-5 text-center"> <h2>회원 가입</h2>
-    </div>
-    <h4 class="mb-3">회원 정보 입력</h4>
-    <form action="" th:action th:object="${memberDTO}" method="post">
-        <div>
-            <label for="mem_id">로그인 Email</label>
-            <input type="text" id="mem_id" th:field="*{mem_id}" class="form-control" oninput="checkId()">
-            <span class="mail_check_button" onclick='EmailSend()'>인증번호 전송</span><br>
-            <span class="id_already">이미 존재하는 이메일입니다.</span>
-            <span class="idChk_msg"></span>
-        </div>
-        <div>
-            <label>Email 인증번호</label>
-            <input class="mail_check_input" disabled="disabled">
-            <span class="mailChkmsg"></span>
-        </div>
-        <div>
-            <label for="mem_pwd">비밀번호</label>
-            <input type="password" name="mem_pwd" id="mem_pwd" th:field="*{mem_pwd}" class="form-control">
-            <span class="pwdChk_msg"></span>
-        </div>
-        <div>
-            <label for="mem_pwd_check">비밀번호 확인</label>
-            <input type="password" id="mem_pwd_check" class="form-control" oninput="checkPwd()">
-            <span class="pwdCorrectChk_msg"></span>
-        </div>
-        <div>
-            <label for="mem_name">이름</label>
-            <input type="text" id="mem_name" th:field="*{mem_name}" class="form-control">
-            <span class="nameChk_msg"></span>
-        </div>
-        <div>
-            <label for="mem_phone">전화번호</label>
-            <input type="text" id="mem_phone" th:field="*{mem_phone}" class="form-control" placeholder="01012345678">
-            <span class="phoneChk_msg"></span>
-        </div>
-        <div class="gender-chk"> 성별
-            <label><input type="radio" checked="checked" name="mem_gender" value="남"/>남</label>
-            <label><input type="radio" name="mem_gender" value="여"/>녀</label>
-        </div>
-        <div>
-            <label for="mem_birth">생년월일</label>
-            <input type="text" id="mem_birth" th:field="*{mem_birth}" class="form-control" placeholder="1900-01-01">
-            <span class="birthChk_msg"></span>
-        </div>
-        <hr class="my-4">
-        <div class="row">
-            <div class="col">
-                <input type="submit" value="회원가입" onclick="return check()"></input>
-            </div>
-        </div>
-    </form>
-    <button class=pwdFind type="button"
-            th:onclick="|location.href='@{/member/find}'|">
-        비밀번호 찾기
-    </button-->
-<!--/div-->
-<!-- /container -->
-
-<!--/body>
-</html-->

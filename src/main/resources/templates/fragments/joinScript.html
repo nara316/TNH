@@ -28,7 +28,7 @@
         function EmailSend() {
 
             let mem_id =  $('#mem_id').val();
-            let input = $(".mail_check_input");
+            let input = $("#mail_check_input");
             let idChkMsg = $('.idChk_msg');
             let mem_idPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
 
@@ -57,7 +57,7 @@
 
         //이메일 인증번호 확인 메서드
         function mailNumCheck(){
-            let checkInput = $(".mail_check_input").val();        // 사용자가 입력한 코드
+            let checkInput = $("#mail_check_input").val();        // 사용자가 입력한 코드
             let warn = $(".mailChkmsg");          // 비교 결과
 
             $.ajax({
@@ -105,7 +105,7 @@
 
         //비밀번호 확인 메서드
         function checkPwd(){
-            let pwd = $('#mem_pwd').val(); //비밀번호 입력값
+            let pwd = $('#psw-input').val(); //비밀번호 입력값
             let pwdChk = $('#mem_pwd_check').val(); //비밀번호 확인 값
             let pwdCorrectChk = $('.pwdCorrectChk_msg');
 
