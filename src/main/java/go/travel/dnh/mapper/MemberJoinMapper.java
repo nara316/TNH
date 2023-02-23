@@ -13,7 +13,9 @@ public interface MemberJoinMapper {
 
     void insertMemberRole(Integer mno);
 
-    int findMember(String mem_id);
+    int readById(String mem_id);
+
+    int readByPhone(Integer mem_phone);
 
     void updatePwd(Map map);
 

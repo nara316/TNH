@@ -9,7 +9,9 @@ public interface MemberJoinRepository {
 
     public void insertMemberRole(Integer mno);
 
-    public int findMember(String mem_id);
+    public int readById(String mem_id);
+
+    public int readByPhone(Integer mem_pwd);
 
     public void updatePwd(String mem_id,String mem_pwd);
 

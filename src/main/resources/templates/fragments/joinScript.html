@@ -7,21 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="Webestica.com">
     <meta name="description" content="Booking - Multipurpose Online Booking Theme">
-    <style>
-        .field-error {
-            border-color: #dc3545;
-            color: #dc3545;
-        }
-        .id_already {
-            color: red;
-            display: none;
-        }
-    </style>
+
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script th:inline="javascript" >
         let cntcheck = 0;
         let idCheck = false;
         let pwdCheck = false;
+        let phoneCheck = false;
         /*<![CDATA[*/
 
         //인증번호 전송 메서드
@@ -67,9 +59,11 @@
                 success:function(result){
                     if(result === 1){
                         warn.html("인증번호가 일치합니다.");
+                        warn.css('color','#2e8b57');
                         idCheck=true;
                     } else {
                         warn.html("인증번호를 다시 확인해주세요.");
+                        warn.css('color','red');
                     }
                 },
                 error:function(){
@@ -111,11 +105,39 @@
 
             if(pwd == pwdChk){
                 pwdCorrectChk.html("비밀번호가 일치합니다.");
+                pwdCorrectChk.css('color','#2e8b57');
                 pwdCheck=true;
             }else if(pwd != pwdChk){
                 pwdCorrectChk.html("비밀번호가 일치하지 않습니다.");
+                pwdCorrectChk.css('color','red');
             }
         }; //checkPwd() 메서드 종료
+
+        //전화번호 중복 체크 메서드
+        function checkMobile() {
+            let mem = $('#mem_phone').val();
+
+            if(mem=='') {
+                $('.phone_already').css("display", "none");
+                return false;
+            }
+
+            $.ajax({
+                url: "/member/mobileCheck", //Controller에서 요청 받을 주소
+                type: 'post', //POST 방식으로 전달
+                data: {mem_phone: mem},
+                success: function (pnt) { //컨트롤러에서 넘어온 cnt값을 받는다
+                    if (pnt == 1) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+                        $('.phone_already').css("display","inline-block");
+                    } else {
+                        $('.phone_already').css("display", "none");
+                        phoneCheck=false;
+                    }
+                }, error: function () {
+                    alert("에러입니다");
+                }
+            });
+        };
 
         //전체 유효성 검사 메서드
         function check(){
@@ -134,6 +156,7 @@
 
             if(!namePattern.test(name)){
                 nameChkMsg.html("이름은 2~5글자의 한글로 입력해주세요.");
+                nameChkMsg.css('color','red');
                 return false;
             } else {
                 nameChkMsg.css("display", "none");
@@ -141,6 +164,7 @@
 
             if(!phonePattern.test(phone)){
                 phoneChkMsg.html("전화번호는 10~11 길이의 숫자로 입력해주세요.");
+                phoneChkMsg.css('color','red');
                 return false;
             } else {
                 phoneChkMsg.css("display", "none");
@@ -148,12 +172,13 @@
 
             if(!birthPattern.test(birth)){
                 birthChkMsg.html("생년월일을 형식에 맞게 입력해주세요. ex) 1900-01-01");
+                birthChkMsg.css('color','red');
                 return false;
             } else {
                 birthChkMsg.css("display", "none");
             }
 
-            if((idCheck==false)||(pwdCheck==false)){
+            if((idCheck==false)||(pwdCheck==false)||(phoneCheck==false)){
                 return false;
             }
         }; //check()메서드 종료

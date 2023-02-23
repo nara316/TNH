@@ -16,9 +16,15 @@
     </insert>
 
     <!--아이디 기반 회원 찾기-->
-    <select id="findMember" parameterType="String" resultType="int">
+    <select id="readById" parameterType="String" resultType="int">
         select count(mem_id) from member
         WHERE mem_id = #{mem_id};
+    </select>
+
+    <!--전화번호 기반 회원찾기-->
+    <select id="readByPhone" parameterType="Integer" resultType="int">
+        select count(mem_phone) from member
+        WHERE mem_phone = #{mem_phone};
     </select>
 
     <!--패스워드 초기화-->

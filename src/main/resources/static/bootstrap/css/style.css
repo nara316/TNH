@@ -21892,3 +21892,19 @@ html[dir=rtl] .choices__input {
 
 /*User CSS*/
 /*# sourceMappingURL=style.css.map */
+
+/*우리가 추가한 CSS*/
+.id_already {
+  color: red;
+  display: none;
+}
+
+.phone_already {
+  color: red;
+  display: none;
+}
+
+.idChk_msg {
+  color : red;
+}
+
