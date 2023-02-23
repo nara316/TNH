@@ -25,10 +25,18 @@
             let phone = $('#mem_phone').val();
             let phonePattern = /^[0-9]{10,11}$/
             let phoneChkMsg = $('.phoneChk_msg');
-
+            let pwd = $('#mem_pwd').val();
+            let pwdBlankChkMsg = $('.pwdBlankChk_msg');
+            let blank = "";
+            if (pwd === blank) {
+                pwdBlankChkMsg.html(" 공백이 아닌 비밀번호를 입력해주세요.")
+                return false;
+            } else {
+                pwdBlankChkMsg.css("display","none")
+            }
 
             if(!phonePattern.test(phone)){
-                phoneChkMsg.html("전화번호는 10~11 길이의 숫자로 입력해주세요.");
+                phoneChkMsg.html(" 전화번호는 10~11 길이의 숫자로 입력해주세요.");
                 return false;
             } else {
                 phoneChkMsg.css("display", "none");
@@ -170,21 +178,22 @@
                                             <input class="form-control fakepassword" placeholder="변경할 비밀번호를 입력해주세요." type="password" th:value="${mem_pwd}" id="mem_pwd">
                                             <span class="input-group-text p-0 bg-transparent">
 										<i class="fakepasswordicon fas fa-eye-slash cursor-pointer p-2"></i>
-									</span>
+									        </span>
                                         </div>
+                                        <span class="pwdBlankChk_msg" style="color: #b02a37"></span>
                                     </div>
                                     <!-- Confirm -->
                                     <div class="mb-3" style="margin-top: 10px;">
                                         <label class="form-label">비밀번호 확인<span class="text-danger">*</span></label>
                                         <input class="form-control" type="password" placeholder="비밀번호를 다시한번 입력해주세요." th:value="${mem_pwd}" name="mem_pwd" id="mem_pwd_check" oninput="checkPwd()">
-                                        <span class="pwdCorrectChk_msg" ></span>
+                                        <span class="pwdCorrectChk_msg" style="color: #b02a37"></span>
                                     </div>
 
                                     <!-- Mobile -->
                                     <div class="col-md-6">
                                         <label class="form-label">핸드폰 번호<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" th:field="*{mem_phone}" name="mem_phone" id="mem_phone">
-                                        <span class="phoneChk_msg"></span>
+                                        <span class="phoneChk_msg" style="color: #b02a37"></span>
                                     </div>
                                     <!-- Date of birth -->
                                     <div class="col-md-6">

@@ -54,7 +54,7 @@ Main Content START -->
                                     </a>
                                     <!-- Title -->
                                     <h1 class="mb-2 h3">어서오세요!</h1>
-                                    <p class="mb-0">처음 방문해주셨나요?<a href="#">  회원가입 하기</a></p>
+                                    <p class="mb-0">처음 방문해주셨나요? <lable th:onclick="|location.href='@{/member/join}'|" style="color:#4539b8; cursor:pointer;">회원가입하기</lable></p>
     <!-- Form START -->
     <form class="mt-4 text-start" action="/login" method="post">
         <!-- Email -->
@@ -73,6 +73,10 @@ Main Content START -->
 				<i class="fakepasswordicon fas fa-eye-slash cursor-pointer p-2"></i>
 			</span>
         </div>
+        <div class="mb-3 d-sm-flex justify-content-between">
+            <a th:href="@{/member/find}">비밀번호를 잊어버리셨나요?</a>
+        </div>
+
         <!-- Button -->
         <div><button type="submit" class="btn btn-primary w-100 mb-0">Login</button></div>
 

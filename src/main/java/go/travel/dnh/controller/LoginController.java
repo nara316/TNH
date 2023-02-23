@@ -66,15 +66,16 @@ public class LoginController {
     }
     @PostMapping("/oauth/update/{email}")
     public String update(@Validated @ModelAttribute("memberDTO") MemberjoinForm form, BindingResult
-            bindingResult ,@PathVariable("email") String email, HttpSession httpSession) {
+            bindingResult ,@PathVariable("email") String email, HttpSession httpSession, Model model) {
         email = httpSession.getAttribute("socialEmail").toString();
-
         if (bindingResult.hasErrors()) {
             return "login/oauthjoin";
         }
         //성공했을 때
         joinService.joinSnsMember(form);
-        return "redirect:/";
+        model.addAttribute("message", "회원 가입이 완료되었습니다.");
+        model.addAttribute("searchURL", "/");
+        return "message";
     }
     @GetMapping("/mypage")
     public String MyPage(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
@@ -92,26 +93,16 @@ public class LoginController {
     }
 
     @PostMapping("/mypage")
-    public void upDate(@Validated @ModelAttribute("memberDTO")updateForm updateForm,BindingResult bindingResult,
-                       HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
-        System.out.println("updateForm.getMem_pwd() = " + updateForm.getMem_pwd());
-        String blank = "";
-        String redirectUrl ="http://localhost:8080/login/mypage";
-        if (bindingResult.hasErrors()||updateForm.getMem_pwd().equals(blank)) {
-            model.addAttribute("message", "공백이나 빈값이 있을경우 수정이 불가합니다.");
-            model.addAttribute("searchURL", "/login/mypage");
+    public String upDate(@Validated @ModelAttribute("memberDTO")updateForm updateForm,BindingResult bindingResult, Model model)  {
+        if(bindingResult.hasErrors()) {
+            return "login/mypage";
         } else {
             //성공했을 때
             memberLoginService.updateUser(updateForm);
-            model.addAttribute("message", "수정이 완료되었습니다.");
+            model.addAttribute("message", "회원 정보 수정이 완료되었습니다.");
             model.addAttribute("searchURL", "/login/mypage");
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('수정이 완료되었습니다.'); </script>");
-            out.flush();
-            response.sendRedirect("/login/mypage");
+            return "message";
         }
-
     }
 
     }

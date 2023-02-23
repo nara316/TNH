@@ -10,9 +10,6 @@
     <!-- 여기에 공통 적용할 css 및 js 등등 입력하면 됩니다-->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script>
-        function preventEvent() {
-            window.alert("회원정보를 먼저 입력해주세요.")
-        }
         function check(){
             //생년월일 정규식 체크
             let birth = $('#mem_birth').val();
@@ -85,7 +82,7 @@ Main Content START -->
                                         <img class="h-50px mb-4" src="/bootstrap/images/logo-icon.svg" alt="logo">
                                     </a>
                                     <!-- Title -->
-                                    <h1 class="mb-2 h3">회원 정보 수정</h1>
+                                    <h1 class="mb-2 h3">회원 가입</h1>
                                     <!-- Form START -->
                                     <form class="mt-4 text-start" th:object="${memberDTO}" method="post">
                                         <!-- Email -->
@@ -104,19 +101,19 @@ Main Content START -->
                                         <!-- Name -->
                                         <div class="mb-3">
                                             <label class="form-label">이름</label>
-                                            <input type="email" class="form-control" th:placeholder="${session.socialName}"  th:value="${session.socialName}" name="mem_name" id="mem_name" readonly>
+                                            <input type="text" class="form-control" th:placeholder="${session.socialName}"  th:value="${session.socialName}" name="mem_name" id="mem_name" readonly>
                                         </div>
                                         <!-- Phone Number -->
                                         <div class="mb-3">
                                             <label class="form-label">핸드폰번호</label>
                                             <input th:field="*{mem_phone}" id="mem_phone" class="form-control">
-                                            <span class="phoneChk_msg"></span>
+                                            <span class="phoneChk_msg" style="color: #b02a37"></span>
                                         </div>
                                         <!-- Birth -->
                                         <div class="mb-3">
                                             <label class="form-label">생년월일</label>
                                             <input th:field="*{mem_birth}" id="mem_birth" class="form-control">
-                                            <span class="birthChk_msg"></span>
+                                            <span class="birthChk_msg" style="color: #b02a37"></span>
                                         </div>
                                         <!-- Gender -->
                                         <div class="mb-3">
@@ -125,7 +122,7 @@ Main Content START -->
                                                 <label><input type="radio" name="mem_gender" value="여"/>녀</label>
                                         </div>
                                         <!-- Button -->
-                                        <div><button type="submit" class="btn btn-primary w-100 mb-0" onclick="return check()">정보 수정</button></div>
+                                        <div><button type="submit" class="btn btn-primary w-100 mb-0" onclick="return check()">회원 가입</button></div>
                                         <!-- Copyright -->
                                         <div class="text-primary-hover mt-3 text-center"> Copyrights ©2023 Booking. Build by <a href="https://www.webestica.com/">Webestica</a>. </div>
                                     </form>

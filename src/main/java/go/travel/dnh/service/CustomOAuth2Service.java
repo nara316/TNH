@@ -79,7 +79,7 @@ public class CustomOAuth2Service implements OAuth2UserService<OAuth2UserRequest,
             }
             httpSession.setAttribute("socialName", socialName);
             httpSession.setAttribute("socialEmail", socialEmail);
-            httpSession.setAttribute("socialPwd", resultNum);
+            httpSession.setAttribute("socialPwd", "!"+resultNum+"a");
             LoginUser loginUser = new LoginUser(attributes.getAttributes());
             String role = "ROLE_[USER]";
             loginUser.setAuthorities(Collections.singleton(new SimpleGrantedAuthority(role)));
