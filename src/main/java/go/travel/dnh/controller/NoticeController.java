@@ -61,8 +61,8 @@ public class NoticeController {
     @PostMapping("/list/update/{nno}")
     public String boardUpdate(@PathVariable("nno") Integer nno,NoticeDTO noticeDTO, MultipartFile file) throws Exception {
         NoticeDTO noticeTemp = noticeBoardService.boardView(nno);
-        noticeTemp.setTitle(noticeDTO.getTitle());
-        noticeTemp.setContent(noticeDTO.getContent());
+        noticeTemp.setN_title(noticeDTO.getN_title());
+        noticeTemp.setN_content(noticeDTO.getN_content());
         noticeBoardService.write(noticeDTO, file);
 
         return "redirect:/notice/list";

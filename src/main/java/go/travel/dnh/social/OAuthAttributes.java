@@ -53,8 +53,8 @@ public class OAuthAttributes {
     }
     public SocialUser toEntity(){
         return SocialUser.builder()
-                .name(name)
-                .email(email)
+                .s_name(name)
+                .s_id(email)
                 .build();
     }
 }

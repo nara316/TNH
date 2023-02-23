@@ -33,10 +33,10 @@
                <tr th:each="noticeDTO : ${list}">
                    <th th:text="${noticeDTO.nno}"></th>
                    <th>
-                       <a th:text="${noticeDTO.title}" th:href="@{/notice/list/detail(nno=${noticeDTO.nno})}"></a>
+                       <a th:text="${noticeDTO.n_title}" th:href="@{/notice/list/detail(nno=${noticeDTO.nno})}"></a>
                    </th>
                    <th>
-                       <img th:src="@{${noticeDTO.filepath}}" style="width: 300px; height:300px;"/>
+                       <img th:src="@{${noticeDTO.n_filepath}}" style="width: 300px; height:300px;"/>
                    </th>
                </tr>
            </tbody>

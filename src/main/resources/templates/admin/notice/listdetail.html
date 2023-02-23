@@ -17,9 +17,9 @@
 <div th:replace="admin/admin-fragments/nav :: nav">
 </div>
 <div class="layout">
-    <h1 th:text="${board.title}"></h1>
-    <p th:text="${board.content}"></p>
-    <img th:src="@{${board.filepath}}" style="width: inherit; width:100%;"/>
+    <h1 th:text="${board.n_title}"></h1>
+    <p th:text="${board.n_content}"></p>
+    <img th:src="@{${board.n_filepath}}" style="width: inherit; width:100%;"/>
     <button><a th:href="@{/notice/list/modify/{nno}(nno=${board.nno})}">게시글 수정</a></button>
     <button><a th:href="@{/notice/list/delete(nno=${board.nno})}">게시글 삭제</a></button>
 </div>

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="go.travel.dnh.mapper.SocialUserMapper">
     <select id="findByEmail" parameterType="String" resultType="SocialUser">
-        SELECT * FROM social WHERE email = #{email}
+        SELECT * FROM social WHERE s_id = #{s_id}
     </select>
     <insert id="saveSocialUser" parameterType="SocialUser" >
-        INSERT INTO social (  name , email ) values ( #{name}, #{email} )
+        INSERT INTO social (  s_name , s_id ) values ( #{s_name}, #{s_id} )
     </insert>
 </mapper>

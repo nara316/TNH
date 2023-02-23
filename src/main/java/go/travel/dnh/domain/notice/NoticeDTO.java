@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class NoticeDTO {
     private Integer nno;
-    private String title;
-    private String content;
-    private String filename;
-    private String filepath;
+    private String n_title;
+    private String n_content;
+    private String n_filename;
+    private String n_filepath;
 }

@@ -21,8 +21,8 @@ public class NoticeBoardService {
         String fileName = uuid + "_" + file.getOriginalFilename();
         File saveFile = new File(projectPath, fileName);
         file.transferTo(saveFile);
-        noticeDTO.setFilename(fileName);
-        noticeDTO.setFilepath("/files/"+fileName);
+        noticeDTO.setN_filename(fileName);
+        noticeDTO.setN_filepath("/files/"+fileName);
         noticeBoardMapper.save(noticeDTO);
     }
     public List<NoticeDTO> boardList() {

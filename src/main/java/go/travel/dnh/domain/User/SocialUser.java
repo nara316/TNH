@@ -8,8 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class SocialUser {
-    private String id;
-    private String name;
-    private String email;
-    private String password;
+    private String sno;
+    private String s_name;
+    private String s_id;
+    private String s_pwd;
 }

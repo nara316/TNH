@@ -5,6 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface SocialUserMapper {
-    SocialUser findByEmail(String email);
+    SocialUser findByEmail(String s_id);
     void saveSocialUser(SocialUser socialUser);
 }
