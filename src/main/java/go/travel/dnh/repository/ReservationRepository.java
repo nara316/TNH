@@ -10,4 +10,5 @@ public interface ReservationRepository {
 
     public ReservationDTO getReservation(int rno);
 
+    public void insert(ReservationDTO reservationDTO);
 }

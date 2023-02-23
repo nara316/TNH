@@ -25,15 +25,14 @@ public class JoinController {
     }
 
     @PostMapping("/join")
-    public String join(@Validated @ModelAttribute("memberDTO") MemberjoinForm form, BindingResult
-            bindingResult, RedirectAttributes redirectAttributes) {
+    public String join(@Validated @ModelAttribute("memberDTO") MemberjoinForm form, BindingResult bindingResult) {
 
         //인증에 실패했을 때
         if (bindingResult.hasErrors()) {
             return "member/joinForm";
         }
 
-        //성공했을 때
+        //성공했을 때 로그인폼으로!
         joinService.joinMember(form);
         return "member/loginForm";
     }

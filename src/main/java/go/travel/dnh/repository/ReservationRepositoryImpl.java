@@ -22,4 +22,9 @@ public class ReservationRepositoryImpl implements ReservationRepository{
     public ReservationDTO getReservation(int rno){
         return reservationMapper.getReservation(rno);
     }
+
+    @Override
+    public void insert(ReservationDTO reservationDTO) {
+        reservationMapper.insert(reservationDTO);
+    }
 }
