@@ -67,7 +67,7 @@
                     }
                 },
                 error:function(){
-                    alert("에러입니다");
+                    console.log("error");
                 }
             });
         }; //mailNumCheck 마무리
@@ -92,7 +92,7 @@
                         $('.id_already').css("display", "none");
                     } cntcheck = cnt;
                 }, error: function () {
-                    alert("에러입니다");
+                    console.log("error");
                 }
             });
         }; //checkId() 메서드 종료
@@ -131,10 +131,10 @@
                         $('.phone_already').css("display","inline-block");
                     } else {
                         $('.phone_already').css("display", "none");
-                        phoneCheck=false;
+                        phoneCheck=true;
                     }
                 }, error: function () {
-                    alert("에러입니다");
+                    console.log("error");
                 }
             });
         };

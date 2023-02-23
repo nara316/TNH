@@ -11,4 +11,6 @@ public interface ReservationMapper {
     public List<ReservationDTO> getReservationList();
 
     public ReservationDTO getReservation(int rno);
+
+    public void insert(ReservationDTO reservationDTO);
 }
