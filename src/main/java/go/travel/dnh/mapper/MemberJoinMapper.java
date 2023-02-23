@@ -19,5 +19,6 @@ public interface MemberJoinMapper {
 
     void updatePwd(Map map);
 
+    void insertSnsMember(MemberDTO memberDTO);
 
 }

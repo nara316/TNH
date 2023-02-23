@@ -21,6 +21,11 @@ public class MemberJoinRepositoryImpl implements MemberJoinRepository {
     }
 
     @Override
+    public void joinSnsMember(MemberDTO memberDTO) {
+        memberJoinMapper.insertSnsMember(memberDTO);
+    }
+
+    @Override
     public void insertMemberRole(Integer mno){
         memberJoinMapper.insertMemberRole(mno);
     }

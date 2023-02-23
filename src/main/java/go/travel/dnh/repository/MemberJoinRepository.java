@@ -7,6 +7,7 @@ public interface MemberJoinRepository {
     //회원가입 메서드
     public void joinMember(MemberDTO memberDTO);
 
+    public void joinSnsMember(MemberDTO memberDTO);
     public void insertMemberRole(Integer mno);
 
     public int readById(String mem_id);

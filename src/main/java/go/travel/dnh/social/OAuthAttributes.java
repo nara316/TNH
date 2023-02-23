@@ -24,7 +24,7 @@ public class OAuthAttributes {
 
     private static OAuthAttributes ofGoogle(String usernameAttributeName, Map<String, Object> attributes) {
         return OAuthAttributes.builder()
-                .name("google"+(String) attributes.get("name"))
+                .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .attributes(attributes)
                 .nameAttributeKey(usernameAttributeName)
@@ -33,19 +33,21 @@ public class OAuthAttributes {
     private static OAuthAttributes ofNaver(String usernameAttributeName, Map<String, Object> attributes) {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
         return OAuthAttributes.builder()
-                .name("naver"+(String) response.get("name"))
+                .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 .attributes(response)
                 .nameAttributeKey(usernameAttributeName)
                 .build();
     }
     private static OAuthAttributes ofKakao(String usernameAttributeName, Map<String, Object> attributes) {
+        System.out.println("usernameAttributeName = " + usernameAttributeName);
+        System.out.println("카카오로그인..");
         Map<String, Object> response = (Map<String, Object>) attributes.get("kakao_account");
         Map<String, Object> accountName = (Map<String, Object>) response.get("profile");
         String accountEmail = response.get("email").toString();
 
         return OAuthAttributes.builder()
-                .name("kakao"+(String) accountName.get("nickname"))
+                .name((String) accountName.get("nickname"))
                 .email((String) response.get("email"))
                 .attributes(attributes)
                 .nameAttributeKey(usernameAttributeName)

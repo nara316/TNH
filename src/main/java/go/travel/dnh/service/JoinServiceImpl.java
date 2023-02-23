@@ -47,6 +47,27 @@ public class JoinServiceImpl implements JoinService{
         memberJoinRepository.insertMemberRole(mno);
     }
 
+    @Transactional
+    public void joinSnsMember(MemberjoinForm form){
+
+        rawPwd = form.getMem_pwd();
+        encodePwd = bCryptPasswordEncoder.encode(rawPwd);
+
+        //성공로직
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setMem_id(form.getMem_id());
+        memberDTO.setMem_pwd(encodePwd);
+        memberDTO.setMem_name(form.getMem_name());
+        memberDTO.setMem_phone(form.getMem_phone());
+        memberDTO.setMem_gender(form.getMem_gender());
+        memberDTO.setMem_birth(form.getMem_birth());
+        memberDTO.setMem_sns(true);
+
+        memberJoinRepository.joinSnsMember(memberDTO);
+        int mno = memberDTO.getMno();
+        memberJoinRepository.insertMemberRole(mno);
+    }
+
     public int findMember(String mem_id){
         return memberJoinRepository.readById(mem_id);
     }

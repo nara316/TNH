@@ -73,16 +73,18 @@ public class LoginController {
             return "login/oauthjoin";
         }
         //성공했을 때
-        joinService.joinMember(form);
+        joinService.joinSnsMember(form);
         return "redirect:/";
     }
     @GetMapping("/mypage")
     public String MyPage(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
         MemberDTO findUser;
         if (loginUser == null) {
+            //일반로그인 user 찾기
             UserDetails userDetails=(UserDetails) authentication.getPrincipal();
             findUser = memberLoginService.findById(userDetails.getUsername());
         } else {
+            //소셜로그인 user 찾기
             findUser = memberLoginService.findById(loginUser.getMem_id());
         }
         model.addAttribute("memberDTO", findUser);
@@ -90,22 +92,26 @@ public class LoginController {
     }
 
     @PostMapping("/mypage")
-    public String upDate(@Validated @ModelAttribute("memberDTO")updateForm updateForm,BindingResult bindingResult,HttpServletResponse response) throws IOException {
+    public void upDate(@Validated @ModelAttribute("memberDTO")updateForm updateForm,BindingResult bindingResult,
+                       HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         System.out.println("updateForm.getMem_pwd() = " + updateForm.getMem_pwd());
-        if (bindingResult.hasErrors()||updateForm.getMem_pwd()==null) {
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('공백이나 빈값이 있을경우 수정이 불가합니다.'); </script>");
-            out.flush();
-            return "login/mypage";
-        }
+        String blank = "";
+        String redirectUrl ="http://localhost:8080/login/mypage";
+        if (bindingResult.hasErrors()||updateForm.getMem_pwd().equals(blank)) {
+            model.addAttribute("message", "공백이나 빈값이 있을경우 수정이 불가합니다.");
+            model.addAttribute("searchURL", "/login/mypage");
+        } else {
             //성공했을 때
             memberLoginService.updateUser(updateForm);
+            model.addAttribute("message", "수정이 완료되었습니다.");
+            model.addAttribute("searchURL", "/login/mypage");
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>alert('수정이 완료되었습니다.'); </script>");
             out.flush();
-            return "index";
+            response.sendRedirect("/login/mypage");
+        }
+
     }
 
     }

@@ -19,4 +19,6 @@ public interface JoinService {
 
     public String sendPwdMail(String mem_id);
 
+    public void joinSnsMember(MemberjoinForm form);
+
 }

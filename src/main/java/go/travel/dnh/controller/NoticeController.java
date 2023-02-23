@@ -40,7 +40,6 @@ public class NoticeController {
     //공지 글 등록
     @PostMapping("/write")
     public String Write(NoticeDTO noticeDTO, Model model, MultipartFile file) throws Exception {
-
         noticeBoardService.write(noticeDTO, file);
         model.addAttribute("message", "글 작성이 완료되었습니다.");
         model.addAttribute("searchURL", "/notice/list");

@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- Meta Tags -->
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Webestica.com">
+    <meta name="description" content="Booking - Multipurpose Online Booking Theme">
     <!-- 여기에 공통 적용할 css 및 js 등등 입력하면 됩니다-->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script>
@@ -32,40 +36,230 @@
             return true;
         };
     </script>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/bootstrap/images/favicon.ico">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/font-awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/flatpickr/css/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/choices/css/choices.min.css">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
 </head>
 
-<body>
-<div th:replace="fragments/nav :: nav">
-</div>
-<div class="login-form">
-    <h1>마이페이지</h1>
-    <form th:object="${memberDTO}" method="post">
-        <div>
-            아이디<input th:field="*{mem_id}"  name="mem_id" id="mem_id" readonly></input>
-        </div><br>
-        <div>
-            비밀번호<br>
-            <input type="password" th:value="${mem_pwd}" id="mem_pwd"  >
-        </div><br>
-        <div>
-            비밀번호 확인<br>
-            <input type="password"  th:value="${mem_pwd}" name="mem_pwd" id="mem_pwd_check" oninput="checkPwd()" >
-            <span class="pwdCorrectChk_msg"></span>
-        </div>
-        <div>
-            이름<p type="text" th:text="*{mem_name}" name="mem_name" readonly>
+<body class="dashboard">
+<!-- Header START /아직 없음 -->
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
 
-        </div><br>
-        <div>
-            핸드폰번호<br>
-            <input th:field="*{mem_phone}" name="mem_phone" id="mem_phone"></input>
-            <span class="phoneChk_msg"></span>
-        </div><br>
-        <div>
-            생년월일<br>
-            <p th:text="${#dates.format(memberDTO.mem_birth, 'yyyy-MM-dd')}" name="mem_birth" id="mem_birth"></p>
-            <span class="birthChk_msg"></span>
-        </div><br>
-        <button onclick="return check()">회원수정</button>
-    </form>
-</div>
+    <!-- =======================
+    Content START -->
+    <section class="pt-3">
+        <div class="container">
+            <div class="row">
+
+                <!-- Sidebar START -->
+                <div class="col-lg-4 col-xl-3">
+                    <!-- Responsive offcanvas body START -->
+                    <div class="offcanvas-lg offcanvas-end" tabindex="-1" id="offcanvasSidebar" >
+                        <!-- Offcanvas header -->
+                        <div class="offcanvas-header justify-content-end pb-2">
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasSidebar" aria-label="Close"></button>
+                        </div>
+
+                        <!-- Offcanvas body -->
+                        <div class="offcanvas-body p-3 p-lg-0" th:object="${memberDTO}">
+                            <div class="card bg-light w-100">
+                                <!-- Card body START -->
+                                <div class="card-body p-3">
+                                    <!-- content -->
+                                    <div class="text-center mb-3">
+                                        <h5 class="mb-0" th:text="*{mem_name}" ></h5>
+                                        <h6 class="text-reset text-primary-hover small" th:text="*{mem_id}" style="margin-top: 20px;"></h6>
+                                        <hr>
+                                    </div>
+
+                                    <!-- Sidebar menu item START -->
+                                    <ul class="nav nav-pills-primary-soft flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" th:href="@{/login/mypage}"><i class="bi bi-person fa-fw me-2"></i>내 프로필</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="account-bookings.html"><i class="bi bi-ticket-perforated fa-fw me-2"></i>예약 내역</a>
+                                        </li>
+                                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                                            <a class="nav-link text-danger bg-danger-soft-hover" th:href="@{/login/logout}" th:field="logout"><i class="fas fa-sign-out-alt fa-fw me-2"></i>로그아웃</a>
+                                        </li>
+                                    </ul>
+                                    <!-- Sidebar menu item END -->
+                                </div>
+                                <!-- Card body END -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Responsive offcanvas body END -->
+                </div>
+                <!-- Sidebar END -->
+
+                <!-- Main content START -->
+                <div class="col-lg-8 col-xl-9">
+
+                    <!-- Offcanvas menu button -->
+                    <div class="d-grid mb-0 d-lg-none w-100">
+                        <button class="btn btn-primary mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+                            <i class="fas fa-sliders-h"></i> Menu
+                        </button>
+                    </div>
+
+                    <div class="vstack gap-4">
+                        <!-- Verified message -->
+                        <div class="bg-light rounded p-3">
+                            <!-- Progress bar -->
+                            <div class="overflow-hidden">
+                                <h6>프로필 작성을 완료해주세요!</h6>
+                                <div class="progress progress-sm bg-success bg-opacity-10">
+                                    <div class="progress-bar bg-success aos" role="progressbar" data-aos="slide-right" data-aos-delay="200" data-aos-duration="1000" data-aos-easing="ease-in-out" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+                                        <span class="progress-percent-simple h6 fw-light ms-auto">85%</span>
+                                    </div>
+                                </div>
+                                <p class="mb-0">서비스 이용 시 필요한 정보사항을 입력해주세요.</p>
+                            </div>
+                            <!-- Content -->
+                            <div class="bg-body rounded p-3 mt-3">
+                                <ul class="list-inline hstack flex-wrap gap-2 justify-content-between mb-0">
+                                    <li class="list-inline-item h6 fw-normal mb-0"><a href="#"><i class="bi bi-check-circle-fill text-success me-2"></i>핸드폰 번호</a></li>
+                                    <li class="list-inline-item h6 fw-normal mb-0"><a href="#"><i class="bi bi-check-circle-fill text-success me-2"></i>비밀 번호</a></li>
+                                    <li class="list-inline-item h6 fw-normal mb-0"><a th:href="@{/login/mypage}" class="text-primary"><i class="bi bi-plus-circle-fill me-2"></i>상세 정보 입력하기</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Personal info START -->
+                        <div class="card border">
+                            <!-- Card header -->
+                            <div class="card-header border-bottom">
+                                <h4 class="card-header-title">내 프로필</h4>
+                            </div>
+
+                            <!-- Card body START -->
+                            <div class="card-body">
+                                <!-- Form START -->
+                                <form class="row g-3" th:object="${memberDTO}" method="post">
+                                    <!-- Name -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">이름</label>
+                                        <input type="text" class="form-control" th:field="*{mem_name}" name="mem_name" readonly>
+                                    </div>
+                                    <!-- Email -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">아이디</label>
+                                        <input type="email" class="form-control" th:field="*{mem_id}"  name="mem_id" id="mem_id" readonly>
+                                    </div>
+                                    <!-- New password -->
+                                    <div class="mb-3">
+                                        <label class="form-label">비밀번호 변경<span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input class="form-control fakepassword" placeholder="변경할 비밀번호를 입력해주세요." type="password" th:value="${mem_pwd}" id="mem_pwd">
+                                            <span class="input-group-text p-0 bg-transparent">
+										<i class="fakepasswordicon fas fa-eye-slash cursor-pointer p-2"></i>
+									</span>
+                                        </div>
+                                    </div>
+                                    <!-- Confirm -->
+                                    <div class="mb-3" style="margin-top: 10px;">
+                                        <label class="form-label">비밀번호 확인<span class="text-danger">*</span></label>
+                                        <input class="form-control" type="password" placeholder="비밀번호를 다시한번 입력해주세요." th:value="${mem_pwd}" name="mem_pwd" id="mem_pwd_check" oninput="checkPwd()">
+                                        <span class="pwdCorrectChk_msg" ></span>
+                                    </div>
+
+                                    <!-- Mobile -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">핸드폰 번호<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" th:field="*{mem_phone}" name="mem_phone" id="mem_phone">
+                                        <span class="phoneChk_msg"></span>
+                                    </div>
+                                    <!-- Date of birth -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">생년월일</label>
+                                        <p type="text" th:text="${#dates.format(memberDTO.mem_birth, 'yyyy-MM-dd')}" name="mem_birth" id="mem_birth" style="margin-top: 10px; color: #0b0a12;">
+                                    </div>
+                                    <!-- Button -->
+                                    <div class="col-12 text-end">
+                                        <button class="btn btn-primary mb-0" onclick="return check()">회원수정</button>
+                                    </div>
+                                </form>
+                                <!-- Form END -->
+                            </div>
+                            <!-- Card body END -->
+                        </div>
+                        <!-- Personal info END -->
+                    </div>
+                </div>
+                <!-- Main content END -->
+
+            </div>
+        </div>
+    </section>
+    <!-- =======================
+    Content END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+<!-- =======================
+Footer START -->
+<footer class="bg-dark p-3">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- Widget -->
+            <div class="col-md-4">
+                <div class="text-center text-md-start mb-3 mb-md-0">
+                    <a href="index.html"> <img class="h-30px" src="/bootstrap/images/logo-light.svg" alt="logo"> </a>
+                </div>
+            </div>
+
+            <!-- Widget -->
+            <div class="col-md-4">
+                <div class="text-muted text-primary-hover"> Copyrights ©2023 Booking. Build by <a href="https://www.webestica.com/" class="text-muted">Webestica</a>. </div>
+            </div>
+
+            <!-- Widget -->
+            <div class="col-md-4">
+                <ul class="list-inline mb-0 text-center text-md-end">
+                    <li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-facebook"></i></a></li>
+                    <li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-instagram"></i></a></li>
+                    <li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-linkedin-in"></i></a></li>
+                    <li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-twitter"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- =======================
+Footer END -->
+
+<!-- Back to top -->
+<div class="back-top"></div>
+
+<!-- Bootstrap JS -->
+<script src="/bootstrap/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Vendors -->
+<script src="/bootstrap/vendor/aos/aos.js"></script>
+<script src="/bootstrap/vendor/flatpickr/js/flatpickr.min.js"></script>
+<script src="/bootstrap/vendor/choices/js/choices.min.js"></script>
+
+<!-- ThemeFunctions -->
+<script src="/bootstrap/js/functions.js"></script>
+
+</body>
+</html>
