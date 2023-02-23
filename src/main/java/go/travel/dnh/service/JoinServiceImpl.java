@@ -48,7 +48,12 @@ public class JoinServiceImpl implements JoinService{
     }
 
     public int findMember(String mem_id){
-        return memberJoinRepository.findMember(mem_id);
+        return memberJoinRepository.readById(mem_id);
+    }
+
+    @Override
+    public int findMemberbyPhone(int mem_phone) {
+       return memberJoinRepository.readByPhone(mem_phone);
     }
 
     public void Sendmail(String mem_id){

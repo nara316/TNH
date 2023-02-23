@@ -9,6 +9,8 @@ public interface JoinService {
 
     public int findMember(String mem_id);
 
+    public int findMemberbyPhone(int mem_phone);
+
     public String randomNum();
 
     public int mailNumCheck(String checkInput);

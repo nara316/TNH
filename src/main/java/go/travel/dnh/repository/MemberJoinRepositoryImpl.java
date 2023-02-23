@@ -26,8 +26,13 @@ public class MemberJoinRepositoryImpl implements MemberJoinRepository {
     }
 
     @Override
-    public int findMember(String mem_id){
-        return memberJoinMapper.findMember(mem_id);
+    public int readById(String mem_id){
+        return memberJoinMapper.readById(mem_id);
+    }
+
+    @Override
+    public int readByPhone(Integer mem_pwd){
+        return memberJoinMapper.readByPhone(mem_pwd);
     }
 
     @Override

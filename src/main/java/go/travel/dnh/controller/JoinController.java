@@ -62,17 +62,24 @@ public class JoinController {
         return joinService.mailNumCheck(checkInput);
     }
 
+    //전화번호 중복 확인 메서드
+    @PostMapping("/mobileCheck")
+    @ResponseBody
+    public int moblieCheck(int mem_phone) {
+        int pnt = joinService.findMemberbyPhone(mem_phone);
+        return pnt;
+    }
+
     @GetMapping("/find")
     public String pwdFind(String mem_id) {
 
         return "member/pwdFindForm";
     }
 
-    @PostMapping ("/find")
-    public String pwdFindPost(String mem_id) {
-
-        return "member/pwdFindForm";
-    }
+//    @PostMapping ("/find")
+//    public String pwdFindPost(String mem_id) {
+//        return "login/loginForm";
+//    }
 
     //메일 보내면서 패스워드 바꾸는 메서드
     @PostMapping("/pwdFind")
