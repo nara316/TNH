@@ -1,59 +1,48 @@
 
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <div th:fragment="nav">
-  <!-- 메뉴 영역입니다 -->
-  <div class="menu view-size">
-    <div class="between flex">
-      <section>
-        <!--top logo-->
-        <div id="logo">
-          <a href="/" class="flex">
-            <img src="/imgs/logo.png" style="width:120px; height:80px;">
-          </a>
-        </div>
-      </section>
 
-      <section id="user-menu">
-        <!--유저메뉴-->
-        <div class="center">
-          <ul class="flex center">
-            <li class="join">
-              <button class="join-buttom" type="button"
-                      th:onclick="|location.href='@{/member/join}'|">
-                회원 가입!
-              </button>
-            </li>
-            <li sec:authorize="isAnonymous()" >
-              <a th:href="@{/login/loginForm}">로그인</a>
-            </li>
-            <li sec:authorize="isAuthenticated()">
-              <span sec:authentication="name"></span>
-            </li>
-            <li sec:authorize="isAuthenticated()">
-              <a th:href="@{/login/logout}" th:field="logout">로그아웃</a>
-            </li>
-            <li sec:authorize="isAuthenticated()" >
-              <a th:href="@{/login/mypage}">마이페이지</a>
-            </li>
-            <li >
-              <a href="/admin/main">관리자페이지</a>
-            </li>
-          </ul>
-        </div>
-      </section>
+  <!-- Header START -->
+  <header class="navbar-light header-sticky">
+    <!-- Logo Nav START -->
+    <nav class="navbar navbar-expand-xl">
+      <div class="container">
+        <!-- Logo START -->
+        <a class="navbar-brand" href="#">
+          <img class="light-mode-item navbar-brand-item" src="/bootstrap/images/logo.svg" alt="logo">
+        </a>
+        <!-- Logo END -->
 
+        <!-- Buttons START -->
+        <ul class="nav flex-row align-items-center list-unstyled ms-xl-auto">
+          <li class="nav-item">
+            <a th:href="@{/login/mypage}" class="nav-link small pb-2"><i class="bi bi-briefcase me-2"></i>My Page</a>
+          </li>
 
-    </div>
-    <div id="main-menu">
-      <!--메인메뉴-->
-      <ul class="flex center">
-        <li>
-          <a href="/air/search">항공권검색</a>
-        </li>
-        <li>
-          <a href="/air/list">항공권리스트</a>
-        </li>
-      </ul>
-    </div>
-  </div>
+          <!-- Login button START -->
+
+          <li class="nav-item">
+            <a th:href="@{/login/loginForm}" class="nav-link small pb-2"><i class="fa-solid fa-user me-2"></i>Login</a>
+          </li>
+          <li class="nav-item">
+            <a th:href="@{/login/logout}" class="nav-link small pb-2"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
+          </li>
+          <li class="nav-item">
+            <a th:href="@{/member/join}" class="nav-link small pb-2"><i class="fa-solid fa-right-to-bracket me-2"></i>Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a th:href="@{/admin/main}" class="nav-link small pb-2"><i class="fa-solid fa-screwdriver-wrench me-2"></i>Admin Page</a>
+          </li>
+          <!-- Login button END -->
+        </ul>
+        <!-- Buttons START -->
+
+      </div>
+    </nav>
+    <!-- Logo Nav END -->
+  </header>
+  <!-- Header END -->
 </div>
-
+</html>
