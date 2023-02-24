@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletOutputStream;
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/reservation")
@@ -33,18 +36,12 @@ public class ReservationController {
     }
 
     @PostMapping("/air")
-    public String join(ReservationDTO reservationDTO,@AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
+    public String join(ReservationDTO reservationDTO, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
 
-        MemberDTO findUser;
-        if (loginUser == null) {
-            UserDetails userDetails=(UserDetails) authentication.getPrincipal();
-            findUser = memberLoginService.findById(userDetails.getUsername());
-        } else {
-            findUser = memberLoginService.findById(loginUser.getMem_id());
-        }
-        int mno = findUser.getMno();
-       reservationService.insert(reservationDTO, mno);
+        int mno = memberLoginService.findMno(loginUser,authentication);
+        reservationService.insert(reservationDTO, mno);
         return "admin/main";
     }
+
 
 }
