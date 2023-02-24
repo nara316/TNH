@@ -1,5 +1,6 @@
 package go.travel.dnh.service;
 
+import go.travel.dnh.domain.User.LoginUser;
 import go.travel.dnh.domain.air.AirProductDTO;
 import go.travel.dnh.domain.air.AirportDTO;
 import go.travel.dnh.domain.air.PagingResponse;
@@ -8,6 +9,8 @@ import go.travel.dnh.domain.reservation.AirReservationDTO;
 import go.travel.dnh.domain.reservation.ReservationDetail;
 import go.travel.dnh.repository.AirProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,7 @@ import java.util.List;
 public class AirProductServiceImpl implements AirProductService{
 
     private final AirProductRepository airProductRepository;
+    private final MemberLoginService memberLoginService;
 
     @Override
     public List<AirProductDTO> getListAdmin() {
@@ -76,9 +80,9 @@ public class AirProductServiceImpl implements AirProductService{
 
     @Override
     @Transactional
-    public void reservation(AirReservationDTO dto, ReservationDetail detail) {
+    public void reservation(AirReservationDTO dto, ReservationDetail detail, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
 
-        Integer mno = 36;
+        Integer mno = memberLoginService.findMember(loginUser,authentication).getMno();
         dto.setMno(mno);
         Integer ano = dto.getOut_ano();
         //rno 만들기

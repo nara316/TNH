@@ -1,11 +1,14 @@
 package go.travel.dnh.controller;
 
+import go.travel.dnh.domain.User.LoginUser;
 import go.travel.dnh.domain.air.*;
 import go.travel.dnh.domain.reservation.AirReservationDTO;
 import go.travel.dnh.domain.reservation.ReservationDetail;
 import go.travel.dnh.service.AirProductService;
 import go.travel.dnh.validation.ReservationInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -89,8 +92,8 @@ public class AirController {
     //예약정보 저장하기
 
     @PostMapping("/reservation")
-    public String reservation(AirReservationDTO dto, @ModelAttribute("reservationDetails") ReservationDetail reservationDetails, Model m) {
-        airProductService.reservation(dto,reservationDetails);
+    public String reservation(AirReservationDTO dto, @ModelAttribute("reservationDetails") ReservationDetail reservationDetails, Model m, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
+        airProductService.reservation(dto,reservationDetails,loginUser,authentication);
         AirProductDTO outDTO = airProductService.readRes(dto.getOut_ano());
         AirProductDTO inDTO = airProductService.readRes(dto.getIn_ano());
         AirReservationDTO resDTO = dto;
