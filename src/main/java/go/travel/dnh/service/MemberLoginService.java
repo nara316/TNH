@@ -1,6 +1,9 @@
 package go.travel.dnh.service;
 
+import go.travel.dnh.domain.User.LoginUser;
 import go.travel.dnh.domain.member.MemberDTO;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 
 public interface MemberLoginService {
@@ -8,6 +11,8 @@ public interface MemberLoginService {
     MemberDTO findById(MemberDTO memberDTO);
 
     MemberDTO findById(String mem_id);
+
+    public int findMno(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
 
 
 }

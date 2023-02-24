@@ -23,7 +23,7 @@ public class MemberjoinForm {
     private String mem_id;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$")
+    //@Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$")
     private String mem_pwd;
 
     @NotBlank
