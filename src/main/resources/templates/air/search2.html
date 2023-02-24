@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/script :: script">
+  <link rel="stylesheet" href="/css/air/air-list.css">
+</head>
+
+<body>
+<div th:replace="fragments/nav :: nav">
+</div>
+
+<div class="center view-size">
+  <!--항공권 검색-->
+  <form th:action="@{/air/search}" method="post" >
+    <ul>
+      <li>
+        <label>가는날</label>
+        <input type="date" th:name="fromDate" th:value="${sch.fromDate}"/>
+      </li>
+      <li>
+        <label>오는날</label>
+        <input type="date" th:name="toDate" th:value="${sch.toDate}"/>
+      </li>
+      <li>
+        <label>출발지 선택</label>
+        <select th:field="*{sch.from}">
+          <option value="">출발지 선택</option>
+          <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                   th:utext="${list.ap_name}"></option>
+        </select>
+      </li>
+      <li>
+        <label>도착지 선택</label>
+        <select th:field="*{sch.to}">
+          <option value="">도착지 선택</option>
+          <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                   th:utext="${list.ap_name}"></option>
+        </select>
+      </li>
+      <li>
+        <label>인원</label>
+        <input type="number" th:name="ea" th:value="${sch.ea}">
+      </li>
+      <li>
+        <label>좌석등급</label>
+        <label>이코노미</label>
+        <input type="radio" th:value="A01" th:field="${sch.airGrade}">
+        <label>비즈니스</label>
+        <input type="radio" th:value="A02" th:field="${sch.airGrade}">
+      </li>
+    </ul>
+    <input type="submit" value="검색">
+  </form>
+</div>
+
+
+
+
+  </div>
+
+  <div th:replace="fragments/footer :: footer">
+  </div>
+</body>
+
+
+</html>
