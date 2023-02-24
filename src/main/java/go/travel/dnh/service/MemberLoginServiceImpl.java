@@ -48,7 +48,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     /*시큐리티로 mno찾기*/
-    public int findMno(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication){
+    public MemberDTO findMember(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication){
         MemberDTO findUser;
         if (loginUser == null) {
             UserDetails userDetails=(UserDetails) authentication.getPrincipal();
@@ -57,6 +57,6 @@ public class MemberLoginServiceImpl implements MemberLoginService {
             findUser = findById(loginUser.getMem_id());
         }
 
-        return findUser.getMno();
+        return findUser;
     }
 }
