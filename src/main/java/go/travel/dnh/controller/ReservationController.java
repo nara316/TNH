@@ -38,7 +38,7 @@ public class ReservationController {
     @PostMapping("/air")
     public String join(ReservationDTO reservationDTO, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
 
-        int mno = memberLoginService.findMno(loginUser,authentication);
+        int mno = memberLoginService.findMember(loginUser,authentication).getMno();
         reservationService.insert(reservationDTO, mno);
         return "admin/main";
     }

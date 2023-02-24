@@ -12,7 +12,7 @@ public interface MemberLoginService {
 
     MemberDTO findById(String mem_id);
 
-    public int findMno(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
+    public MemberDTO findMember(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
 
 
 }
