@@ -38,7 +38,7 @@ public class AirController {
     public String air_search(@ModelAttribute("sch") final SearchDTO sch, Model m) {
         List<AirportDTO> airportList = airProductService.getListAirport();
         m.addAttribute("airport",airportList);
-        return "air/search";
+        return "air/search2";
     }
     //항공권 검색
     @PostMapping("/search")
@@ -47,13 +47,20 @@ public class AirController {
         PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
         List<AirportDTO> airportList = airProductService.getListAirport();
 
+        System.out.println(sch.getAirGrade());
+        System.out.println(sch.getFrom());
+        System.out.println(sch.getTo());
+        System.out.println(sch.getEa());
+        System.out.println(sch.getFromDate());
+        System.out.println(sch.getToDate());
+
         if(listFrom.getList().isEmpty() || listTo.getList().isEmpty()) {
             res.setContentType("text/html; charset=UTF-8");
             PrintWriter out = res.getWriter();
             out.println("<script>alert('해당 항공편은 존재하지 않습니다. 다시 검색해주세요'); </script>");
             out.flush();
             m.addAttribute("airport",airportList);
-            return "air/search";
+            return "air/search2";
         }
         m.addAttribute("airFrom", listFrom);
         m.addAttribute("airTo", listTo);
