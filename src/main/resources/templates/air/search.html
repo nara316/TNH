@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
 <head>
     <div th:replace="fragments/script :: script">
 
     </div>
+
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/flatpickr/css/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/choices/css/choices.min.css">
+
 
 </head>
 
@@ -12,6 +16,8 @@
 <div th:replace="fragments/nav :: nav">
 </div>
 
+<!-- =======================
+Main Banner START -->
 <!-- **************** MAIN CONTENT START **************** -->
 <main>
 
@@ -29,7 +35,7 @@
                 </div>
 
                 <!-- Booking from START -->
-                <form class="bg-mode position-relative px-3 px-sm-4 pt-4 mb-4 mb-sm-0">
+                <form th:action="@{/air/search}" method="post" class="bg-mode position-relative px-3 px-sm-4 pt-4 mb-4 mb-sm-0">
 
                     <!-- Svg decoration -->
                     <figure class="position-absolute top-0 start-0 h-100 ms-n2 ms-sm-n1">
@@ -63,12 +69,10 @@
                         <!-- Ticket class -->
                         <div class="col-lg-3 ms-auto">
                             <div class="form-control-bg-light form-fs-md">
-                                <select class="form-select js-choice">
+                                <select class="form-select js-choice" name="airGrade">
                                     <option value="">Select Class</option>
-                                    <option>Economy</option>
-                                    <option>Premium Economy</option>
-                                    <option>Business</option>
-                                    <option>First Class</option>
+                                    <option th:value="A01" >Economy</option>
+                                    <option th:value="A02" >Business</option>
                                 </select>
                             </div>
                         </div>
@@ -76,7 +80,7 @@
                         <!-- Ticket Travelers -->
                         <div class="col-lg-3 ms-auto">
                             <div class="form-control-bg-light form-fs-md">
-                                <select class="form-select js-choice">
+                                <select class="form-select js-choice" th:name="ea" th:value="${sch.ea}">
                                     <option value="">Select Travelers</option>
                                     <option>1</option>
                                     <option>2</option>
@@ -96,12 +100,13 @@
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <!-- Input field -->
                                             <label class="mb-1"><i class="bi bi-geo-alt me-2"></i>From</label>
-                                            <select class="form-select js-choice" data-search-enabled="true">
+                                            <select class="form-select js-choice" data-search-enabled="true"
+                                                    onchange="document.getElementById('from').value = this.options[this.selectedIndex].value">
                                                 <option value="">Select location</option>
-                                                <option>San Jacinto, USA</option>
-                                                <option>North Dakota, Canada</option>
-                                                <option>West Virginia, Paris</option>
+                                                <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                         th:text="${list.ap_name}"></option>
                                             </select>
+
                                         </div>
 
                                         <!-- Auto fill button -->
@@ -115,11 +120,10 @@
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <!-- Input field -->
                                             <label class="mb-1"><i class="bi bi-send me-2"></i>To</label>
-                                            <select class="form-select js-choice" data-search-enabled="true">
+                                            <select class="form-select js-choice" data-search-enabled="true" th:field="*{sch.to}">
                                                 <option value="">Select location</option>
-                                                <option>San Jacinto, USA</option>
-                                                <option>North Dakota, Canada</option>
-                                                <option>West Virginia, Paris</option>
+                                                <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                         th:text="${list.ap_name}"></option>
                                             </select>
                                         </div>
                                     </div>
@@ -128,12 +132,12 @@
                                     <div class="col-lg-4">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="d M Y" placeholder="Select date">
+                                            <input type="text" class="form-control flatpickr" data-date-format="d M Y" placeholder="Select date" th:name="fromDate" th:value="${sch.fromDate}">
                                         </div>
                                     </div>
 
                                     <div class="col-12 text-end pt-0">
-                                        <a  class="btn btn-primary mb-n4" href="#">Find ticket <i class="bi bi-arrow-right ps-3"></i></a>
+                                        <input type="submit" class="btn btn-primary mb-n4" href="#">Find ticket <i class="bi bi-arrow-right ps-3"></i></input>
                                     </div>
                                 </div>
                             </div>
@@ -148,12 +152,13 @@
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <!-- Input field -->
                                             <label class="mb-1"><i class="bi bi-geo-alt me-2"></i>From</label>
-                                            <select class="form-select js-choice" data-search-enabled="true">
+                                            <select class="form-select js-choice" data-search-enabled="true"
+                                                    onchange="document.getElementById('from').value = this.options[this.selectedIndex].value">
                                                 <option value="">Select location</option>
-                                                <option>San Jacinto, USA</option>
-                                                <option>North Dakota, Canada</option>
-                                                <option>West Virginia, Paris</option>
+                                                <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                         th:text="${list.ap_name}"></option>
                                             </select>
+                                            <input type="hidden" id="from" value=""/>
                                         </div>
 
                                         <!-- Auto fill button -->
@@ -167,11 +172,10 @@
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <!-- Input field -->
                                             <label class="mb-1"><i class="bi bi-send me-2"></i>To</label>
-                                            <select class="form-select js-choice" data-search-enabled="true">
+                                            <select class="form-select js-choice" data-search-enabled="true" th:field="*{sch.to}">
                                                 <option value="">Select location</option>
-                                                <option>San Jacinto, USA</option>
-                                                <option>North Dakota, Canada</option>
-                                                <option>West Virginia, Paris</option>
+                                                <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                          th:text="${list.ap_name}"></option>
                                             </select>
                                         </div>
                                     </div>
@@ -180,7 +184,7 @@
                                     <div class="col-md-6 col-xl-3">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="d M Y" placeholder="Select date">
+                                            <input type="text" class="form-control flatpickr" data-date-format="Y M d" placeholder="Select date" th:name="fromDate" th:value="${sch.fromDate}">
                                         </div>
                                     </div>
 
@@ -188,12 +192,12 @@
                                     <div class="col-md-6 col-xl-3">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Return</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="d M Y" placeholder="Select date">
+                                            <input type="text" class="form-control flatpickr" data-date-format="Y M d" placeholder="Select date" th:name="toDate" th:value="${sch.toDate}">
                                         </div>
                                     </div>
 
                                     <div class="col-12 text-end pt-0">
-                                        <a  class="btn btn-primary mb-n4" href="#">Find ticket <i class="bi bi-arrow-right ps-3"></i></a>
+                                        <input type="submit" value="Find ticket" class="btn btn-primary mb-n4"> <i class="bi bi-arrow-right ps-3"></i></input>
                                     </div>
                                 </div>
                             </div>
@@ -215,4 +219,6 @@
 </div>
 
 </body>
+
+
 </html>
