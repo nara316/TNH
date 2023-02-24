@@ -2,6 +2,7 @@ package go.travel.dnh.controller;
 
 import go.travel.dnh.domain.User.LoginUser;
 import go.travel.dnh.domain.member.MemberDTO;
+import go.travel.dnh.domain.reservation.AirReservationDTO;
 import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.service.MemberLoginService;
 import go.travel.dnh.service.ReservationService;
@@ -43,5 +44,13 @@ public class ReservationController {
         return "admin/main";
     }
 
+    @GetMapping("/bookingList")
+    public String bookingList(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
+
+        MemberDTO memberDTO = memberLoginService.findMember(loginUser,authentication);
+        model.addAttribute("memberDTO", memberDTO);
+
+        return "order/bookingList";
+    }
 
 }
