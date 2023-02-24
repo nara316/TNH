@@ -2,6 +2,7 @@ package go.travel.dnh.domain.air;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import go.travel.dnh.domain.reservation.AirReservationDTO;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,5 +34,6 @@ public class AirProductDTO {
     private AirlineDTO AirlineDTO;
     private AirportDTO AirportDTO;
     private AirGradeOptionDTO AirGradeOptionDTO;
+    private AirReservationDTO AirReservationDTO;
 
 }

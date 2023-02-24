@@ -22,6 +22,10 @@
         <result column="agop_code" property="agop_code"/>
         <result column="agop_name" property="agop_name"/>
     </resultMap>
+
+    <resultMap id="AirReservationDTO" type="AirReservationDTO">
+        <result column="rno" property="rno"/>
+    </resultMap>
     <!--메인테이블-->
     <resultMap id="AirProductDTO" type="AirProductDTO">
         <result column="ano" property="ano"/>
@@ -39,6 +43,7 @@
         <collection property="airlineDTO" resultMap="AirlineDTO"/>
         <collection property="airportDTO" resultMap="AirportDTO"/>
         <collection property="airGradeOptionDTO" resultMap="AirGradeOptionDTO"/>
+        <collection property="AirReservationDTO" resultMap="AirReservationDTO"/>
     </resultMap>
 
     <sql id="productColumns">
@@ -125,6 +130,17 @@
             ,p.ar_fl_no ,p.ar_from_date, p.ar_to_date ,ar_price
         from air_product p
         where p.ano = #{ano}
+    </select>
+    <!--잉이잉ㅇ!!!!!!!!!!!!-->
+    <!--잉이잉ㅇ!!!!!!!!!!!!-->
+    <select id="selectMyRes" resultMap="AirProductDTO">
+        select
+                (select ap_name from airport  where ap_code = p.ar_from) ar_from,
+                (select ap_name from airport where ap_code = p.ar_to) ar_to,
+                (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code,
+                p.ar_from_date, p.ar_to_date
+        from air_product p, reservation2 res
+        where p.ano = res.out_ano and mno = #{mno};
     </select>
     
 </mapper>
