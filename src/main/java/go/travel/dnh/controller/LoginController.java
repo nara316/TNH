@@ -79,15 +79,8 @@ public class LoginController {
     }
     @GetMapping("/mypage")
     public String MyPage(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
-        MemberDTO findUser;
-        if (loginUser == null) {
-            //일반로그인 user 찾기
-            UserDetails userDetails=(UserDetails) authentication.getPrincipal();
-            findUser = memberLoginService.findById(userDetails.getUsername());
-        } else {
-            //소셜로그인 user 찾기
-            findUser = memberLoginService.findById(loginUser.getMem_id());
-        }
+        MemberDTO findUser = memberLoginService.findMember(loginUser,authentication);
+
         model.addAttribute("memberDTO", findUser);
         return "login/mypage";
     }
