@@ -38,48 +38,76 @@ public class AirController {
     public String air_search(@ModelAttribute("sch") final SearchDTO sch, Model m) {
         List<AirportDTO> airportList = airProductService.getListAirport();
         m.addAttribute("airport",airportList);
-        return "air/search2";
+        return "air/search";
     }
     //항공권 검색
     @PostMapping("/search")
     public String air_search(@ModelAttribute("sch") final SearchDTO sch, HttpServletResponse res, Model m) throws IOException {
+        PagingResponse<AirProductDTO> listOneWay = airProductService.getSearchOneWayList(sch);
         PagingResponse<AirProductDTO> listFrom = airProductService.getSearchFromList(sch);
         PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
         List<AirportDTO> airportList = airProductService.getListAirport();
 
-        System.out.println(sch.getAirGrade());
-        System.out.println(sch.getFrom());
-        System.out.println(sch.getTo());
-        System.out.println(sch.getEa());
-        System.out.println(sch.getFromDate());
-        System.out.println(sch.getToDate());
 
-        if(listFrom.getList().isEmpty() || listTo.getList().isEmpty()) {
-            res.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = res.getWriter();
-            out.println("<script>alert('해당 항공편은 존재하지 않습니다. 다시 검색해주세요'); </script>");
-            out.flush();
-            m.addAttribute("airport",airportList);
-            return "air/search2";
-        }
-        m.addAttribute("airFrom", listFrom);
-        m.addAttribute("airTo", listTo);
-        m.addAttribute("airport",airportList);
-
-        //여기 너무 하드코딩인데 바꾸고 십어요
-        String from = "";
-        String to = "";
-        for (int i = 0; i < airportList.size(); i++) {
-            if(sch.getFrom().equals(airportList.get(i).getAp_code())){
-                from = airportList.get(i).getAp_name();
-            } else if(sch.getTo().equals(airportList.get(i).getAp_code())){
-                to = airportList.get(i).getAp_name();
+        //편도
+        if(sch.getRoundFrom()==null){
+            if(listOneWay.getList().isEmpty()){
+                res.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = res.getWriter();
+                out.println("<script>alert('해당 항공편은 존재하지 않습니다. 다시 검색해주세요'); </script>");
+                out.flush();
+                m.addAttribute("airport",airportList);
+                return "air/search";
             }
-        }
-        m.addAttribute("fromAP",from);
-        m.addAttribute("toAP",to);
+            System.out.println(sch.getEa());
+            System.out.println(sch.getOneFromDate());
+            m.addAttribute("airOneWay", listOneWay);
+            m.addAttribute("airport",airportList);
 
-        return "air/search-list";
+            String from = "";
+            String to = "";
+            for (int i = 0; i < airportList.size(); i++) {
+                if(sch.getOneFrom().equals(airportList.get(i).getAp_code())){
+                    from = airportList.get(i).getAp_name();
+                } else if(sch.getOneTo().equals(airportList.get(i).getAp_code())){
+                    to = airportList.get(i).getAp_name();
+                }
+            }
+            m.addAttribute("fromAP",from);
+            m.addAttribute("toAP",to);
+
+            return "air/search-list-oneway";
+
+        }
+        //왕복
+        else if (sch.getOneFrom()==null) {
+            if(listFrom.getList().isEmpty() || listTo.getList().isEmpty()){
+                res.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = res.getWriter();
+                out.println("<script>alert('해당 항공편은 존재하지 않습니다. 다시 검색해주세요'); </script>");
+                out.flush();
+                m.addAttribute("airport",airportList);
+                return "air/search";
+            }
+            System.out.println(listFrom.getPagination().getTotalRecordCount());
+            System.out.println(listTo.getPagination().getTotalRecordCount());
+            m.addAttribute("airFrom", listFrom);
+            m.addAttribute("airTo", listTo);
+            m.addAttribute("airport",airportList);
+
+            String from = "";
+            String to = "";
+            for (int i = 0; i < airportList.size(); i++) {
+                if(sch.getRoundFrom().equals(airportList.get(i).getAp_code())){
+                    from = airportList.get(i).getAp_name();
+                } else if(sch.getRoundTo().equals(airportList.get(i).getAp_code())){
+                    to = airportList.get(i).getAp_name();
+                }
+            }
+            m.addAttribute("fromAP",from);
+            m.addAttribute("toAP",to);
+        }
+        return "air/search-list-round";
     }
 
     // 예약정보 예약화면에 넘기기
@@ -87,11 +115,20 @@ public class AirController {
     public String check(@ModelAttribute("resInfo") final ReservationInfo resInfo,Model m) {
         AirProductDTO outPro = airProductService.readRes(resInfo.getAir_from_check());
         AirProductDTO inPro = airProductService.readRes(resInfo.getAir_to_check());
+        AirProductDTO onewayPro = airProductService.readRes(resInfo.getAir_oneway_check());
 
-        m.addAttribute("resInfo",resInfo);
-        m.addAttribute("outPro",outPro);
-        m.addAttribute("inPro", inPro);
-        return "/air/reservation";
+        System.out.println(resInfo.getAir_oneway_check());
+
+        if(resInfo.getAir_oneway_check()!=null){
+            m.addAttribute("resInfo",resInfo);
+            m.addAttribute("onewayPro",onewayPro);
+            return "air/reservation2";
+        } else {
+            m.addAttribute("resInfo", resInfo);
+            m.addAttribute("outPro", outPro);
+            m.addAttribute("inPro", inPro);
+            return "/air/reservation";
+        }
     }
 
 
@@ -104,10 +141,15 @@ public class AirController {
         AirProductDTO outDTO = airProductService.readRes(dto.getOut_ano());
         AirProductDTO inDTO = airProductService.readRes(dto.getIn_ano());
         AirReservationDTO resDTO = dto;
+
         m.addAttribute("resDTO", resDTO);
         m.addAttribute("outDTO", outDTO);
         m.addAttribute("inDTO", inDTO);
-        return "air/order";
+
+        if(inDTO==null){
+            return "air/order2";}
+        else
+            return "air/order";
     }
 
 

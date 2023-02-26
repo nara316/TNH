@@ -25,6 +25,7 @@ public interface AirProductRepository {
 
     PagingResponse<AirProductDTO> airProductSchFrom(SearchDTO sch);
     PagingResponse<AirProductDTO> airProductSchTo(SearchDTO sch);
+    PagingResponse<AirProductDTO> airProductSchOneWay(SearchDTO sch);
 
     List<AirportDTO> airportList();
 

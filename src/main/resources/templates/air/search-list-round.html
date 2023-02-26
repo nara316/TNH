@@ -18,15 +18,15 @@
       <ul>
         <li>
           <label>가는날</label>
-          <input type="date" th:name="fromDate" th:value="${sch.fromDate}"/>
+          <input type="date" th:name="roundFromDate" th:value="${sch.roundFromDate}"/>
         </li>
         <li>
           <label>오는날</label>
-          <input type="date" th:name="toDate" th:value="${sch.toDate}"/>
+          <input type="date" th:name="roundToDate" th:value="${sch.roundToDate}"/>
         </li>
         <li>
           <label>출발지 선택</label>
-          <select th:field="*{sch.from}">
+          <select th:field="*{sch.roundFrom}">
             <option value="">출발지 선택</option>
             <option  th:each="list : ${airport}" th:value="${list.ap_code}"
                      th:utext="${list.ap_name}"></option>
@@ -34,7 +34,7 @@
         </li>
         <li>
           <label>도착지 선택</label>
-          <select th:field="*{sch.to}">
+          <select th:field="*{sch.roundTo}">
             <option value="">도착지 선택</option>
             <option  th:each="list : ${airport}" th:value="${list.ap_code}"
                      th:utext="${list.ap_name}"></option>
