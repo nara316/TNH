@@ -14,6 +14,7 @@ public class ReservationInfo {
     private String air_to;
     private Integer air_from_check;
     private Integer air_to_check;
+    private Integer air_oneway_check;
     private Integer ea;
 
 }

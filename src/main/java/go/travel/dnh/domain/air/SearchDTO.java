@@ -10,10 +10,13 @@ public class SearchDTO {
     private int pageNum;
     private int amount;
     private int pageSize;
-    private String fromDate;
-    private String toDate;
-    private Integer from;
-    private Integer to;
+    private String oneFromDate;
+    private Integer oneFrom;
+    private Integer oneTo;
+    private String roundFromDate;
+    private String roundToDate;
+    private Integer roundFrom;
+    private Integer roundTo;
     private Integer ea;
     private String airGrade;
     private Pagination pagination;

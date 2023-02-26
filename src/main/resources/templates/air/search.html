@@ -100,8 +100,7 @@ Main Banner START -->
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <!-- Input field -->
                                             <label class="mb-1"><i class="bi bi-geo-alt me-2"></i>From</label>
-                                            <select class="form-select js-choice" data-search-enabled="true"
-                                                    onchange="document.getElementById('from').value = this.options[this.selectedIndex].value">
+                                            <select class="form-select js-choice" data-search-enabled="true" name="oneFrom">
                                                 <option value="">Select location</option>
                                                 <option  th:each="list : ${airport}" th:value="${list.ap_code}"
                                                          th:text="${list.ap_name}"></option>
@@ -120,7 +119,7 @@ Main Banner START -->
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <!-- Input field -->
                                             <label class="mb-1"><i class="bi bi-send me-2"></i>To</label>
-                                            <select class="form-select js-choice" data-search-enabled="true" th:field="*{sch.to}">
+                                            <select class="form-select js-choice" data-search-enabled="true" name="oneTo">
                                                 <option value="">Select location</option>
                                                 <option  th:each="list : ${airport}" th:value="${list.ap_code}"
                                                          th:text="${list.ap_name}"></option>
@@ -132,12 +131,12 @@ Main Banner START -->
                                     <div class="col-lg-4">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="d M Y" placeholder="Select date" th:name="fromDate" th:value="${sch.fromDate}">
+                                            <input type="text" class="form-control flatpickr" data-date-format="YMd" placeholder="Select date" th:field="*{sch.oneFromDate}">
                                         </div>
                                     </div>
 
                                     <div class="col-12 text-end pt-0">
-                                        <input type="submit" class="btn btn-primary mb-n4" href="#">Find ticket <i class="bi bi-arrow-right ps-3"></i></input>
+                                        <input type="submit" value="Find ticket" class="btn btn-primary mb-n4"> <i class="bi bi-arrow-right ps-3"></i></input>
                                     </div>
                                 </div>
                             </div>
@@ -152,13 +151,11 @@ Main Banner START -->
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <!-- Input field -->
                                             <label class="mb-1"><i class="bi bi-geo-alt me-2"></i>From</label>
-                                            <select class="form-select js-choice" data-search-enabled="true"
-                                                    onchange="document.getElementById('from').value = this.options[this.selectedIndex].value">
+                                            <select class="form-select js-choice" data-search-enabled="true" name="roundFrom">
                                                 <option value="">Select location</option>
                                                 <option  th:each="list : ${airport}" th:value="${list.ap_code}"
                                                          th:text="${list.ap_name}"></option>
                                             </select>
-                                            <input type="hidden" id="from" value=""/>
                                         </div>
 
                                         <!-- Auto fill button -->
@@ -172,7 +169,7 @@ Main Banner START -->
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <!-- Input field -->
                                             <label class="mb-1"><i class="bi bi-send me-2"></i>To</label>
-                                            <select class="form-select js-choice" data-search-enabled="true" th:field="*{sch.to}">
+                                            <select class="form-select js-choice" data-search-enabled="true" name="roundTo">
                                                 <option value="">Select location</option>
                                                 <option  th:each="list : ${airport}" th:value="${list.ap_code}"
                                                           th:text="${list.ap_name}"></option>
@@ -184,7 +181,7 @@ Main Banner START -->
                                     <div class="col-md-6 col-xl-3">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="Y M d" placeholder="Select date" th:name="fromDate" th:value="${sch.fromDate}">
+                                            <input type="text" class="form-control flatpickr" data-date-format="YMd" placeholder="Select date" name="roundFromDate" >
                                         </div>
                                     </div>
 
@@ -192,7 +189,7 @@ Main Banner START -->
                                     <div class="col-md-6 col-xl-3">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Return</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="Y M d" placeholder="Select date" th:name="toDate" th:value="${sch.toDate}">
+                                            <input type="text" class="form-control flatpickr" data-date-format="YMd" placeholder="Select date" name="roundToDate">
                                         </div>
                                     </div>
 
