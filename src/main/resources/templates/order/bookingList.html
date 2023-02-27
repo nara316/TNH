@@ -29,75 +29,8 @@
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
 
 </head>
-
 <body class="dashboard">
-
-<!-- Header START -->
-<header class="navbar-light header-sticky">
-    <!-- Logo Nav START -->
-    <nav class="navbar navbar-expand-xl">
-        <div class="container">
-            <!-- Logo START -->
-            <a class="navbar-brand" href="/">
-                <img class="light-mode-item navbar-brand-item" src="/bootstrap/images/logo.svg" alt="logo">
-                <img class="dark-mode-item navbar-brand-item" src="/bootstrap/images/logo-light.svg" alt="logo">
-            </a>
-            <!-- Logo END -->
-
-            <!-- Responsive navbar toggler -->
-            <button class="navbar-toggler ms-auto mx-3 me-md-0 p-0 p-sm-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-animation">
-					<span></span>
-					<span></span>
-					<span></span>
-				</span>
-            </button>
-
-            <!-- Profile and Notification START -->
-            <ul class="nav flex-row align-items-center list-unstyled ms-xl-auto">
-                <!-- Profile dropdown START -->
-                <li class="nav-item ms-3 dropdown">
-                    <!-- Avatar -->
-                    <a class="avatar avatar-xs p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="avatar-img rounded-circle" src="/bootstrap/images/avatar/01.jpg" alt="avatar">
-                    </a>
-
-                    <!-- Profile dropdown START -->
-                    <ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3" aria-labelledby="profileDropdown">
-                        <!-- Profile info -->
-                        <li class="px-3 mb-3">
-                            <div class="d-flex align-items-center">
-                                <!-- Avatar -->
-                                <div class="avatar me-3">
-                                    <img class="avatar-img rounded-circle shadow" src="/bootstrap/images/avatar/01.jpg" alt="avatar">
-                                </div>
-                                <div>
-                                    <a class="h6 mt-2 mt-sm-0" href="#">Lori Ferguson</a>
-                                    <p class="small m-0">example@gmail.com</p>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Links -->
-                        <li> <hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark-check fa-fw me-2"></i>My Bookings</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-heart fa-fw me-2"></i>My Wishlist</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear fa-fw me-2"></i>Settings</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-info-circle fa-fw me-2"></i>Help Center</a></li>
-                        <li><a class="dropdown-item bg-danger-soft-hover" href="#"><i class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
-                        <li> <hr class="dropdown-divider"></li>
-
-                    </ul>
-                    <!-- Profile dropdown END -->
-                </li>
-                <!-- Profile dropdown END -->
-            </ul>
-            <!-- Profile and Notification START -->
-        </div>
-    </nav>
-    <!-- Logo Nav END -->
-</header>
-<!-- Header END -->
+<div th:replace="fragments/nav :: nav"></div>
 
 <!-- **************** MAIN CONTENT START **************** -->
 <main>
@@ -132,16 +65,13 @@
                                     <!-- Sidebar menu item START -->
                                     <ul class="nav nav-pills-primary-soft flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" th:href="@{/login/mypage}"><i class="bi bi-person fa-fw me-2"></i>My Profile</a>
+                                            <a class="nav-link" th:href="@{/login/mypage}"><i class="bi bi-person fa-fw me-2"></i>내 프로필</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" th:href="@{/reservation/bookingList}"><i class="bi bi-ticket-perforated fa-fw me-2"></i>My Bookings</a>
+                                            <a class="nav-link active" th:href="@{/reservation/bookingList}"><i class="bi bi-ticket-perforated fa-fw me-2"></i>예약 내역</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="account-delete.html"><i class="bi bi-trash fa-fw me-2"></i>Delete Profile</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-danger bg-danger-soft-hover" href="#"><i class="fas fa-sign-out-alt fa-fw me-2"></i>Sign Out</a>
+                                            <a class="nav-link text-danger bg-danger-soft-hover" href="#"><i class="fas fa-sign-out-alt fa-fw me-2"></i>로그아웃</a>
                                         </li>
                                     </ul>
                                     <!-- Sidebar menu item END -->
@@ -190,7 +120,7 @@
                             <div class="tab-content p-2 p-sm-4" id="nav-tabContent">
 
                                 <!-- Tab content item START -->
-                                <div class="tab-pane fade show active" id="tab-1">
+                                <div class="tab-pane fade show active" id="tab-1" th:each="list : ${revList}">
                                     <h6>Completed booking</h6>
                                     <!-- Card item START -->
                                     <div class="card border mb-4">
@@ -201,17 +131,16 @@
                                                 <div class="icon-lg bg-light rounded-circle flex-shrink-0"><i class="fa-solid fa-plane"></i></div>
                                                 <!-- Title -->
                                                 <div class="ms-2">
-                                                    <h6 class="card-title mb-0">France to New York</h6>
+                                                    <h6 class="card-title mb-0">[[${list.ar_from}]] <i class="fa-solid fa-right-long"></i> [[${list.ar_to}]]</h6>
                                                     <ul class="nav nav-divider small">
-                                                        <li class="nav-item">Booking ID: CGDSUAHA12548</li>
-                                                        <li class="nav-item">Business class</li>
+                                                        <li class="nav-item">Booking ID: [[${list.rno}]]</li>
                                                     </ul>
                                                 </div>
                                             </div>
 
                                             <!-- Button -->
                                             <div class="mt-2 mt-md-0">
-                                                <a href="#" class="btn btn-primary-soft mb-0">Manage Booking</a>
+                                                <a href="#" class="btn btn-primary-soft mb-0">예약 상세</a>
                                             </div>
                                         </div>
 
@@ -219,18 +148,18 @@
                                         <div class="card-body">
                                             <div class="row g-3">
                                                 <div class="col-sm-6 col-md-4">
-                                                    <span>Departure time</span>
-                                                    <h6 class="mb-0">Tue 05 Aug 12:00 AM</h6>
+                                                    <span>Check in time</span>
+                                                    <h6 th:text="${#temporals.format(list.ar_from_date, 'yy-MM-dd HH:mm')}" class="mb-0"/>
                                                 </div>
 
                                                 <div class="col-sm-6 col-md-4">
-                                                    <span>Arrival time</span>
-                                                    <h6 class="mb-0">Tue 06 Aug 4:00 PM</h6>
+                                                    <span>Check out time</span>
+                                                    <h6 th:text="${#temporals.format(list.ar_to_date, 'yy-MM-dd HH:mm')}" class="mb-0"/>
                                                 </div>
 
                                                 <div class="col-md-4">
-                                                    <span>Booked by</span>
-                                                    <h6 class="mb-0">Frances Guerrero</h6>
+                                                    <span>Payment Satus</span>
+                                                    <h6 class="mb-0">[[${list.arp_state}]]</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -281,7 +210,7 @@
                                                 </div>
 
                                                 <div class="col-md-4">
-                                                    <span>Booked by</span>
+                                                    <span>Payment status</span>
                                                     <h6 class="mb-0">Frances Guerrero</h6>
                                                 </div>
                                             </div>
