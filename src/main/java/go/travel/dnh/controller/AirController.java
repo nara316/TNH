@@ -59,8 +59,6 @@ public class AirController {
                 m.addAttribute("airport",airportList);
                 return "air/search";
             }
-            System.out.println(sch.getEa());
-            System.out.println(sch.getOneFromDate());
             m.addAttribute("airOneWay", listOneWay);
             m.addAttribute("airport",airportList);
 
@@ -76,7 +74,7 @@ public class AirController {
             m.addAttribute("fromAP",from);
             m.addAttribute("toAP",to);
 
-            return "air/search-list-oneway";
+            return "/air/search-list-oneway";
 
         }
         //왕복
@@ -89,8 +87,6 @@ public class AirController {
                 m.addAttribute("airport",airportList);
                 return "air/search";
             }
-            System.out.println(listFrom.getPagination().getTotalRecordCount());
-            System.out.println(listTo.getPagination().getTotalRecordCount());
             m.addAttribute("airFrom", listFrom);
             m.addAttribute("airTo", listTo);
             m.addAttribute("airport",airportList);
@@ -107,8 +103,33 @@ public class AirController {
             m.addAttribute("fromAP",from);
             m.addAttribute("toAP",to);
         }
+        return "/air/search-list-round";
+    }
+
+    @GetMapping("/search-list-oneway")
+    public String onewaySchList(@ModelAttribute("sch") final SearchDTO sch,Model m){
+        PagingResponse<AirProductDTO> listOneWay = airProductService.getSearchOneWayList(sch);
+        List<AirportDTO> airportList = airProductService.getListAirport();
+
+        m.addAttribute("airOneWay", listOneWay);
+        m.addAttribute("airport",airportList);
+
+        return "air/search-list-oneway";
+    }
+
+    @GetMapping("/search-list-round")
+    public String roundSchList(@ModelAttribute("sch") final SearchDTO sch,Model m){
+
+        PagingResponse<AirProductDTO> listFrom = airProductService.getSearchFromList(sch);
+        PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
+        List<AirportDTO> airportList = airProductService.getListAirport();
+
+        m.addAttribute("airFrom", listFrom);
+        m.addAttribute("airTo", listTo);
+        m.addAttribute("airport",airportList);
         return "air/search-list-round";
     }
+
 
     // 예약정보 예약화면에 넘기기
     @PostMapping("/res-check")
