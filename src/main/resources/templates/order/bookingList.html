@@ -119,9 +119,9 @@
                             <!-- Tabs content START -->
                             <div class="tab-content p-2 p-sm-4" id="nav-tabContent">
                                 <!-- Tab content item START -->
-                                <div class="tab-pane fade show active" id="tab-1" th:each="list : ${revList}">
+                                <div class="tab-pane fade show active" id="tab-1">
                                     <!-- Card item START -->
-                                    <div class="card border mb-4">
+                                    <div class="card border mb-4" th:each="list : ${revList}">
                                         <!-- Card header -->
                                         <div class="card-header border-bottom d-md-flex justify-content-md-between align-items-center">
                                             <!-- Icon and Title -->
