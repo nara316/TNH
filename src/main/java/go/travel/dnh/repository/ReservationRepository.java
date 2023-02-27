@@ -11,11 +11,13 @@ public interface ReservationRepository {
 
     public List<ReservationDTO> getReservationList();
 
-    public ReservationDTO getReservation(int rno);
+    public AirReservationListDTO getReservation(Long rno);
 
     public void insert(ReservationDTO reservationDTO);
 
     public List<AirReservationDTO> readList(int mno);
 
     public List<AirReservationListDTO> selectMyRes(int mno);
+
+    public List<AirReservationListDTO> getReservationDetail(Long rno);
 }

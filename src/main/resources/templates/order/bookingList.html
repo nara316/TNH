@@ -106,10 +106,10 @@
                             <!-- Tabs -->
                             <ul class="nav nav-tabs nav-bottom-line nav-responsive nav-justified">
                                 <li class="nav-item">
-                                    <a class="nav-link mb-0 active" data-bs-toggle="tab" href="#tab-1"><i class="bi bi-briefcase-fill fa-fw me-1"></i>Upcoming Booking</a>
+                                    <a class="nav-link mb-0 active" data-bs-toggle="tab" href="#tab-1"><i class="bi bi-briefcase-fill fa-fw me-1"></i>예약내역</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mb-0" data-bs-toggle="tab" href="#tab-2"><i class="bi bi-x-octagon fa-fw me-1"></i>Canceled Booking</a>
+                                    <a class="nav-link mb-0" data-bs-toggle="tab" href="#tab-2"><i class="bi bi-x-octagon fa-fw me-1"></i>취소내역</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link mb-0" data-bs-toggle="tab" href="#tab-3"><i class="bi bi-patch-check fa-fw me-1"></i>Completed Booking</a>
@@ -118,10 +118,8 @@
 
                             <!-- Tabs content START -->
                             <div class="tab-content p-2 p-sm-4" id="nav-tabContent">
-
                                 <!-- Tab content item START -->
                                 <div class="tab-pane fade show active" id="tab-1" th:each="list : ${revList}">
-                                    <h6>Completed booking</h6>
                                     <!-- Card item START -->
                                     <div class="card border mb-4">
                                         <!-- Card header -->
@@ -131,16 +129,17 @@
                                                 <div class="icon-lg bg-light rounded-circle flex-shrink-0"><i class="fa-solid fa-plane"></i></div>
                                                 <!-- Title -->
                                                 <div class="ms-2">
-                                                    <h6 class="card-title mb-0">[[${list.ar_from}]] <i class="fa-solid fa-right-long"></i> [[${list.ar_to}]]</h6>
+                                                    <h6 class="card-title mb-0">[[${list.ar_from}]] <i class="fa-solid fa-right-left"></i> [[${list.ar_to}]]</h6>
                                                     <ul class="nav nav-divider small">
-                                                        <li class="nav-item">Booking ID: [[${list.rno}]]</li>
+                                                        <li class="nav-item">Booking Num : [[${list.rno}]]</li>
+                                                        <li class="nav-item">[[${list.agop_code}]]</li>
                                                     </ul>
                                                 </div>
                                             </div>
 
                                             <!-- Button -->
                                             <div class="mt-2 mt-md-0">
-                                                <a href="#" class="btn btn-primary-soft mb-0">예약 상세</a>
+                                                <a href="#" th:onclick="|location.href='@{/order/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a>
                                             </div>
                                         </div>
 
@@ -148,17 +147,17 @@
                                         <div class="card-body">
                                             <div class="row g-3">
                                                 <div class="col-sm-6 col-md-4">
-                                                    <span>Check in time</span>
+                                                    <span>출발 시각</span>
                                                     <h6 th:text="${#temporals.format(list.ar_from_date, 'yy-MM-dd HH:mm')}" class="mb-0"/>
                                                 </div>
 
                                                 <div class="col-sm-6 col-md-4">
-                                                    <span>Check out time</span>
+                                                    <span>도착 시각</span>
                                                     <h6 th:text="${#temporals.format(list.ar_to_date, 'yy-MM-dd HH:mm')}" class="mb-0"/>
                                                 </div>
 
                                                 <div class="col-md-4">
-                                                    <span>Payment Satus</span>
+                                                    <span>결제상태</span>
                                                     <h6 class="mb-0">[[${list.arp_state}]]</h6>
                                                 </div>
                                             </div>
@@ -168,6 +167,7 @@
                                 </div>
                                 <!-- Tabs content item END -->
 
+                                <!-- 여기는 건들지 마시오-->
                                 <!-- Tab content item START -->
                                 <div class="tab-pane fade" id="tab-2">
                                     <h6>Cancelled booking</h6>
@@ -236,7 +236,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <!-- Tabs content item END -->
                             </div>

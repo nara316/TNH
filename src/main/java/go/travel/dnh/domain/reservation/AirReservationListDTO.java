@@ -16,13 +16,24 @@ import java.util.Date;
 public class AirReservationListDTO {
 
     private Long rno;
+    private Integer mno;
     private String ar_from;
     private String ar_to;
     private String agop_code;
     private String arp_state;
+    private Integer arp_count;
+    private Integer arp_price;
+    private String ko_name;
+    private String en_lname;
+    private String en_fname;
+    private String birth;
+    private String gender;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime arp_date;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime ar_from_date;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime ar_to_date;
+
 
 }

@@ -30,7 +30,7 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public ReservationDTO getReservation(int rno){
+    public AirReservationListDTO getReservation(Long rno){
         return reservationRepository.getReservation(rno);
     }
 
@@ -39,7 +39,6 @@ public class ReservationServiceImpl implements ReservationService{
 
         ReservationDTO rv = new ReservationDTO();
         rv.setRno(reservationDTO.getRno());
-        rv.setAno(reservationDTO.getAno());
         rv.setMno(mno);
         rv.setArp_count(reservationDTO.getArp_count());
         rv.setArp_price(reservationDTO.getArp_price());
@@ -58,5 +57,10 @@ public class ReservationServiceImpl implements ReservationService{
     public List<AirReservationListDTO> selectMyRes(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication){
         int mno = memberLoginService.findMember(loginUser, authentication).getMno();
         return reservationRepository.selectMyRes(mno);
+    }
+
+    @Override
+    public List<AirReservationListDTO> getReservationDetail(Long rno) {
+        return reservationRepository.getReservationDetail(rno);
     }
 }

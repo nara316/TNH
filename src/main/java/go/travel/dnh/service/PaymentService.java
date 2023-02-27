@@ -14,7 +14,7 @@ public interface PaymentService {
 
     public void paymentCancle(String access_token, String imp_uid, int amount, String reason) throws IOException;
 
-    public void insertPay(String imp_uid,int name,int totalPrice, String pay_method);
+    public void insertPay(String imp_uid,Long merchant_uid,int totalPrice, String pay_method);
 
     public List<PayDTO> readPayList();
 

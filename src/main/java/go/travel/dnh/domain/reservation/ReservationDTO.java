@@ -15,8 +15,7 @@ import java.util.Date;
 public class ReservationDTO {
 
     /*뷰로부터 전달받을 값*/
-    private Integer rno; //예약번호
-    private Integer ano; //항공번호
+    private Long rno; //예약번호
     private Integer mno; //회원번호
     private Integer arp_count; //예약수량
     private Integer arp_price; //항공번호의 가격

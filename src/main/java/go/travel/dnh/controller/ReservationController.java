@@ -56,6 +56,8 @@ public class ReservationController {
         model.addAttribute("memberDTO", memberDTO);
         model.addAttribute("revList", revList);
 
+        System.out.println(revList);
+
         return "order/bookingList";
     }
 
