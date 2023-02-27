@@ -102,8 +102,9 @@ public class AirController {
             }
             m.addAttribute("fromAP",from);
             m.addAttribute("toAP",to);
+            return "/air/search-list-round";
         }
-        return "/air/search-list-round";
+        return "air/search";
     }
 
     @GetMapping("/search-list-oneway")
