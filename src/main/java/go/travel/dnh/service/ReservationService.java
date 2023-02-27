@@ -14,12 +14,14 @@ public interface ReservationService {
 
     public List<ReservationDTO> getReservationList();
 
-    public ReservationDTO getReservation(int rno);
+    public AirReservationListDTO getReservation(Long rno);
 
     public void insert(ReservationDTO reservationDTO, int mno);
 
     public List<AirReservationDTO> readList(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
 
     public List<AirReservationListDTO> selectMyRes(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
+
+    public List<AirReservationListDTO> getReservationDetail(Long rno);
 
 }

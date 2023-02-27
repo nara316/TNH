@@ -1,7 +1,9 @@
 package go.travel.dnh.controller;
 
 import go.travel.dnh.domain.pay.PayDTO;
+import go.travel.dnh.domain.reservation.AirReservationListDTO;
 import go.travel.dnh.service.PaymentService;
+import go.travel.dnh.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import java.util.List;
 public class PayController {
 
     private final PaymentService paymentService;
+    private final ReservationService reservationService;
 
     private int result;
 
@@ -33,6 +36,15 @@ public class PayController {
         PayDTO pay = paymentService.readPay(pno);
         model.addAttribute("list", pay);
         return "order/refundPractice";
+    }
+
+    @GetMapping("{rno}")
+    public String payrev(@PathVariable("rno") Long rno, Model model) {
+        AirReservationListDTO revDto = reservationService.getReservation(rno);
+        List<AirReservationListDTO> revDtDto = reservationService.getReservationDetail(rno);
+        model.addAttribute("list", revDto);
+        model.addAttribute("listDetail", revDtDto);
+        return "order/payment";
     }
 
     @PostMapping("/refund/complete")

@@ -6,15 +6,25 @@
     <!--전체 예약목록 조회-->
     <select id="getReservationList" resultType="ReservationDTO">
         select rno, ano, mno, arp_count, arp_price, arp_date
-        from reservation
+        from reservation,
         order by rno;
     </select>
 
-    <!--예약 단건 조회-->
-    <select id="getReservation" parameterType="int" resultType="ReservationDTO">
-        select rno, ano, mno, arp_count, arp_price, arp_date
-        from reservation
-        where rno = #{rno};
+    <!--결제창 예약단건조회-->
+    <select id="getReservation" parameterType="Long" resultType="AirReservationListDTO">
+        select res.rno, res.mno, res.arp_count, res.arp_price, p.ar_from_date,
+            (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,
+               (select ap_code_name from airport where ap_code = p.ar_to) ar_to,
+               (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code
+        from reservation2 res, air_product p
+        where p.ano = res.out_ano and rno = #{rno};
+    </select>
+
+    <!--결제창 이용자 세부조회-->
+    <select id="getReservationDetail" parameterType="Long" resultType="AirReservationListDTO">
+        select resdt.ko_name, resdt.en_lname, resdt.en_fname, resdt.birth, resdt.gender
+        from reservation2 res, ReservationDetail resdt
+        where resdt.rno = res.rno and res.rno = #{rno};
     </select>
 
     <!--예약 한 건 인서트-->
@@ -30,6 +40,7 @@
         where mno = #{mno};
     </select>
 
+    <!--마이페이지 개인 예약내역-->
     <select id="selectMyRes" resultType="AirReservationListDTO" parameterType="int">
         select
                 (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,

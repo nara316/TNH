@@ -22,7 +22,7 @@ public class ReservationRepositoryImpl implements ReservationRepository{
     }
 
     @Override
-    public ReservationDTO getReservation(int rno){
+    public AirReservationListDTO getReservation(Long rno){
         return reservationMapper.getReservation(rno);
     }
 
@@ -39,5 +39,10 @@ public class ReservationRepositoryImpl implements ReservationRepository{
     @Override
     public List<AirReservationListDTO> selectMyRes(int mno){
         return reservationMapper.selectMyRes(mno);
+    }
+
+    @Override
+    public List<AirReservationListDTO> getReservationDetail(Long rno) {
+        return reservationMapper.getReservationDetail(rno);
     }
 }
