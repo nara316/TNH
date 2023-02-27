@@ -1,5 +1,6 @@
 package go.travel.dnh.repository;
 
+import go.travel.dnh.domain.User.WithdrawalForm;
 import go.travel.dnh.domain.User.updateForm;
 import go.travel.dnh.domain.member.MemberDTO;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +23,14 @@ public class MemberLoginRepositoryImpl implements MemberLoginRepository {
 
     @Override
     public void update(MemberDTO memberDTO) {
+    }
+
+    @Override
+    public void delete(int mno) {
+    }
+
+    @Override
+    public void andInsert(WithdrawalForm withdrawalForm) {
+
     }
 }

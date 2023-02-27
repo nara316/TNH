@@ -7,4 +7,7 @@
     <insert id="saveSocialUser" parameterType="SocialUser" >
         INSERT INTO social (  s_name , s_id ) values ( #{s_name}, #{s_id} )
     </insert>
+    <delete id="deleteSocialUser" parameterType="int">
+        DELETE FROM social where sno = #{sno}
+    </delete>
 </mapper>

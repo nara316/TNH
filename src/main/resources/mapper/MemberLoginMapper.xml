@@ -11,4 +11,10 @@
     <update id="update" parameterType="MemberDTO">
         update member set mem_pwd = #{mem_pwd}, mem_phone = #{mem_phone}, mem_up_date = now() where mem_id = #{mem_id}
     </update>
+    <delete id="delete" parameterType="int">
+        delete from member where mno = #{mno}
+    </delete>
+    <insert id="andInsert" parameterType="go.travel.dnh.domain.User.WithdrawalForm" >
+        insert into withdrawal (withdrawal_mno, withdrawal_id) values (#{withdrawal_mno},#{withdrawal_id})
+    </insert>
 </mapper>

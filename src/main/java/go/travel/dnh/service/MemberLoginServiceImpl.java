@@ -2,8 +2,10 @@ package go.travel.dnh.service;
 
 
 import go.travel.dnh.domain.User.LoginUser;
+import go.travel.dnh.domain.User.WithdrawalForm;
 import go.travel.dnh.domain.User.updateForm;
 import go.travel.dnh.domain.member.MemberDTO;
+import go.travel.dnh.mapper.SocialUserMapper;
 import go.travel.dnh.repository.MemberLoginRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -13,12 +15,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class MemberLoginServiceImpl implements MemberLoginService {
 
     private final MemberLoginRepository memberLoginRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final SocialUserMapper socialUserMapper;
     @Override
     public String login(MemberDTO memberDTO) {
         MemberDTO user = memberLoginRepository.findByMember(memberDTO);
@@ -59,4 +64,40 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
         return findUser;
     }
+
+    @Override
+    public void withdrawal(int mno, WithdrawalForm withdrawalForm) {
+        memberLoginRepository.andInsert(withdrawalForm);
+        memberLoginRepository.delete(mno);
+    }
+    @Transactional
+    public void deleteMember(Map<String, Object> deleteUser) {
+        String id = deleteUser.get("id").toString();
+        String pwd = deleteUser.get("pwd").toString();
+        MemberDTO user = findById(id);
+        WithdrawalForm withdrawalForm = new WithdrawalForm();
+        //아이디 비밀번호 확인 후
+        //소셜로그인 유저라면 소셜 로그인도 지워야함
+        if(socialUserMapper.findByEmail(id)!=null) {
+            int sno = socialUserMapper.findByEmail(id).getSno();
+            socialUserMapper.deleteSocialUser(sno);
+            int smno = memberLoginRepository.findById(id).getMno();
+            withdrawalForm.setWithdrawal_id(id);
+            withdrawalForm.setWithdrawal_mno(smno);
+            withdrawal(smno , withdrawalForm);
+        } else {
+            if (user.getMem_id().equals(id) && bCryptPasswordEncoder.matches(pwd,user.getMem_pwd())) {
+                int mno = user.getMno();
+                withdrawalForm.setWithdrawal_id(id);
+                withdrawalForm.setWithdrawal_mno(mno);
+                //삭제 테이블에 값 넣고
+                //기존 DB삭제
+                withdrawal(mno,withdrawalForm);
+            }
+
+        }
+
+
+    }
+
 }

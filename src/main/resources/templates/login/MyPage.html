@@ -9,10 +9,56 @@
     <!-- 여기에 공통 적용할 css 및 js 등등 입력하면 됩니다-->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script>
+        function deleteMember() {
+            const deletePwd = $("#delete_pwd_chk").val();
+            const deleteId = $("#mem_id").val();
+            $.ajax({
+                type: "post",
+                url : "/login/withdrawal",
+                contentType: "application/json",
+                data:JSON.stringify({ id: deleteId, pwd : deletePwd }) ,
+                success :
+                function (data) {
+                    if(data===true) {
+                        alert("탈퇴가 완료되었습니다. 지금까지 저희 사이트를 이용해 주셔서 감사합니다.")
+                        window.location.replace("/");
+                    } else{
+                        alert("실패")
+                    }
+                },
+                error :
+                function () {
+                    alert("에러")
+                }
+            })
+        }
+        $(function(){
+
+            $("#submit_btn").click(function(){
+                $(".modal").fadeIn();
+            });
+
+            $(".modal-close").click(function(){
+                $(".modal").fadeOut();
+            });
+
+        });
         function checkPwd(){
             let pwd = $('#mem_pwd').val(); //비밀번호 입력값
             let pwdChk = $('#mem_pwd_check').val(); //비밀번호 확인 값
             let pwdCorrectChk = $('.pwdCorrectChk_msg');
+
+            if(pwd == pwdChk){
+                pwdCorrectChk.html("비밀번호가 일치합니다.");
+                pwdCheck=true;
+            }else if(pwd != pwdChk){
+                pwdCorrectChk.html("비밀번호가 일치하지 않습니다.");
+            }
+        }; //checkPwd() 메서드 종료
+        function checkDeletePwd(){
+            let pwd = $('#delete_pwd').val(); //비밀번호 입력값
+            let pwdChk = $('#delete_pwd_chk').val(); //비밀번호 확인 값
+            let pwdCorrectChk = $('.pwdChk_msg');
 
             if(pwd == pwdChk){
                 pwdCorrectChk.html("비밀번호가 일치합니다.");
@@ -62,6 +108,28 @@
     <!-- Theme CSS -->
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
     <style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: absolute; /* Stay in place */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            background: rgba(0,0,0,0.2);
+            border-radius:9px;
+        }
+        .modal-content{
+            width:500px; height:400px;
+            background:#fff; border-radius:10px;
+            position:relative; top:30%; left:43%;
+            margin-top:-100px; margin-left:-200px;
+            text-align:center;
+            box-sizing:border-box; padding:5px 0;
+            cursor:pointer;
+        }
+
+
 
         #menu {
             margin: 0px auto;
@@ -70,9 +138,9 @@
         .arrow_box {
             display: none;
             position: absolute;
-            width: 400px;
+            width: 700px;
             padding: 8px;
-            left: 285px;
+            left: 130px;
             margin-top: 12px;
             -webkit-border-radius: 8px;
             -moz-border-radius: 8px;
@@ -226,8 +294,14 @@
                                     <!-- Confirm -->
                                     <div class="mb-3" style="margin-top: 10px;">
                                         <label class="form-label">비밀번호 확인<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="password" placeholder="비밀번호를 다시한번 입력해주세요." th:value="${mem_pwd}" name="mem_pwd" id="mem_pwd_check" oninput="checkPwd()">
-                                        <span class="pwdCorrectChk_msg" style="color: #b02a37"></span>
+                                        <div class="input-group">
+                                        <input class="form-control fakepassword" type="password" placeholder="비밀번호를 다시한번 입력해주세요." th:value="${mem_pwd}" name="mem_pwd" id="mem_pwd_check" oninput="checkPwd()">
+                                        <span class="input-group-text p-0 bg-transparent">
+                                            <i class="fakepasswordicon fas fa-eye-slash cursor-pointer p-2"></i>
+									        </span>
+                                        </div>
+                                        <span class="pwdCorrectChk_msg" style="color: #b02a37; margin-left: 5px" ></span>
+
                                     </div>
 
                                     <!-- Mobile -->
@@ -244,9 +318,31 @@
                                     <!-- Button -->
                                     <div class="col-12 text-end" id="danger_alert">
                                         <div id="menu">
-                                            <button class="btn btn-primary mb-0" onclick="return check()">회원수정</button>
-                                            <button type="button" class="btn btn-danger" id="submit_btn" onclick="" style="margin: 0;">회원탈퇴</button>
-                                            <p class="arrow_box">회원 탈퇴 신청 시, 로그아웃 처리가 됩니다.</p>
+                                            <button type="submit" class="btn btn-primary mb-0" onclick="return check()">회원수정</button>
+                                            <button type="button"  class="btn btn-danger" id="submit_btn"
+                                                    style="margin: 0;">회원탈퇴</button>
+                                            <p class="arrow_box">회원 탈퇴 신청 시 로그아웃 처리가 되며, 가입시 사용한 아이디는 30일 동안 보관됩니다.</p>
+                                            <div class="modal">
+                                                <!-- Modal content -->
+                                                <div class="modal-content">
+                                                    <p class="modal-close" style="text-align: right; margin-right: 20px; font-size: 20px">✕</p>
+                                                    <form class="row g-3">
+                                                        <h5>GO TRAVEL에서 회원탈퇴를 원하십니까?</h5>
+                                                        <h6> 인증을 통해 회원 탈퇴가 가능합니다.</h6>
+                                                        <span>회원 탈퇴 시 최소한의 개인정보(아이디)가 30일 동안 저장되며,</span>
+                                                        <span> 이 외의 모든 개인정보가 삭제됩니다.</span>
+                                                        <br>
+                                                        비밀번호 <input type="password" class="form-control" style="width: 250px; text-align: center; margin: 0 auto" id="delete_pwd">
+                                                        비밀번호 입력<input type="password" class="form-control" style="width: 250px; text-align: center; margin: 0 auto" id="delete_pwd_chk"  name="delete_pwd_chk" oninput="checkDeletePwd()">
+                                                        <span class="pwdChk_msg" style="color: #b02a37; margin-left: 5px"></span>
+                                                        <button type="button" class="btn btn-danger" style="width: 100px; margin: auto;" onclick="deleteMember()">탈퇴 신청
+                                                        </button>
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                     </div>
                                 </form>
