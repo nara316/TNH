@@ -105,12 +105,6 @@ Main Banner START -->
                                                 <option  th:each="list : ${airport}" th:value="${list.ap_code}"
                                                          th:text="${list.ap_name}"></option>
                                             </select>
-
-                                        </div>
-
-                                        <!-- Auto fill button -->
-                                        <div class="btn-flip-icon mt-3 mt-md-0">
-                                            <button class="btn btn-white shadow btn-round mb-0"><i class="fa-solid fa-right-left"></i></button>
                                         </div>
                                     </div>
 
@@ -156,11 +150,6 @@ Main Banner START -->
                                                 <option  th:each="list : ${airport}" th:value="${list.ap_code}"
                                                          th:text="${list.ap_name}"></option>
                                             </select>
-                                        </div>
-
-                                        <!-- Auto fill button -->
-                                        <div class="btn-flip-icon mt-3 mt-md-0">
-                                            <button class="btn btn-white shadow btn-round mb-0"><i class="fa-solid fa-right-left"></i></button>
                                         </div>
                                     </div>
 
@@ -212,6 +201,8 @@ Main Banner START -->
 
 </main>
 
+<br>
+<br>
 <div th:replace="fragments/footer :: footer">
 </div>
 
