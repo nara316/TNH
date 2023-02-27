@@ -1,7 +1,10 @@
 package go.travel.dnh.service;
 
 import go.travel.dnh.domain.User.LoginUser;
+import go.travel.dnh.domain.air.AirProductDTO;
 import go.travel.dnh.domain.member.MemberDTO;
+import go.travel.dnh.domain.reservation.AirReservationDTO;
+import go.travel.dnh.domain.reservation.AirReservationListDTO;
 import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService{
 
     private final ReservationRepository reservationRepository;
+    private final MemberLoginService memberLoginService;
 
     @Override
     public List<ReservationDTO> getReservationList() {
@@ -43,4 +47,16 @@ public class ReservationServiceImpl implements ReservationService{
         reservationRepository.insert(rv);
     }
 
+    @Override
+    public List<AirReservationDTO> readList(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
+
+        int mno = memberLoginService.findMember(loginUser, authentication).getMno();
+        return reservationRepository.readList(mno);
+    }
+
+    @Override
+    public List<AirReservationListDTO> selectMyRes(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication){
+        int mno = memberLoginService.findMember(loginUser, authentication).getMno();
+        return reservationRepository.selectMyRes(mno);
+    }
 }

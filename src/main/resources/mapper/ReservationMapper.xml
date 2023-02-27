@@ -23,4 +23,21 @@
         values (#{rno},#{ano},#{mno},#{arp_count},#{arp_price},now());
     </insert>
 
+    <!--전체 예약목록 조회(회원간)-->
+    <select id="readList" resultType="AirReservationDTO" parameterType="int">
+        select rno, arp_price, arp_count, arp_date, arp_state
+        from reservation2
+        where mno = #{mno};
+    </select>
+
+    <select id="selectMyRes" resultType="AirReservationListDTO" parameterType="int">
+        select
+                (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,
+                (select ap_code_name from airport where ap_code = p.ar_to) ar_to,
+                (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code,
+                p.ar_from_date, p.ar_to_date, res.rno, res.arp_state
+        from air_product p, reservation2 res
+        where p.ano = res.out_ano and mno = #{mno};
+    </select>
+
 </mapper>

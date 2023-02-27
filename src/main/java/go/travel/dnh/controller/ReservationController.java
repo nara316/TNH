@@ -1,8 +1,10 @@
 package go.travel.dnh.controller;
 
 import go.travel.dnh.domain.User.LoginUser;
+import go.travel.dnh.domain.air.AirProductDTO;
 import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.domain.reservation.AirReservationDTO;
+import go.travel.dnh.domain.reservation.AirReservationListDTO;
 import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.service.MemberLoginService;
 import go.travel.dnh.service.ReservationService;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletOutputStream;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,9 +51,23 @@ public class ReservationController {
     public String bookingList(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
 
         MemberDTO memberDTO = memberLoginService.findMember(loginUser,authentication);
+        List<AirReservationListDTO> revList = reservationService.selectMyRes(loginUser,authentication);
+
         model.addAttribute("memberDTO", memberDTO);
+        model.addAttribute("revList", revList);
 
         return "order/bookingList";
+    }
+
+    //연습용 메서드
+    @GetMapping("/bookingList2")
+    public String orderForm(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
+
+        List<AirReservationDTO> reservationList = reservationService.readList(loginUser, authentication);
+
+        model.addAttribute("reservationList", reservationList);
+
+        return "order/bookingList2";
     }
 
 }
