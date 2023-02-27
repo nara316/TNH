@@ -131,11 +131,10 @@
                     <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                       <!-- Input field -->
                       <label class="mb-1"><i class="bi bi-geo-alt me-2"></i>From</label>
-                      <select class="form-select js-choice" data-search-enabled="true">
+                      <select class="form-select js-choice" data-search-enabled="true" name="roundFrom">
                         <option value="">Select location</option>
-                        <option>San Jacinto, USA</option>
-                        <option>North Dakota, Canada</option>
-                        <option>West Virginia, Paris</option>
+                        <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                                 th:text="${list.ap_name}"></option>
                       </select>
                     </div>
 
@@ -150,11 +149,10 @@
                     <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                       <!-- Input field -->
                       <label class="mb-1"><i class="bi bi-send me-2"></i>To</label>
-                      <select class="form-select js-choice" data-search-enabled="true">
+                      <select class="form-select js-choice" data-search-enabled="true" name="roundTo">
                         <option value="">Select location</option>
-                        <option>San Jacinto, USA</option>
-                        <option>North Dakota, Canada</option>
-                        <option>West Virginia, Paris</option>
+                        <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                                 th:text="${list.ap_name}"></option>
                       </select>
                     </div>
                   </div>
@@ -163,7 +161,7 @@
                   <div class="col-md-6 col-xl-3">
                     <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                       <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
-                      <input type="text" class="form-control flatpickr" data-date-format="YMd" placeholder="Select date">
+                      <input type="text" class="form-control flatpickr" data-date-format="Ymd" placeholder="Select date" th:field="*{sch.roundFromDate}">
                     </div>
                   </div>
 
@@ -171,12 +169,13 @@
                   <div class="col-md-6 col-xl-3">
                     <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                       <label class="mb-1"><i class="bi bi-calendar me-2"></i>Return</label>
-                      <input type="text" class="form-control flatpickr" data-date-format="YMd" placeholder="Select date" th:name="roundToDate" th:value="${sch.roundToDate}">
+                      <input type="text" class="form-control flatpickr" data-date-format="Ymd" placeholder="Select date" th:field="*{sch.roundToDate}">
                     </div>
                   </div>
 
                   <div class="col-12 text-end pt-0">
-                    <a  class="btn btn-primary mb-n4" href="@{/air/search}">Find ticket <i class="bi bi-arrow-right ps-3"></i></a>
+
+                    <input  type="submit" class="btn btn-primary mb-n4" value="Find ticket" ><i class="bi bi-arrow-right ps-3"></i></input>
                   </div>
                 </div>
               </div>
@@ -491,39 +490,39 @@
           <div class="vstack gap-4">
 
             <!-- Ticket item START -->
-            <div class="card border">
+            <div th:each="list : ${airOneWay.list}" class="card border">
               <!-- card-body START -->
               <div class="card-body p-4 pb-0">
                 <div class="row g-4">
                   <!-- Air line name -->
                   <div class="col-md-3">
                     <!-- Image -->
-                    <img src="/bootstrap/images/element/09.svg" class="w-80px mb-3" alt="">
+                    <img th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}" class="w-80px mb-3" alt="">
                     <!-- Title -->
-                    <h6 class="fw-normal mb-0">Phillippines Airline</h6>
-                    <h6 class="fw-normal mb-0">PA - 5620</h6>
+                    <h6 class="fw-normal mb-0">[[${list.airlineDTO.al_name}]]</h6>
+                    <h6 class="fw-normal mb-0">[[${list.ar_fl_no}]]</h6>
                   </div>
 
                   <!-- Airport detail -->
                   <div class="col-sm-4 col-md-3">
                     <!-- Title -->
                     <h4>14:50</h4>
-                    <h6 class="mb-0">Sun, 29 Jan 2023</h6>
-                    <p class="mb-0">BOM - Terminal 2 Mumbai, India</p>
+                    <h6 th:text="${#temporals.format(list.ar_from_date, 'yy-MM-dd HH:mm')}" class="mb-0"></h6>
+                    <p class="mb-0">[[${list.ar_from}]]</p>
                   </div>
 
                   <!-- Airport detail -->
                   <div class="col-sm-4 col-md-3">
                     <!-- Title -->
                     <h4>07:35</h4>
-                    <h6 class="mb-0">Sun, 30 Jan 2023</h6>
-                    <p class="mb-0">JFK - Terminal 2 New York, USA</p>
+                    <h6 th:text="${#temporals.format(list.ar_to_date, 'yy-MM-dd HH:mm')}" class="mb-0"></h6>
+                    <p class="mb-0">[[${list.ar_to}]]</p>
                   </div>
 
                   <!-- Price -->
                   <div class="col-sm-4 col-md-3">
                     <!-- Price -->
-                    <h4>$18,500</h4>
+                    <h4 th:text="${#numbers.formatInteger(list.ar_price * sch.ea, 3, 'COMMA') + '원'}"></h4>
                     <a href="flight-detail.html" class="btn btn-dark">Book Now</a>
                     <button class="btn btn-link text-decoration-underline p-0 mb-0" data-bs-toggle="modal" data-bs-target="#flightdetail">
                       <i class="bi bi-eye-fill me-1"></i>Flight Details
@@ -538,506 +537,8 @@
               <div class="card-footer p-4">
                 <div class="bg-light p-2 rounded-2">
                   <ul class="list-inline d-sm-flex justify-content-sm-between mb-0 mx-4">
-                    <li class="list-inline-item text-danger">Only 10 Seat Left</li>
-                    <li class="list-inline-item">Total time: 10h 35m</li>
-                    <li class="list-inline-item text-success">Refundable</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <!-- Ticket item END -->
-
-            <!-- Ticket item START -->
-            <div class="card border">
-              <!-- Card header -->
-              <div class="card-header d-sm-flex justify-content-sm-between align-items-center">
-                <!-- Airline Name -->
-                <div class="d-flex align-items-center mb-2 mb-sm-0">
-                  <img src="/bootstrap/images/element/13.svg" class="w-30px me-2" alt="">
-                  <h6 class="fw-normal mb-0">Blogzine Airline (FFR - 5682)</h6>
-                </div>
-                <h6 class="fw-normal mb-0"><span class="text-body">Travel Class:</span> Economy</h6>
-              </div>
-
-              <!-- Card body -->
-              <div class="card-body p-4 pb-0">
-                <!-- Ticket item START -->
-                <div class="row g-4">
-                  <!-- Airport detail -->
-                  <div class="col-sm-4 col-md-3">
-                    <h4>14:50</h4>
-                    <p class="mb-0">BOM - Terminal 2 Mumbai, India</p>
-                  </div>
-
-                  <!-- Time -->
-                  <div class="col-sm-4 col-md-3 my-sm-auto text-center">
-                    <!-- Time -->
-                    <h5>9hr 50min</h5>
-                    <div class="position-relative my-4">
-                      <!-- Line -->
-                      <hr class="bg-primary opacity-5 position-relative">
-                      <!-- Icon -->
-                      <div class="icon-md bg-primary text-white rounded-circle position-absolute top-50 start-50 translate-middle">
-                        <i class="fa-solid fa-fw fa-plane rtl-flip"></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Airport detail -->
-                  <div class="col-sm-4 col-md-3">
-                    <h4>07:35</h4>
-                    <p class="mb-0">JFK - Terminal 2 New York, USA</p>
-                  </div>
-
-                  <!-- Price -->
-                  <div class="col-md-3 text-md-end">
-                    <h4>$18,500</h4>
-                    <a href="flight-detail.html" class="btn btn-dark mb-0 mb-sm-2">Book Now</a>
-                    <button class="btn btn-link text-decoration-underline p-0 mb-0" data-bs-toggle="modal" data-bs-target="#flightdetail">
-                      <i class="bi bi-eye-fill me-1"></i>Flight Details
-                    </button>
-                  </div>
-                </div>
-                <!-- Ticket item END -->
-              </div>
-
-              <!-- Card footer -->
-              <div class="card-footer pt-4">
-                <ul class="list-inline bg-light rounded-2 d-sm-flex text-center justify-content-sm-between mb-0 px-4 py-2">
-                  <li class="list-inline-item text-danger">Only 10 Seat Left</li>
-                  <li class="list-inline-item text-danger">Non-Refundable</li>
-                </ul>
-              </div>
-            </div>
-            <!-- Ticket item END -->
-
-            <!-- Ticket item START -->
-            <div class="card border">
-              <!-- Card header -->
-              <div class="card-header d-sm-flex justify-content-sm-between align-items-center">
-                <!-- Airline Name -->
-                <div class="d-flex align-items-center mb-2 mb-sm-0">
-                  <img src="/bootstrap/images/element/12.svg" class="w-30px me-2" alt="">
-                  <h6 class="fw-normal mb-0">Wizixo Airline (SA - 1254)</h6>
-                </div>
-                <h6 class="fw-normal mb-0"><span class="text-body">Travel Class:</span> Economy</h6>
-              </div>
-
-              <!-- Card body -->
-              <div class="card-body p-4 pb-0">
-                <!-- Ticket item START -->
-                <div class="row g-4">
-                  <!-- Airport detail -->
-                  <div class="col-sm-4 col-md-3">
-                    <h4>14:50</h4>
-                    <p class="mb-0">BOM - Terminal 2 Mumbai, India</p>
-                  </div>
-
-                  <!-- Time -->
-                  <div class="col-sm-4 col-md-3 my-sm-auto text-center">
-                    <!-- Time -->
-                    <h5>9hr 50min</h5>
-                    <div class="position-relative my-4">
-                      <!-- Line -->
-                      <hr class="bg-primary opacity-5 position-relative">
-                      <!-- Icon -->
-                      <div class="icon-md bg-primary text-white rounded-circle position-absolute top-50 start-50 translate-middle">
-                        <i class="fa-solid fa-fw fa-plane rtl-flip"></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Airport detail -->
-                  <div class="col-sm-4 col-md-3">
-                    <h4>07:35</h4>
-                    <p class="mb-0">JFK - Terminal 2 New York, USA</p>
-                  </div>
-
-                  <!-- Price -->
-                  <div class="col-md-3 text-md-end">
-                    <h4>$18,500</h4>
-                    <a href="flight-detail.html" class="btn btn-dark mb-0 mb-sm-2">Book Now</a>
-                  </div>
-                </div>
-                <!-- Ticket item END -->
-              </div>
-
-              <!-- Card footer -->
-              <div class="card-footer pt-4">
-                <ul class="list-inline bg-light rounded-2 d-sm-flex text-center justify-content-sm-between mb-0 px-4 py-2">
-                  <li class="list-inline-item text-danger">Only 25 Seat Left</li>
-                  <li class="list-inline-item text-danger">Non-Refundable</li>
-                  <li class="list-inline-item">
-                    <!-- Collapse button -->
-                    <a class="btn-more d-flex align-items-center collapsed p-0 mb-0" data-bs-toggle="collapse" href="#flightDetail" role="button" aria-expanded="false" aria-controls="flightDetail">
-                      Flight detail<i class="fa-solid fa-angle-down ms-2"></i>
-                    </a>
-                  </li>
-                </ul>
-
-                <!-- Collapse body START -->
-                <div class="multi-collapse collapse" id="flightDetail">
-                  <!-- Tabs START -->
-                  <ul class="nav nav-pills nav-justified nav-responsive bg-primary bg-opacity-10 rounded mt-4 mb-3 p-2" id="flightlist-tab" role="tablist">
-                    <!-- Tab item -->
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link active mb-0" id="flightlist-tab-1" data-bs-toggle="pill" data-bs-target="#flightlist-tab1" type="button" role="tab" aria-controls="flightlist-tab1" aria-selected="true">Flight Information</button>
-                    </li>
-                    <!-- Tab item -->
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link mb-0" id="flightlist-tab-2" data-bs-toggle="pill" data-bs-target="#flightlist-tab2" type="button" role="tab" aria-controls="flightlist-tab2" aria-selected="false">Fare Detail</button>
-                    </li>
-                    <!-- Tab item -->
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link mb-0" id="flightlist-tab-3" data-bs-toggle="pill" data-bs-target="#flightlist-tab3" type="button" role="tab" aria-controls="flightlist-tab3" aria-selected="false">Baggage Rules</button>
-                    </li>
-                    <!-- Tab item -->
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link mb-0" id="flightlist-tab-4" data-bs-toggle="pill" data-bs-target="#flightlist-tab4" type="button" role="tab" aria-controls="flightlist-tab4" aria-selected="false">Cancellation Rules</button>
-                    </li>
-                  </ul>
-                  <!-- Tabs END -->
-
-                  <!-- Tab content START -->
-                  <div class="tab-content mb-0" id="flightlist-tabContent">
-
-                    <!-- Content item START -->
-                    <div class="tab-pane fade show active" id="flightlist-tab1" role="tabpanel" aria-labelledby="flightlist-tab-1">
-                      <div class="card border">
-
-                        <!-- Card header -->
-                        <div class="card-header d-flex align-items-center pb-0">
-                          <img src="/bootstrap/images/element/12.svg" class="w-30px me-2" alt="">
-                          <h6 class="fw-normal mb-0">Wizixo Airline (SA - 1254)</h6>
-                        </div>
-
-                        <!-- Card body START -->
-                        <div class="card-body p-4">
-                          <!-- Ticket item START -->
-                          <div class="row g-4">
-                            <!-- Airport detail -->
-                            <div class="col-sm-4">
-                              <!-- Title -->
-                              <h4>BOM</h4>
-                              <h6 class="mb-0">14:50</h6>
-                              <p class="mb-0">Chhatrapati Shivaji International Airport</p>
-                            </div>
-
-                            <!-- Time -->
-                            <div class="col-sm-4 my-sm-auto text-center">
-                              <!-- Time -->
-                              <h5>9hr 50min</h5>
-
-                              <div class="position-relative my-4">
-                                <!-- Line -->
-                                <hr class="bg-primary opacity-5 position-relative">
-                                <!-- Icon -->
-                                <div class="icon-md bg-primary text-white rounded-circle position-absolute top-50 start-50 translate-middle">
-                                  <i class="fa-solid fa-fw fa-plane rtl-flip"></i>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- Airport detail -->
-                            <div class="col-sm-4">
-                              <!-- Title -->
-                              <h4>CDG</h4>
-                              <h6 class="mb-0">11:50</h6>
-                              <p class="mb-0">Ch. De Gaulle, Paris, France</p>
-                            </div>
-                          </div>
-                          <!-- Ticket item END -->
-
-                          <!-- Divider -->
-                          <div class="bg-light text-center fw-normal rounded-2 mt-3 mb-4 p-2">
-                            Change of planes: 3h 15m Layover in France
-                          </div>
-
-                          <!-- Ticket item START -->
-                          <div class="row g-4">
-                            <!-- Airport detail -->
-                            <div class="col-sm-4">
-                              <!-- Title -->
-                              <h4>CDG</h4>
-                              <h6 class="mb-0">2:50</h6>
-                              <p class="mb-0">Ch. De Gaulle, Paris, France</p>
-                            </div>
-
-                            <!-- Time -->
-                            <div class="col-sm-4 my-sm-auto text-center">
-                              <!-- Time -->
-                              <h5>5hr 50min</h5>
-
-                              <div class="position-relative my-4">
-                                <!-- Line -->
-                                <hr class="bg-primary opacity-5 position-relative">
-                                <!-- Icon -->
-                                <div class="icon-md bg-primary text-white rounded-circle position-absolute top-50 start-50 translate-middle">
-                                  <i class="fa-solid fa-fw fa-plane rtl-flip"></i>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- Airport detail -->
-                            <div class="col-sm-4">
-                              <!-- Title -->
-                              <h4>JFK</h4>
-                              <h6 class="mb-0">7:35</h6>
-                              <p class="mb-0">John F Kennedy Intl-NY</p>
-                            </div>
-                          </div>
-                          <!-- Ticket item END -->
-                        </div>
-                        <!-- Card body END -->
-                      </div>
-                    </div>
-                    <!-- Content item END -->
-
-                    <!-- Content item START -->
-                    <div class="tab-pane fade" id="flightlist-tab2" role="tabpanel" aria-labelledby="flightlist-tab-2">
-                      <div class="card card-body">
-                        <!-- Table START -->
-                        <div class="table-responsive-lg">
-                          <table class="table caption-bottom mb-0">
-                            <!-- Caption -->
-                            <caption class="pb-0">*From The Date Of Departure</caption>
-                            <!-- Table head -->
-                            <thead class="table-dark">
-                            <tr>
-                              <th scope="col" class="border-0 rounded-start">Base Fare</th>
-                              <th scope="col" class="border-0">Taxes and Fees</th>
-                              <th scope="col" class="border-0 rounded-end">Total Fees</th>
-                            </tr>
-                            </thead>
-                            <!-- Table body -->
-                            <tbody>
-                            <tr>
-                              <td>$36,500</td>
-                              <td>$1,050</td>
-                              <td><h5 class="mb-0">$37,550</h5></td>
-                            </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <!-- Table END -->
-                      </div>
-                    </div>
-                    <!-- Content item END -->
-
-                    <!-- Content item START -->
-                    <div class="tab-pane fade" id="flightlist-tab3" role="tabpanel" aria-labelledby="flightlist-tab-3">
-                      <div class="card border">
-                        <!-- Card header -->
-                        <div class="card-header d-flex align-items-center border-bottom">
-                          <!-- Title -->
-                          <img src="/bootstrap/images/element/12.svg" class="w-30px me-2" alt="">
-                          <h5 class="card-title mb-0">BOM - CDG</h5>
-                        </div>
-
-                        <!-- Card body -->
-                        <div class="card-body">
-                          <!-- Table START -->
-                          <div class="table-responsive-lg">
-                            <table class="table caption-bottom mb-0">
-                              <!-- Caption -->
-                              <caption class="pb-0">*1PC = 23KG</caption>
-                              <!-- Table head -->
-                              <thead class="table-dark">
-                              <tr>
-                                <th scope="col" class="border-0 rounded-start">Baggage Type</th>
-                                <th scope="col" class="border-0">Check In</th>
-                                <th scope="col" class="border-0 rounded-end">Cabin</th>
-                              </tr>
-                              </thead>
-                              <!-- Table body -->
-                              <tbody class="border-top-0">
-                              <tr>
-                                <td>Adult</td>
-                                <td>2 PC</td>
-                                <td>7 Kg</td>
-                              </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <!-- Table END -->
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Content item END -->
-
-                    <!-- Content item START -->
-                    <div class="tab-pane fade" id="flightlist-tab4" role="tabpanel" aria-labelledby="flightlist-tab-4">
-                      <div class="card border">
-                        <!-- Card header -->
-                        <div class="card-header d-flex align-items-center border-bottom">
-                          <!-- Title -->
-                          <img src="/bootstrap/images/element/12.svg" class="w-30px me-2" alt="">
-                          <h5 class="card-title mb-0">BOM - CDG</h5>
-                        </div>
-
-                        <!-- Card body -->
-                        <div class="card-body">
-                          <!-- Table START -->
-                          <div class="table-responsive-lg">
-                            <table class="table caption-bottom mb-0">
-                              <!-- Caption -->
-                              <caption class="pb-0">*From The Date Of Departure</caption>
-                              <!-- Table head -->
-                              <thead class="table-dark">
-                              <tr>
-                                <th scope="col" class="border-0 rounded-start">Time Frame</th>
-                                <th scope="col" class="border-0 rounded-end">Air Free + MMT Free</th>
-                              </tr>
-                              </thead>
-                              <!-- Table body -->
-                              <tbody class="border-top-0">
-                              <tr>
-                                <td>0 hours to 24 hours</td>
-                                <td>Non Refundable</td>
-                              </tr>
-                              <tr>
-                                <td>24 hours to 365 days</td>
-                                <td>$16,325 + $250</td>
-                              </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <!-- Table END -->
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Content item END -->
-
-                  </div>
-                  <!-- Tab content END -->
-                </div>
-              </div>
-            </div>
-            <!-- Ticket item END -->
-
-            <!-- Action box START -->
-            <div class="bg-success bg-opacity-10 p-3 rounded-2 d-sm-flex justify-content-sm-between align-items-center">
-              <!-- Title and badge -->
-              <div class="d-flex align-items-center mb-3 mb-sm-0">
-                <div class="position-relative z-index-1 me-2">
-                  <img src="/bootstrap/images/element/05.svg" class="position-relative h-40px" alt="">
-                  <span class="smaller text-white position-absolute top-50 start-50 translate-middle">New</span>
-                </div>
-                <!-- Title -->
-                <h6 class="mb-0 fw-normal">Get <strong class='text-success'>12% Off</strong> On Your First Flight</h6>
-              </div>
-
-              <!-- Button -->
-              <a href="#" class="btn btn-sm btn-success mb-0">Login / Signup</a>
-            </div>
-            <!-- Action box END -->
-
-            <!-- Ticket item START -->
-            <div class="card border">
-              <!-- Card header -->
-              <div class="card-header">
-                <div class="d-md-flex justify-content-md-between">
-                  <!-- Airline Name -->
-                  <div class="d-flex align-items-center mb-2 mb-md-0">
-                    <img src="/bootstrap/images/element/14.svg" class="w-30px me-2" alt="">
-                    <h6 class="fw-normal mb-0">Folio Airline (CCE - 2158)</h6>
-                  </div>
-                  <h6 class="fw-normal mb-0"><span class="text-body">Travel Class:</span> Economy</h6>
-                </div>
-              </div>
-
-              <!-- Card body START -->
-              <div class="card-body p-4 pb-0">
-                <div class="row g-4 align-items-center">
-                  <!-- Ticket START -->
-                  <div class="col-md-9">
-                    <!-- Ticket detail START -->
-                    <div class="row g-4">
-                      <!-- Airport detail -->
-                      <div class="col-sm-4">
-                        <h4>14:50</h4>
-                        <h6 class="mb-0 fw-normal">Sun, 29 Jan 2023</h6>
-                        <p class="mb-0">BOM - Terminal 2 Mumbai, India</p>
-                      </div>
-
-                      <!-- Time -->
-                      <div class="col-sm-4 my-sm-auto text-center">
-                        <h5>9hr 50min</h5>
-                        <div class="position-relative my-4">
-                          <!-- Line -->
-                          <hr class="bg-primary opacity-5 position-relative">
-                          <!-- Icon -->
-                          <div class="icon-md bg-primary text-white rounded-circle position-absolute top-50 start-50 translate-middle">
-                            <i class="fa-solid fa-fw fa-plane rtl-flip"></i>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Airport detail -->
-                      <div class="col-sm-4">
-                        <h4>07:35</h4>
-                        <h6 class="mb-0 fw-normal">Sun, 30 Jan 2023</h6>
-                        <p class="mb-0">JFK - Terminal 2 New York, USA</p>
-                      </div>
-                    </div>
-                    <!-- Ticket detail END -->
-
-                    <!-- Divider -->
-                    <hr class="my-4">
-
-                    <!-- Ticket detail START -->
-                    <div class="row g-4">
-                      <!-- Airport detail -->
-                      <div class="col-sm-4">
-                        <h4>04:50</h4>
-                        <h6 class="mb-0 fw-normal">Sun, 19 Feb 2023</h6>
-                        <p class="mb-0">JFK - Terminal 2 New York, USA</p>
-                      </div>
-
-                      <!-- Time -->
-                      <div class="col-sm-4 my-sm-auto text-center">
-                        <h5>10hr 35min</h5>
-                        <div class="position-relative my-4">
-                          <!-- Line -->
-                          <hr class="bg-primary opacity-5 position-relative">
-                          <!-- Icon -->
-                          <div class="icon-md bg-primary text-white rounded-circle position-absolute top-50 start-50 translate-middle">
-                            <i class="fa-solid fa-fw fa-plane rtl-flip"></i>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Airport detail -->
-                      <div class="col-sm-4">
-                        <h4>15:48</h4>
-                        <h6 class="mb-0 fw-normal">Sun, 19 Feb 2023</h6>
-                        <p class="mb-0">BOM - Terminal 2 Mumbai, India</p>
-                      </div>
-                    </div>
-                    <!-- Ticket detail END -->
-                  </div>
-                  <!-- Ticket END -->
-
-                  <!-- Price START -->
-                  <div class="col-md-3 text-md-end">
-                    <!-- Price -->
-                    <h4>$18,500</h4>
-                    <a href="flight-detail.html" class="btn btn-dark mb-0 mb-sm-2">Book Now</a>
-                    <button class="btn btn-link text-decoration-underline p-0 mb-0" data-bs-toggle="modal" data-bs-target="#flightdetail">
-                      <i class="bi bi-eye-fill me-1"></i>Flight Details
-                    </button>
-                  </div>
-                  <!-- Price END -->
-                </div>	<!-- Row END -->
-              </div>
-              <!-- Card body END -->
-
-              <!-- Card footer -->
-              <div class="card-footer pt-4">
-                <div class="">
-                  <ul class="list-inline bg-light d-sm-flex text-center justify-content-sm-between rounded-2 py-2 px-4 mb-0">
-                    <li class="list-inline-item text-danger">Only 10 Seat Left</li>
-                    <li class="list-inline-item text-success">Refundable</li>
+                    <li th:text="${list.ar_res_cnt+'석 남았습니다!!'}" class="list-inline-item text-danger"></li>
+                    <li th:text="${list.ar_time + '분 소요'}" class="list-inline-item"></li>
                   </ul>
                 </div>
               </div>
@@ -1069,158 +570,6 @@
 </main>
 <!-- **************** MAIN CONTENT END **************** -->
 
-<!-- =======================
-Footer START -->
-<footer class="bg-dark pt-5">
-  <div class="container">
-    <!-- Row START -->
-    <div class="row g-4">
-
-      <!-- Widget 1 START -->
-      <div class="col-lg-3">
-        <!-- logo -->
-        <a href="index.html">
-          <img class="h-40px" src="/bootstrap/images/logo-light.svg" alt="logo">
-        </a>
-        <p class="my-3 text-muted">Departure defective arranging rapturous did believe him all had supported.</p>
-        <p class="mb-2"><a href="#" class="text-muted text-primary-hover"><i class="bi bi-telephone me-2"></i>+1234 568 963</a> </p>
-        <p class="mb-0"><a href="#" class="text-muted text-primary-hover"><i class="bi bi-envelope me-2"></i>example@gmail.com</a></p>
-      </div>
-      <!-- Widget 1 END -->
-
-      <!-- Widget 2 START -->
-      <div class="col-lg-8 ms-auto">
-        <div class="row g-4">
-          <!-- Link block -->
-          <div class="col-6 col-md-3">
-            <h5 class="text-white mb-2 mb-md-4">Page</h5>
-            <ul class="nav flex-column text-primary-hover">
-              <li class="nav-item"><a class="nav-link text-muted" href="#">About us</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Contact us</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">News and Blog</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Meet a Team</a></li>
-            </ul>
-          </div>
-
-          <!-- Link block -->
-          <div class="col-6 col-md-3">
-            <h5 class="text-white mb-2 mb-md-4">Link</h5>
-            <ul class="nav flex-column text-primary-hover">
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Sign up</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Sign in</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Privacy Policy</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Terms</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Cookie</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Support</a></li>
-            </ul>
-          </div>
-
-          <!-- Link block -->
-          <div class="col-6 col-md-3">
-            <h5 class="text-white mb-2 mb-md-4">Global Site</h5>
-            <ul class="nav flex-column text-primary-hover">
-              <li class="nav-item"><a class="nav-link text-muted" href="#">India</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">California</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Indonesia</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Canada</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#">Malaysia</a></li>
-            </ul>
-          </div>
-
-          <!-- Link block -->
-          <div class="col-6 col-md-3">
-            <h5 class="text-white mb-2 mb-md-4">Booking</h5>
-            <ul class="nav flex-column text-primary-hover">
-              <li class="nav-item"><a class="nav-link text-muted" href="#"><i class="fa-solid fa-hotel me-2"></i>Hotel</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#"><i class="fa-solid fa-plane me-2"></i>Flight</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#"><i class="fa-solid fa-globe-americas me-2"></i>Tour</a></li>
-              <li class="nav-item"><a class="nav-link text-muted" href="#"><i class="fa-solid fa-car me-2"></i>Cabs</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- Widget 2 END -->
-
-    </div><!-- Row END -->
-
-    <!-- Tops Links -->
-    <div class="row mt-5">
-      <h5 class="mb-2 text-white">Top Links</h5>
-      <ul class="list-inline text-primary-hover lh-lg">
-        <li class="list-inline-item"><a href="#" class="text-muted">Flights</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Hotels</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Tours</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Cabs</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">About</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Contact us</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Blogs</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Services</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Detail page</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Services</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Policy</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Testimonials</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Newsletters</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Podcasts</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Protests</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">NewsCyber</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Education</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Sports</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Tech and Auto</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Opinion</a></li>
-        <li class="list-inline-item"><a href="#" class="text-muted">Share Market</a></li>
-      </ul>
-    </div>
-
-    <!-- Payment and card -->
-    <div class="row g-4 justify-content-between mt-0 mt-md-2">
-
-      <!-- Payment card -->
-      <div class="col-sm-7 col-md-6 col-lg-4">
-        <h5 class="text-white mb-2">Payment & Security</h5>
-        <ul class="list-inline mb-0 mt-3">
-          <li class="list-inline-item"> <a href="#"><img src="/bootstrap/images/element/paypal.svg" class="h-30px" alt=""></a></li>
-          <li class="list-inline-item"> <a href="#"><img src="/bootstrap/images/element/visa.svg" class="h-30px" alt=""></a></li>
-          <li class="list-inline-item"> <a href="#"><img src="/bootstrap/images/element/mastercard.svg" class="h-30px" alt=""></a></li>
-          <li class="list-inline-item"> <a href="#"><img src="/bootstrap/images/element/expresscard.svg" class="h-30px" alt=""></a></li>
-        </ul>
-      </div>
-
-      <!-- Social media icon -->
-      <div class="col-sm-5 col-md-6 col-lg-3 text-sm-end">
-        <h5 class="text-white mb-2">Follow us on</h5>
-        <ul class="list-inline mb-0 mt-3">
-          <li class="list-inline-item"> <a class="btn btn-sm px-2 bg-facebook mb-0" href="#"><i class="fab fa-fw fa-facebook-f"></i></a> </li>
-          <li class="list-inline-item"> <a class="btn btn-sm shadow px-2 bg-instagram mb-0" href="#"><i class="fab fa-fw fa-instagram"></i></a> </li>
-          <li class="list-inline-item"> <a class="btn btn-sm shadow px-2 bg-twitter mb-0" href="#"><i class="fab fa-fw fa-twitter"></i></a> </li>
-          <li class="list-inline-item"> <a class="btn btn-sm shadow px-2 bg-linkedin mb-0" href="#"><i class="fab fa-fw fa-linkedin-in"></i></a> </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Divider -->
-    <hr class="mt-4 mb-0">
-
-    <!-- Bottom footer -->
-    <div class="row">
-      <div class="container">
-        <div class="d-lg-flex justify-content-between align-items-center py-3 text-center text-lg-start">
-          <!-- copyright text -->
-          <div class="text-muted text-primary-hover"> Copyrights ©2023 Booking. Build by <a href="https://www.webestica.com/" class="text-muted">Webestica</a>. </div>
-          <!-- copyright links-->
-          <div class="nav mt-2 mt-lg-0">
-            <ul class="list-inline text-primary-hover mx-auto mb-0">
-              <li class="list-inline-item me-0"><a class="nav-link py-1 text-muted" href="#">Privacy policy</a></li>
-              <li class="list-inline-item me-0"><a class="nav-link py-1 text-muted" href="#">Terms and conditions</a></li>
-              <li class="list-inline-item me-0"><a class="nav-link py-1 text-muted pe-0" href="#">Refund policy</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-<!-- =======================
-Footer END -->
 
 <!-- Flight detail modal START -->
 <div class="modal fade" id="flightdetail" aria-hidden="true">
