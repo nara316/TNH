@@ -23,4 +23,6 @@ public interface PaymentService {
     public int refund(String pno,String rf_reason);
 
     public int readOneRefund(String pno);
+
+    public String readPno(Long rno);
 }
