@@ -9,6 +9,7 @@
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
   <!-- Meta Tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -45,9 +46,7 @@
     IMP.init("imp11477517");
 
     function requestPay() {
-      console.log(pay_method);
       IMP.request_pay({
-        //pg : 'kcp',
         pg : pay_method,
         pay_method : 'card',
         merchant_uid: merchant_uid, //주문번호
