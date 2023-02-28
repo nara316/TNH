@@ -209,4 +209,9 @@ public class PaymentServiceImpl implements PaymentService{
         return paymentRepository.readOneRefund(pno);
     }
 
+    @Override
+    public String readPno(Long rno){
+        return paymentRepository.readPno(rno);
+    }
+
 }
