@@ -1,288 +1,571 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<html lang="en">
 <head th:replace="fragments/script :: script">
-  <link rel="stylesheet" href="/css/air/air-list.css">
+
+    <!-- Meta Tags -->
+    <meta name="description" content="Booking - Multipurpose Online Booking Theme">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/bootstrap/images/favicon.ico">
+
+    <!-- Plugins CSS -->
+
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/flatpickr/css/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/choices/css/choices.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/nouislider/nouislider.css">
+
 </head>
 
 <body>
 <div th:replace="fragments/nav :: nav">
 </div>
 
-<div class="center view-size">
-  <!--메인영역-->
-  <div>
-    <!--항공권 검색-->
-    <form th:action="@{/air/search}" method="post" >
-      <ul>
-        <li>
-          <label>가는날</label>
-          <input type="date" th:name="roundFromDate" th:value="${sch.roundFromDate}"/>
-        </li>
-        <li>
-          <label>오는날</label>
-          <input type="date" th:name="roundToDate" th:value="${sch.roundToDate}"/>
-        </li>
-        <li>
-          <label>출발지 선택</label>
-          <select th:field="*{sch.roundFrom}">
-            <option value="">출발지 선택</option>
-            <option  th:each="list : ${airport}" th:value="${list.ap_code}"
-                     th:utext="${list.ap_name}"></option>
-          </select>
-        </li>
-        <li>
-          <label>도착지 선택</label>
-          <select th:field="*{sch.roundTo}">
-            <option value="">도착지 선택</option>
-            <option  th:each="list : ${airport}" th:value="${list.ap_code}"
-                     th:utext="${list.ap_name}"></option>
-          </select>
-        </li>
-        <li>
-          <label>인원</label>
-          <input type="number" th:name="ea" th:value="${sch.ea}">
-        </li>
-        <li>
-          <label>좌석등급</label>
-          <label>이코노미</label>
-          <input type="radio" th:value="A01" th:field="${sch.airGrade}">
-          <label>비즈니스</label>
-          <input type="radio" th:value="A02" th:field="${sch.airGrade}">
-        </li>
-      </ul>
-      <input type="submit" value="검색">
-    </form>
-  </div>  <!--항공권 검색 끝-->
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
 
-  <div>
-    <!--항공권 상품목록-->
-    <form th:action="@{/air/res-check}" method="post" >
-      <div>
-        <!--가는 항공편-->
-        <div>
-          <!--리스트 타이틀-->
-          <p>가는 항공편</p>
-          <div class="flex">
-            <p th:utext="${fromAP}"/>
-            <img src="/imgs/air/icon/airplane.png">
-            <p th:utext="${toAP}"/>
-          </div>
-          <p th:text="${'총 '+ airFrom.pagination.totalRecordCount + ' 건'}"/>
-        </div> <!--리스트 타이틀 끝-->
-        <div>
-          <!--가는 항공편 리스트 테이블-->
-          <table class="center view-size">
-            <thead>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>항공사</td>
-              <td>편명</td>
-              <td>출발날짜</td>
-              <td>도착날짜</td>
-              <td>소요시간</td>
-              <td>좌석등급</td>
-              <td>금액</td>
-              <td>남은수량</td>
-            </tr>
-            </thead>
-            <tr th:each="list : ${airFrom.list}">
-              <td>
-                <input type="checkbox" name="air_from_check" onclick="checkFromOnlyOne(this)"
-                       th:value="${list.ano}"  >
-              </td>
-              <td>
-                <img style="width: 32px;" th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
-              </td>
-              <td>[[${list.airlineDTO.al_name}]]</td>
-              <td>[[${list.ar_fl_no}]]</td>
-              <td th:text="${#temporals.format(list.ar_from_date, 'yy-MM-dd HH:mm')}"></td>
-              <td th:text="${#temporals.format(list.ar_to_date, 'yy-MM-dd HH:mm')}"></td>
-              <td th:text="${list.ar_time + '분'}"></td>
-              <td>[[${list.airGradeOptionDTO.agop_name}]]</td>
-              <td th:text="${#numbers.formatInteger(list.ar_price * sch.ea, 3, 'COMMA') + '원'}"></td>
-              <td>잔여 [[${list.ar_res_cnt}]] 석 남음</td>
-            </tr>
-          </table>
-        </div> <!--가는 항공편 리스트 테이블 끝-->
-        <div class="paging pagingFrom flex center">
-          <!--가는 항공권 페이징-->
+    <!-- =======================
+    Search START -->
+    <section class="pt-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Booking from START -->
+                    <form th:action="@{/air/search}" method="post"
+                          class="bg-mode border rounded position-relative px-4 pt-4 mb-4 mb-sm-0">
+                        <div class="row g-4">
+                            <!-- Nav tabs START -->
+                            <div class="col-lg-6">
+                                <ul class="nav nav-pills nav-pills-dark" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link rounded-start rounded-0 mb-0 active"
+                                                id="pills-one-way-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-one-way" type="button" role="tab"
+                                                aria-selected="true">One Way
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link rounded-end rounded-0 mb-0" id="pills-round-trip-tab"
+                                                data-bs-toggle="pill" data-bs-target="#pills-round-trip" type="button"
+                                                role="tab" aria-selected="false">Round Trip
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Nav tabs END -->
+
+                            <!-- Ticket class -->
+                            <div class="col-lg-3 ms-auto">
+                                <div class="form-control-bg-light form-fs-md">
+                                    <select class="form-select js-choice" th:field="${sch.airGrade}" name="airGrade">
+                                        <option value="">Select Class</option>
+                                        <option th:value="A01">Economy</option>
+                                        <option th:value="A02">Business</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Ticket Passenger -->
+                            <div class="col-lg-3 ms-auto">
+                                <div class="form-control-bg-light form-fs-md">
+                                    <select class="form-select js-choice" th:field="${sch.ea}" name="ea">
+                                        <option value="">Select Travelers</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab content START -->
+                        <div class="tab-content mt-4" id="pills-tabContent">
+                            <!-- One way tab START -->
+                            <div class="tab-pane fade show active" id="pills-one-way" role="tabpanel"
+                                 aria-labelledby="pills-one-way-tab">
+                                <div class="row g-4">
+                                    <!-- Leaving From -->
+                                    <div class="col-md-6 col-lg-4 position-relative">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <!-- Input field -->
+                                            <label class="mb-1"><i class="bi bi-geo-alt me-2"></i>From</label>
+                                            <select class="form-select js-choice" data-search-enabled="true"
+                                                    th:field="*{sch.oneFrom}" name="oneFrom">
+                                                <option value="">Select location</option>
+                                                <option th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                        th:text="${list.ap_name}"></option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Auto fill button -->
+                                        <div class="btn-flip-icon mt-3 mt-md-0">
+                                            <button class="btn btn-white shadow btn-round mb-0"><i
+                                                    class="fa-solid fa-right-left"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Going To -->
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <!-- Input field -->
+                                            <label class="mb-1"><i class="bi bi-send me-2"></i>To</label>
+                                            <select class="form-select js-choice" data-search-enabled="true"
+                                                    th:field="*{sch.oneTo}" name="oneTo">
+                                                <option value="">Select location</option>
+                                                <option th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                        th:utext="${list.ap_name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Departure -->
+                                    <div class="col-lg-4">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
+                                            <input type="text" class="form-control flatpickr" data-date-format="Ymd"
+                                                   placeholder="Select date" th:field="*{sch.oneFromDate}">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-12 text-end pt-0">
+                                        <input type="submit" class="btn btn-primary mb-n4" value="Find ticket"><i
+                                            class="bi bi-arrow-right ps-3"></i></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- One way tab END -->
+
+                            <!-- Round way tab END -->
+                            <div class="tab-pane fade" id="pills-round-trip" role="tabpanel"
+                                 aria-labelledby="pills-round-trip-tab">
+                                <div class="row g-4">
+
+                                    <!-- Leaving From -->
+                                    <div class="col-md-6 col-xl-3 position-relative">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <!-- Input field -->
+                                            <label class="mb-1"><i class="bi bi-geo-alt me-2"></i>From</label>
+                                            <select class="form-select js-choice" data-search-enabled="true"
+                                                    name="roundFrom">
+                                                <option value="">Select location</option>
+                                                <option th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                        th:text="${list.ap_name}"></option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Auto fill button -->
+                                        <div class="btn-flip-icon mt-3 mt-md-0">
+                                            <button class="btn btn-white shadow btn-round mb-0"><i
+                                                    class="fa-solid fa-right-left"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Going To -->
+                                    <div class="col-md-6 col-xl-3">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <!-- Input field -->
+                                            <label class="mb-1"><i class="bi bi-send me-2"></i>To</label>
+                                            <select class="form-select js-choice" data-search-enabled="true"
+                                                    name="roundTo">
+                                                <option value="">Select location</option>
+                                                <option th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                        th:text="${list.ap_name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Departure -->
+                                    <div class="col-md-6 col-xl-3">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
+                                            <input type="text" class="form-control flatpickr" data-date-format="Ymd"
+                                                   placeholder="Select date" th:field="*{sch.roundFromDate}">
+                                        </div>
+                                    </div>
+
+                                    <!-- Return -->
+                                    <div class="col-md-6 col-xl-3">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <label class="mb-1"><i class="bi bi-calendar me-2"></i>Return</label>
+                                            <input type="text" class="form-control flatpickr" data-date-format="Ymd"
+                                                   placeholder="Select date" th:field="*{sch.roundToDate}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 text-end pt-0">
+
+                                        <input type="submit" class="btn btn-primary mb-n4" value="Find ticket"><i
+                                            class="bi bi-arrow-right ps-3"></i></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Round way tab END -->
+                        </div>
+                        <!-- Tab content END -->
+                    </form>
+                    <!-- Booking from END -->
+                </div>
+            </div>
         </div>
-      </div>  <!--가는 항공편 끝-->
+    </section>
+    <!-- =======================
+    Search START -->
 
-      <div>
-        <!-오는 항공편--->
-        <div>
-          <!--리스트 타이틀-->
-          <p>오는 항공편</p>
-          <div class="flex">
-            <p th:utext="${toAP}"/>
-            <img src="/imgs/air/icon/airplane.png">
-            <p th:utext="${fromAP}"/>
-          </div>
-          <p th:text="${'총 '+ airTo.pagination.totalRecordCount + ' 건'}"/>
-        </div> <!--리스트 타이틀 끝-->
-        <div>
-          <!--오는 항공편 리스트 테이블-->
-          <table class="center view-size">
-            <thead>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>항공사</td>
-              <td>편명</td>
-              <td>출발날짜</td>
-              <td>도착날짜</td>
-              <td>소요시간</td>
-              <td>좌석등급</td>
-              <td>금액</td>
-              <td>남은수량</td>
-            </tr>
-            </thead>
-            <tr th:each="list : ${airTo.list}">
-              <td>
-                <input type="checkbox" name="air_to_check" onclick="checkToOnlyOne(this)"
-                       th:value="${list.ano}" >
-              </td>
-              <td class="al-logo">
-                <img style="width: 32px;"  th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}">
-              </td>
-              <td>[[${list.airlineDTO.al_name}]]</td>
-              <td>[[${list.ar_fl_no}]]</td>
-              <td th:text="${#temporals.format(list.ar_from_date, 'yy-MM-dd HH:mm')}"></td>
-              <td th:text="${#temporals.format(list.ar_to_date, 'yy-MM-dd HH:mm')}"></td>
-              <td th:text="${list.ar_time + '분'}"></td>
-              <td>[[${list.airGradeOptionDTO.agop_name}]]</td>
-              <td th:text="${#numbers.formatInteger(list.ar_price * sch.ea, 3, 'COMMA') + '원'}"></td>
-              <td>잔여 [[${list.ar_res_cnt}]] 석 남음</td>
-              <td></td>
-            </tr>
-          </table>
-        </div><!--오는 항공편 리스트 테이블 -->
-        <div class="paging pagingTo flex center">
-          <!--오는 항공권 페이징-->
+
+    <!-- =======================
+    Flight list START -->
+    <section class="pt-0">
+        <div class="container">
+            <div class="row">
+
+                <!-- Left sidebar START -->
+                <aside class="col-xl-4 col-xxl-3">
+                    <!-- Responsive offcanvas body START -->
+                    <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="offcanvasSidebar"
+                         aria-labelledby="offcanvasSidebarLabel">
+                        <!-- Offcanvas header -->
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Advance Filters</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                    data-bs-target="#offcanvasSidebar" aria-label="Close"></button>
+                        </div>
+
+                        <!-- Offcanvas body -->
+                        <div class="offcanvas-body flex-column p-3 p-xl-0">
+                            <form class="rounded-3 shadow">
+
+                                <!-- Price START -->
+                                <div class="card card-body rounded-0 p-4">
+                                    <!-- Title -->
+                                    <h6 class="mb-2">Price</h6>
+                                    <!-- Price group -->
+                                    <div class="position-relative">
+                                        <div class="noui-wrapper">
+                                            <div class="d-flex justify-content-between">
+                                                <input type="text" class="text-body input-with-range-min">
+                                                <input type="text" class="text-body input-with-range-max">
+                                            </div>
+                                            <div class="noui-slider-range mt-2" data-range-min='500'
+                                                 data-range-max='2000' data-range-selected-min='700'
+                                                 data-range-selected-max='1500'></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Price END -->
+
+                                <hr class="my-0"> <!-- Divider -->
+
+                                <!-- Preferred Airline START -->
+                                <div class="card card-body rounded-0 p-4">
+                                    <!-- Title -->
+                                    <h6 class="mb-2">Preferred Airline</h6>
+                                    <!-- Preferred Airline group -->
+                                    <div class="col-12">
+                                        <!-- Checkbox -->
+                                        <!--항공사 리스트 담아와서 뿌려주기!!!!!!!!!!!!!!!!!!!!-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="airlineType1">
+                                            <label class="form-check-label" for="airlineType1">
+                                                <img src="/bootstrap/images/element/12.svg" class="h-15px fa-fw me-2"
+                                                     alt="">Blogzine
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Preferred Airline END -->
+                            </form><!-- Form End -->
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between p-2 p-xl-0 mt-xl-4">
+                            <button class="btn btn-link p-0 mb-0">Clear all</button>
+                            <button class="btn btn-primary btn-sm mb-0">Filter Result</button>
+                        </div>
+
+                    </div>
+                    <!-- Responsive offcanvas body END -->
+                </aside>
+                <!-- Left sidebar END -->
+
+                <!-- Main content START -->
+
+                <div class="col-xl-8 col-xxl-9">
+                    <div class="vstack gap-4">
+                        <form th:action="@{/air/res-check}" method="post">
+                        <!-- 가는편 -->
+                            <!-- Ticket item START -->
+                            <div th:each="list : ${airFrom.list}" class="card border">
+                                <!-- Card header -->
+                                <div class="card-header d-sm-flex justify-content-sm-between align-items-center">
+                                    <!-- Airline Name -->
+                                    <div class="d-flex align-items-center mb-2 mb-sm-0">
+                                        <img th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}"
+                                             class="w-30px me-2" alt="">
+                                        <h6 class="fw-normal mb-0" th:text="${list.airlineDTO.al_name}"/>
+                                    </div>
+                                    <h6 class="fw-normal mb-0"><span class="text-body">항공권 등급:</span>[[${list.airGradeOptionDTO.agop_name}]]
+                                    </h6>
+                                </div>
+
+                                <!-- Card body -->
+                                <div class="card-body p-4 pb-0">
+                                    <!-- Ticket item START -->
+                                    <div class="row g-4">
+
+                                        <div class="form-check form-floating col-1 align-items-baseline"
+                                             style="top:20px; left:20px;">
+                                            <input class="form-check-input" type="checkbox" name="air_from_check"
+                                                   onclick="checkFromOnlyOne(this)" th:value="${list.ano}">
+                                        </div>
+                                        <!-- Airport detail -->
+                                        <div class="col-sm-4 col-md-3">
+                                            <h4 th:text="${#temporals.format(list.ar_from_date, 'HH:mm')}"/>
+                                            <p class="mb-0" th:text="${list.ar_from}"/>
+                                        </div>
+
+                                        <!-- Time -->
+                                        <div class="col-sm-4 col-md-2 my-sm-auto text-center">
+                                            <!-- Time -->
+                                            <h5 th:text="${list.ar_time + '분'}"/>
+                                            <div class="position-relative my-4">
+                                                <!-- Line -->
+                                                <hr class="bg-primary opacity-5 position-relative">
+                                                <!-- Icon -->
+                                                <div class="icon-md bg-primary text-white rounded-circle position-absolute top-50 start-50 translate-middle">
+                                                    <i class="fa-solid fa-fw fa-plane rtl-flip"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Airport detail -->
+                                        <div class="col-sm-4 col-md-3">
+                                            <h4 th:text="${#temporals.format(list.ar_to_date, 'HH:mm')}"/>
+                                            <p class="mb-0" th:text="${list.ar_to}"/>
+                                        </div>
+
+                                        <!-- Price -->
+                                        <div class="col-md-3 text-md-end">
+                                            <h4 th:text="${#numbers.formatInteger(list.ar_price * sch.ea, 3, 'COMMA') + '원'}"/>
+                                        </div>
+                                    </div>
+                                    <!-- Ticket item END -->
+                                    <!-- Card footer -->
+                                    <div class="card-footer pt-4">
+                                        <ul class="list-inline bg-light rounded-2 d-sm-flex text-center justify-content-sm-between mb-0 px-4 py-2">
+                                            <li class="list-inline-item text-danger"
+                                                th:text="${list.ar_res_cnt+'석 남았습니다!!'}"/>
+                                            <li class="list-inline-item text-danger">Non-Refundable</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Pagination START -->
+                            <nav class="pagingFrom d-flex justify-content-center" aria-label="navigation">
+                                <!--항공권 페이징-->
+                            </nav>
+                            <!-- Pagination END -->
+
+
+                            <!-- Ticket item START -->
+                            <div th:each="list : ${airTo.list}" class="card border">
+                                <!-- Card header -->
+                                <div class="card-header d-sm-flex justify-content-sm-between align-items-center">
+                                    <!-- Airline Name -->
+                                    <div class="d-flex align-items-center mb-2 mb-sm-0">
+                                        <img th:src="@{${list.airlineDTO.al_logo_uri}}+'/'+ ${list.airlineDTO.al_logo_name}"
+                                             class="w-30px me-2" alt="">
+                                        <h6 class="fw-normal mb-0" th:text="${list.airlineDTO.al_name}"/>
+                                    </div>
+                                    <h6 class="fw-normal mb-0"><span class="text-body">항공권 등급:</span>[[${list.airGradeOptionDTO.agop_name}]]
+                                    </h6>
+                                </div>
+
+                                <!-- Card body -->
+                                <div class="card-body p-4 pb-0">
+                                    <!-- Ticket item START -->
+                                    <div class="row g-4">
+
+                                        <div class="form-check form-floating col-1 align-items-baseline"
+                                             style="top:20px; left:20px;">
+                                            <input class="form-check-input" type="checkbox" name="air_to_check"
+                                                   onclick="checkFromOnlyOne(this)" th:value="${list.ano}">
+                                        </div>
+                                        <!-- Airport detail -->
+                                        <div class="col-sm-4 col-md-3">
+                                            <h4 th:text="${#temporals.format(list.ar_from_date, 'HH:mm')}"/>
+                                            <p class="mb-0" th:text="${list.ar_from}"/>
+                                        </div>
+
+                                        <!-- Time -->
+                                        <div class="col-sm-4 col-md-2 my-sm-auto text-center">
+                                            <!-- Time -->
+                                            <h5 th:text="${list.ar_time + '분'}"/>
+                                            <div class="position-relative my-4">
+                                                <!-- Line -->
+                                                <hr class="bg-primary opacity-5 position-relative">
+                                                <!-- Icon -->
+                                                <div class="icon-md bg-primary text-white rounded-circle position-absolute top-50 start-50 translate-middle">
+                                                    <i class="fa-solid fa-fw fa-plane rtl-flip"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Airport detail -->
+                                        <div class="col-sm-4 col-md-3">
+                                            <h4 th:text="${#temporals.format(list.ar_to_date, 'HH:mm')}"/>
+                                            <p class="mb-0" th:text="${list.ar_to}"/>
+                                        </div>
+
+                                        <!-- Price -->
+                                        <div class="col-md-3 text-md-end">
+                                            <h4 th:text="${#numbers.formatInteger(list.ar_price * sch.ea, 3, 'COMMA') + '원'}"/>
+                                        </div>
+                                    </div>
+                                    <!-- Ticket item END -->
+                                </div>
+
+                                <!-- Card footer -->
+                                <div class="card-footer pt-4">
+                                    <ul class="list-inline bg-light rounded-2 d-sm-flex text-center justify-content-sm-between mb-0 px-4 py-2">
+                                        <li class="list-inline-item text-danger"
+                                            th:text="${list.ar_res_cnt+'석 남았습니다!!'}"/>
+                                        <li class="list-inline-item text-danger">Non-Refundable</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Ticket item END -->
+                            <!-- Pagination START -->
+                            <nav class="pagingTo d-flex justify-content-center" aria-label="navigation">
+                            </nav>
+                            <!-- Pagination END -->
+
+                            <div class="d-flex p-xl-1 mt-xl-1 mx-xl-2 justify-content-lg-end">
+                                <input type="submit" class="btn btn-primary px-lg-3" value="예약하기"/>
+                            </div>
+                            <input type="hidden" th:value="${fromAP}" name="air_from"/>
+                            <input type="hidden" th:value="${toAP}" name="air_to"/>
+                            <input type="hidden" th:value="${sch.ea}" name="ea"/>
+                        </form>
+
+                    </div>
+                <!-- Main content END -->
+            </div> <!-- Row END -->
         </div>
-      </div> <!-오는 항공편 끝--->
-      <div>
-        <!--예약하기 버튼-->
-        <input type="hidden" th:value="${fromAP}" name="air_from"/>
-        <input type="hidden" th:value="${toAP}" name="air_to"/>
-        <input type="hidden" th:value="${sch.ea}" name="ea" />
-        <input type="submit" />
-      </div>
+    </section>
+    <!-- =======================
+    Flight list END -->
 
-    </form>
-  </div>
-
-</div>
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
 
 
+<!-- Back to top -->
+<div class="back-top"></div>
 
-</div>
+<!-- Bootstrap JS -->
+<script src="/bootstrap/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- Vendors -->
+<script src="/bootstrap/vendor/flatpickr/js/flatpickr.min.js"></script>
+<script src="/bootstrap/vendor/choices/js/choices.min.js"></script>
+<script src="/bootstrap/vendor/nouislider/nouislider.min.js"></script>
 
-<div th:replace="fragments/footer :: footer">
-</div>
-
-</div>
-</body>
-
+<!-- ThemeFunctions -->
+<script src="/bootstrap/js/functions.js"></script>
 <script th:inline="javascript">
-
-  window.onload = () => {
-    drawPage(pagination1, params);
-    drawPage(pagination2, params);
-  }
-
-  const pagination1 = [[ ${airFrom.pagination} ]];
-  const pagination2 = [[ ${airTo.pagination} ]];
-  const params = [[ ${sch} ]];
-
-  // 페이지 HTML draw
-  function drawPage(pagination, params) {
-
-    if ( !pagination || !params ) {
-      if(pagination == pagination1) {
-        document.querySelector('.pagingFrom').innerHTML = html;
-      } else  if (pagination == pagination2) {
-        document.querySelector('.pagingTo').innerHTML = html;
-      }
-      throw new Error('Missing required parameters...');
+    window.onload = () => {
+        drawPage(pagination1, params);
+        drawPage(pagination2, params);
     }
 
-    let html = '';
+    const pagination1 = [[ ${airFrom.pagination}]];
+    const pagination2 = [[ ${airTo.pagination}]];
+    const params = [[ ${sch}]];
 
-    // 첫 페이지, 이전 페이지
-    if (pagination.existPrevPage) {
-      html += `
+    // 페이지 HTML draw
+    function drawPage(pagination, params) {
+
+        if (!pagination || !params) {
+            if (pagination == pagination1) {
+                document.querySelector('.pagingFrom').innerHTML = html;
+            } else if (pagination == pagination2) {
+                document.querySelector('.pagingTo').innerHTML = html;
+            }
+            throw new Error('Missing required parameters...');
+        }
+
+        let html = '';
+
+        // 첫 페이지, 이전 페이지
+        if (pagination.existPrevPage) {
+            html += `
             <a href="javascript:void(0);" onclick="movePage(1)">&lt;&lt;&nbsp;</a>
             <a href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})" class="page_bt prev">&lt;&nbsp;</a>
         `;
-    }
+        }
 
-    // 페이지 번호
-    html += '<p>';
-    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
-      if (pagination.endPage > pagination.totalPageCount) {
-        pagination.endPage = pagination.totalPageCount;
-      }
-      html += (i !== params.pageNum)
-              ? `<a href="javascript:void(0);" onclick="movePage(${i});">&nbsp;${i}&nbsp;</a>`
-              : `<span class="on">&nbsp;${i}&nbsp;</span>`
-    }
-    html += '</p>';
+        // 페이지 번호
+        html += '<p>';
+        for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+            if (pagination.endPage > pagination.totalPageCount) {
+                pagination.endPage = pagination.totalPageCount;
+            }
+            html += (i !== params.pageNum)
+                ? `<a href="javascript:void(0);" onclick="movePage(${i});">&nbsp;${i}&nbsp;</a>`
+                : `<span class="on">&nbsp;${i}&nbsp;</span>`
+        }
+        html += '</p>';
 
-    // 다음 페이지, 마지막 페이지
-    if (pagination.existNextPage) {
-      html += `
+        // 다음 페이지, 마지막 페이지
+        if (pagination.existNextPage) {
+            html += `
             <a href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next">&nbsp;&gt;&nbsp;</a>
             <a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">&gt;&gt;</a>
         `;
+        }
+        if (pagination == pagination1) {
+            document.querySelector('.pagingFrom').innerHTML = html;
+        } else if (pagination == pagination2) {
+            document.querySelector('.pagingTo').innerHTML = html;
+        }
     }
-    if(pagination == pagination1) {
-      document.querySelector('.pagingFrom').innerHTML = html;
-    } else  if (pagination == pagination2) {
-      document.querySelector('.pagingTo').innerHTML = html;
+
+
+    // 페이지 이동
+    function movePage(pageNum) {
+        const queryParams = {
+            pageNum: (pageNum) ? pageNum : 1,
+            amount: 10,
+            pageSize: 5
+        }
+        location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
     }
-  }
 
 
-  // 페이지 이동
-  function movePage(pageNum) {
-    const queryParams = {
-      pageNum: (pageNum) ? pageNum : 1,
-      amount: 10,
-      pageSize: 5
-    }
-    location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
-  }
+    //체크박스 하나만 선택
 
+    function checkFromOnlyOne(element) {
 
-  //체크박스 하나만 선택
-
-  function checkFromOnlyOne(element) {
-
-    const checkboxes
+        const checkboxes
             = document.getElementsByName("air_from_check");
-    checkboxes.forEach((cb) => {
-      cb.checked = false;
-    })
-    element.checked = true;
-  }
+        checkboxes.forEach((cb) => {
+            cb.checked = false;
+        })
+        element.checked = true;
+    }
 
-  function checkToOnlyOne(element) {
+    function checkToOnlyOne(element) {
 
-    const checkboxes
+        const checkboxes
             = document.getElementsByName("air_to_check");
-    checkboxes.forEach((cb) => {
-      cb.checked = false;
-    })
-    element.checked = true;
-  }
-  /*]]>*/
+        checkboxes.forEach((cb) => {
+            cb.checked = false;
+        })
+        element.checked = true;
+    }
+
+    /*]]>*/
 </script>
-
-
+</body>
 </html>
