@@ -63,4 +63,9 @@ public class ReservationServiceImpl implements ReservationService{
     public List<AirReservationListDTO> getReservationDetail(Long rno) {
         return reservationRepository.getReservationDetail(rno);
     }
+
+    @Override
+    public void update(Long rno){
+        reservationRepository.update(rno);
+    }
 }

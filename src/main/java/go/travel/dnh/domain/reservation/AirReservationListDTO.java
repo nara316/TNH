@@ -17,6 +17,7 @@ public class AirReservationListDTO {
 
     private Long rno;
     private Integer mno;
+    private String mem_name;
     private String ar_from;
     private String ar_to;
     private String agop_code;
@@ -26,7 +27,7 @@ public class AirReservationListDTO {
     private String ko_name;
     private String en_lname;
     private String en_fname;
-    private String birth;
+    private Date birth;
     private String gender;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime arp_date;

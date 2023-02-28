@@ -12,7 +12,7 @@
 
     <!--결제창 예약단건조회-->
     <select id="getReservation" parameterType="Long" resultType="AirReservationListDTO">
-        select res.rno, res.mno, res.arp_count, res.arp_price, p.ar_from_date,
+        select res.rno, res.mno, res.arp_count, res.arp_price, p.ar_from_date, res.arp_state,
             (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,
                (select ap_code_name from airport where ap_code = p.ar_to) ar_to,
                (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code
@@ -46,9 +46,17 @@
                 (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,
                 (select ap_code_name from airport where ap_code = p.ar_to) ar_to,
                 (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code,
-                p.ar_from_date, p.ar_to_date, res.rno, res.arp_state
-        from air_product p, reservation2 res
-        where p.ano = res.out_ano and mno = #{mno};
+                p.ar_from_date, p.ar_to_date, res.rno, res.arp_state, m.mem_name
+        from air_product p, reservation2 res, member m
+        where p.ano = res.out_ano and res.mno = m.mno and m.mno = #{mno}
+        order by p.ar_from_date desc
     </select>
+
+    <!--결제완료 시 예약테이블 상태 변경-->
+    <update id="update" parameterType="Long">
+        UPDATE reservation2
+        SET arp_state = '결제 완료'
+        WHERE rno = #{rno};
+    </update>
 
 </mapper>

@@ -1,5 +1,6 @@
 package go.travel.dnh.controller;
 
+import go.travel.dnh.domain.reservation.AirReservationListDTO;
 import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.service.PaymentService;
 import go.travel.dnh.service.ReservationService;
@@ -34,15 +35,23 @@ public class OrderController {
         return "order/practice";
     }
 
-    //예약상세로 가는 메서드
-//    @GetMapping("/orderList/{rno}")
-//    public String payPractice(@PathVariable("rno") Long rno, Model model) {
-//        ReservationDTO rev = reservationService.getReservation(rno);
-//        totalPrice = rev.getArp_price() * rev.getArp_count();
-//        model.addAttribute("list",rev);
-//        return "order/payPractice";
-//    }
+    @GetMapping("{rno}")
+    public String payrev(@PathVariable("rno") Long rno, Model model) {
 
+        AirReservationListDTO revDto = reservationService.getReservation(rno);
+        List<AirReservationListDTO> revDtDto = reservationService.getReservationDetail(rno);
+        System.out.println(revDto.getArp_state());
+        /*결제 완료된 경우 여기 페이지로 오면 안된다.*/
+        if(revDto.getArp_state().equalsIgnoreCase("결제 완료")){
+            model.addAttribute("message", "이미 결제 완료된 내역입니다");
+            model.addAttribute("searchURL", "/");
+            return "message";
+        }
+        totalPrice = revDto.getArp_price() * revDto.getArp_count();
+        model.addAttribute("list", revDto);
+        model.addAttribute("listDetail", revDtDto);
+        return "order/payment";
+    }
 
     //카드결제 성공 후
     @PostMapping("/payment/complete")
@@ -64,7 +73,9 @@ public class OrderController {
                 return new ResponseEntity<String>("결제 금액 오류, 결제 취소", HttpStatus.BAD_REQUEST);
             }
 
+            /*성공로직*/
             paymentService.insertPay(imp_uid,merchant_uid,totalPrice,pay_method);
+
             return new ResponseEntity<>("결제가 완료되었습니다.", HttpStatus.OK);
 
         } catch (Exception e) {

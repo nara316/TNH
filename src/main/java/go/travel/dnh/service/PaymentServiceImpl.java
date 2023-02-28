@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.domain.pay.PayDTO;
 import go.travel.dnh.domain.pay.RefundDTO;
+import go.travel.dnh.domain.reservation.AirReservationListDTO;
 import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.repository.PaymentRepository;
 import go.travel.dnh.repository.ReservationRepository;
@@ -156,18 +157,19 @@ public class PaymentServiceImpl implements PaymentService{
     @Transactional
     public void insertPay(String imp_uid,Long merchant_uid,int totalPrice, String pay_method) {
 
-//        ReservationDTO dto = reservationRepository.getReservation(merchant_uid);
-//        System.out.println(dto);
-//
-//        PayDTO payDTO = new PayDTO();
-//        payDTO.setPno(imp_uid);
-//        payDTO.setRno(dto.getRno());
-//        payDTO.setMno(dto.getMno());
-//        payDTO.setPay_tot_price(totalPrice);
-//        payDTO.setPay_method(pay_method);
-//
-//        System.out.println(payDTO);
-//        paymentRepository.insertPay(payDTO);
+        AirReservationListDTO dto = reservationRepository.getReservation(merchant_uid);
+        System.out.println(dto);
+
+        PayDTO payDTO = new PayDTO();
+        payDTO.setPno(imp_uid);
+        payDTO.setRno(dto.getRno());
+        payDTO.setMno(dto.getMno());
+        payDTO.setPay_tot_price(totalPrice);
+        payDTO.setPay_method(pay_method);
+
+        System.out.println(payDTO);
+        paymentRepository.insertPay(payDTO);
+        reservationRepository.update(dto.getRno());
     }
 
     @Override

@@ -24,4 +24,6 @@ public interface ReservationService {
 
     public List<AirReservationListDTO> getReservationDetail(Long rno);
 
+    public void update(Long rno);
+
 }

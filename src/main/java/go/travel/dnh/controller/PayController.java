@@ -1,10 +1,15 @@
 package go.travel.dnh.controller;
 
+import go.travel.dnh.domain.User.LoginUser;
+import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.domain.pay.PayDTO;
 import go.travel.dnh.domain.reservation.AirReservationListDTO;
+import go.travel.dnh.service.MemberLoginService;
 import go.travel.dnh.service.PaymentService;
 import go.travel.dnh.service.ReservationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +23,7 @@ public class PayController {
 
     private final PaymentService paymentService;
     private final ReservationService reservationService;
+    private final MemberLoginService memberLoginService;
 
     private int result;
 
@@ -38,14 +44,20 @@ public class PayController {
         return "order/refundPractice";
     }
 
-    @GetMapping("{rno}")
-    public String payrev(@PathVariable("rno") Long rno, Model model) {
-        AirReservationListDTO revDto = reservationService.getReservation(rno);
-        List<AirReservationListDTO> revDtDto = reservationService.getReservationDetail(rno);
-        model.addAttribute("list", revDto);
-        model.addAttribute("listDetail", revDtDto);
-        return "order/payment";
+    @GetMapping("/confirm/{rno}")
+    public String bookingConfirm(@PathVariable("rno") Long rno,Model model) {
+
+        return "order/bookingConfirm";
     }
+
+//    @GetMapping("{rno}")
+//    public String payrev(@PathVariable("rno") Long rno, Model model) {
+//        AirReservationListDTO revDto = reservationService.getReservation(rno);
+//        List<AirReservationListDTO> revDtDto = reservationService.getReservationDetail(rno);
+//        model.addAttribute("list", revDto);
+//        model.addAttribute("listDetail", revDtDto);
+//        return "order/payment";
+//    }
 
     @PostMapping("/refund/complete")
     @ResponseBody
