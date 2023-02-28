@@ -4,8 +4,8 @@
     <insert id="save" parameterType="NoticeDTO">
         insert into notice (n_title,n_content,n_filename,n_filepath) values (#{n_title}, #{n_content},#{n_filename},#{n_filepath});
     </insert>
-    <select id="findAll" resultType="NoticeDTO">
-        select * from notice order by nno desc
+    <select id="findAll" resultType="NoticeDTO" parameterType="go.travel.dnh.domain.notice.NoticeSearchDTO">
+        select * from notice order by nno desc limit #{noticePagination.limitStart}, #{recordSize}
     </select>
     <select id="select" resultType="NoticeDTO" parameterType="Integer">
         select * from notice where nno = #{nno}
@@ -16,4 +16,7 @@
     <update id="update" parameterType="Integer">
         update notice set n_title = #{n_title}, n_content = #{n_content}
     </update>
+    <select id="count" parameterType="go.travel.dnh.domain.notice.NoticeSearchDTO" resultType="int">
+        select count(*) from notice
+    </select>
 </mapper>

@@ -12,13 +12,5 @@ class NoticeBoardServiceTest {
     @Autowired
     NoticeBoardService noticeBoardService;
 
-//    @Test
-//    void write() {
-//        NoticeDTO noticeDTO = new NoticeDTO();
-//        noticeDTO.setContent("가고십다");
-//        noticeDTO.setTitle("집에");
-//        for (int i = 1; i <200; i++) {
-//            noticeBoardService.write(noticeDTO);
-//        }
-//    }
+
 }

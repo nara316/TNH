@@ -1,12 +1,17 @@
 package go.travel.dnh.service;
 
+import go.travel.dnh.domain.air.PagingResponse;
 import go.travel.dnh.domain.notice.NoticeDTO;
+import go.travel.dnh.domain.notice.NoticePageResponse;
+import go.travel.dnh.domain.notice.NoticePagination;
+import go.travel.dnh.domain.notice.NoticeSearchDTO;
 import go.travel.dnh.mapper.NoticeBoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,8 +30,15 @@ public class NoticeBoardService {
         noticeDTO.setN_filepath("/files/"+fileName);
         noticeBoardMapper.save(noticeDTO);
     }
-    public List<NoticeDTO> boardList() {
-        return noticeBoardMapper.findAll();
+    public NoticePageResponse<NoticeDTO> boardList(NoticeSearchDTO noticeSearchDTO) {
+        int count = noticeBoardMapper.count(noticeSearchDTO);
+        if(count < 1) {
+            return new NoticePageResponse<>(Collections.emptyList(), null);
+        }
+        NoticePagination noticePagination = new NoticePagination(count, noticeSearchDTO);
+        noticeSearchDTO.setNoticePagination(noticePagination);
+        List<NoticeDTO> list = noticeBoardMapper.findAll(noticeSearchDTO);
+        return new NoticePageResponse<>(list, noticePagination);
     }
 
     public NoticeDTO boardView(Integer nno) {
@@ -40,4 +52,5 @@ public class NoticeBoardService {
     public void modifyBoard(Integer nno) {
         noticeBoardMapper.update(nno);
     }
+
 }
