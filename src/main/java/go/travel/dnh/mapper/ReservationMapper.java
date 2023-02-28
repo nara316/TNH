@@ -22,4 +22,6 @@ public interface ReservationMapper {
     public List<AirReservationListDTO> selectMyRes(int mno);
 
     public List<AirReservationListDTO> getReservationDetail(Long rno);
+
+    public void update(Long rno);
 }
