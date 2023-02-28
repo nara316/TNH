@@ -33,8 +33,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td th:utext="${outDTO.getAr_from()}+
-                            '<img src='+'/imgs/air/icon/airplane.png'+'>'+${outDTO.getAr_to()}"/>
+                    <td th:utext="${outDTO.getAr_from}+
+                            '<img src='+'/imgs/air/icon/airplane.png'+'>'+${outDTO.getAr_to}"/>
                     <td th:utext="'<img src='+${outDTO.airlineDTO.al_logo_uri}+'/'+${outDTO.airlineDTO.al_logo_name}+'>'
                 +${outDTO.airlineDTO.al_name}+' '+${outDTO.ar_fl_no}+'편'" />
                     <td th:text="${outDTO.ar_from_date}"/>

@@ -141,12 +141,12 @@ public class AirController {
         if(resInfo.getAir_oneway_check()!=null){
             m.addAttribute("resInfo",resInfo);
             m.addAttribute("onewayPro",onewayPro);
-            return "air/res2";
+            return "air/res-oneway";
         } else {
             m.addAttribute("resInfo", resInfo);
             m.addAttribute("outPro", outPro);
             m.addAttribute("inPro", inPro);
-            return "/air/res";
+            return "air/res-round";
         }
     }
 
@@ -168,9 +168,9 @@ public class AirController {
         m.addAttribute("inDTO", inDTO);
 
         if(inDTO==null){
-            return "air/order2";}
+            return "air/order-oneway";}
         else
-            return "air/order";
+            return "air/order-round";
     }
 
 
