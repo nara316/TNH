@@ -15,7 +15,7 @@
         }
         .pagination {
             margin: 0 auto;
-            width: 500px;
+            width: 550px;
             height: 50px;
             font-size: 25px;
         }
@@ -37,6 +37,17 @@
 <div th:replace="admin/admin-fragments/nav :: nav">
 </div>
     <div class="layout">
+        <div class="search_box">
+            <form id="searchForm"  autocomplete="off">
+                <div class="sch_group fl">
+                    <select id="searchType" name="searchType" title="검색 유형 선택">
+                        <option value="title" >제목</option>
+                    </select>
+                    <input type="text" id="keyword" name="keyword" th:value="${params.keyword}" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+                    <button type=submit class="bt_search" >검색</button>
+                </div>
+            </form>
+        </div>
        <table>
            <thead>
                <tr>

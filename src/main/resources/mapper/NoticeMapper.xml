@@ -5,7 +5,8 @@
         insert into notice (n_title,n_content,n_filename,n_filepath) values (#{n_title}, #{n_content},#{n_filename},#{n_filepath});
     </insert>
     <select id="findAll" resultType="NoticeDTO" parameterType="go.travel.dnh.domain.notice.NoticeSearchDTO">
-        select * from notice order by nno desc limit #{noticePagination.limitStart}, #{recordSize}
+        select * from notice <include refid="search" />
+         order by nno desc limit #{noticePagination.limitStart}, #{recordSize}
     </select>
     <select id="select" resultType="NoticeDTO" parameterType="Integer">
         select * from notice where nno = #{nno}
@@ -17,6 +18,21 @@
         update notice set n_title = #{n_title}, n_content = #{n_content}
     </update>
     <select id="count" parameterType="go.travel.dnh.domain.notice.NoticeSearchDTO" resultType="int">
-        select count(*) from notice
+        select count(*) from notice <include refid="search" />
     </select>
+<!--    <select id="search" parameterType="go.travel.dnh.domain.notice.NoticeSearchDTO" resultType="NoticeDTO">-->
+<!--        select * from notice where n_title like Keyword  = '%'||#{Keyword}||'%'-->
+<!--    </select>-->
+    <sql id="search">
+    <!-- 검색 키워드가 있을 때 -->
+        <if test="keyword !=null and keyword != ''">
+            <choose>
+                <when test="searchType != null and searchType != ''">
+                    <choose>
+                        <when test="'title'.equals( searchType )">where n_title like concat('%',#{keyword},'%')</when>
+                    </choose>
+                </when>
+            </choose>
+        </if>
+    </sql>
 </mapper>

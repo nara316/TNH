@@ -40,7 +40,16 @@ public class NoticeBoardService {
         List<NoticeDTO> list = noticeBoardMapper.findAll(noticeSearchDTO);
         return new NoticePageResponse<>(list, noticePagination);
     }
-
+//    public NoticePageResponse<NoticeDTO> searchSome(NoticeSearchDTO noticeSearchDTO) {
+//        int count = noticeBoardMapper.count(noticeSearchDTO);
+//        if(count < 1) {
+//            return new NoticePageResponse<>(Collections.emptyList(), null);
+//        }
+//        NoticePagination noticePagination = new NoticePagination(count, noticeSearchDTO);
+//        noticeSearchDTO.setNoticePagination(noticePagination);
+//        List<NoticeDTO> list = noticeBoardMapper.search(noticeSearchDTO.setKeyword(););
+//        return new NoticePageResponse<>(list, noticePagination);
+//    }
     public NoticeDTO boardView(Integer nno) {
         return noticeBoardMapper.select(nno);
     }

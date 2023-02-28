@@ -19,4 +19,6 @@ public interface NoticeBoardMapper {
     void delete(Integer nno);
 
     void update(Integer nno);
+
+    List<NoticeDTO> search(NoticeSearchDTO noticeSearchDTO);
 }
