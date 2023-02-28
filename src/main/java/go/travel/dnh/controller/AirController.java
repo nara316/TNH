@@ -47,8 +47,7 @@ public class AirController {
         PagingResponse<AirProductDTO> listFrom = airProductService.getSearchFromList(sch);
         PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
         List<AirportDTO> airportList = airProductService.getListAirport();
-
-
+        
         //편도
         if(sch.getRoundFrom()==null){
             if(listOneWay.getList().isEmpty()){
@@ -139,17 +138,15 @@ public class AirController {
         AirProductDTO inPro = airProductService.readRes(resInfo.getAir_to_check());
         AirProductDTO onewayPro = airProductService.readRes(resInfo.getAir_oneway_check());
 
-        System.out.println(resInfo.getAir_oneway_check());
-
         if(resInfo.getAir_oneway_check()!=null){
             m.addAttribute("resInfo",resInfo);
             m.addAttribute("onewayPro",onewayPro);
-            return "air/reservation2";
+            return "air/res2";
         } else {
             m.addAttribute("resInfo", resInfo);
             m.addAttribute("outPro", outPro);
             m.addAttribute("inPro", inPro);
-            return "/air/reservation";
+            return "/air/res";
         }
     }
 
@@ -163,6 +160,8 @@ public class AirController {
         AirProductDTO outDTO = airProductService.readRes(dto.getOut_ano());
         AirProductDTO inDTO = airProductService.readRes(dto.getIn_ano());
         AirReservationDTO resDTO = dto;
+
+
 
         m.addAttribute("resDTO", resDTO);
         m.addAttribute("outDTO", outDTO);

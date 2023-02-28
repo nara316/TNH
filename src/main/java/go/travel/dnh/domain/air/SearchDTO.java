@@ -24,7 +24,7 @@ public class SearchDTO {
 
     public SearchDTO(){
         this.pageNum = 1;
-        this.amount = 10;
+        this.amount = 5;
         this.pageSize = 5;
     }
 
