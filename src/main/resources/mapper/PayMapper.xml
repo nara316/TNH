@@ -23,6 +23,13 @@
         where pno = #{pno};
     </select>
 
+    <!--pno 조회-->
+    <select id="readPno" parameterType="Long" resultType="String">
+        select pno
+        from Pay
+        where rno = #{rno};
+    </select>
+
     <!--결제취소 시 결제상태 변경-->
     <update id="update" parameterType="String">
         UPDATE Pay

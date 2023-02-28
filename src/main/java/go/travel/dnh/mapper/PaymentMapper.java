@@ -21,4 +21,6 @@ public interface PaymentMapper {
     public void insertRefund(RefundDTO refundDTO);
 
     public int readOneRefund(String pno);
+
+    public String readPno(Long rno);
 }

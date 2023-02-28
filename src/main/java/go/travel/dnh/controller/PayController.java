@@ -23,8 +23,6 @@ public class PayController {
 
     private final PaymentService paymentService;
     private final ReservationService reservationService;
-    private final MemberLoginService memberLoginService;
-
     private int result;
 
 
@@ -44,9 +42,13 @@ public class PayController {
         return "order/refundPractice";
     }
 
-    @GetMapping("/confirm/{rno}")
-    public String bookingConfirm(@PathVariable("rno") Long rno,Model model) {
+    @GetMapping("/confirm")
+    public String bookingConfirm(@RequestParam Long rno, Model model) {
+        AirReservationListDTO revDto = reservationService.getReservation(rno);
+        PayDTO payDTO = paymentService.readPay(paymentService.readPno(rno));
 
+        model.addAttribute("rlist", revDto);
+        model.addAttribute("plist", payDTO);
         return "order/bookingConfirm";
     }
 

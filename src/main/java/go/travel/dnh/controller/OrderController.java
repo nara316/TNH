@@ -40,7 +40,6 @@ public class OrderController {
 
         AirReservationListDTO revDto = reservationService.getReservation(rno);
         List<AirReservationListDTO> revDtDto = reservationService.getReservationDetail(rno);
-        System.out.println(revDto.getArp_state());
         /*결제 완료된 경우 여기 페이지로 오면 안된다.*/
         if(revDto.getArp_state().equalsIgnoreCase("결제 완료")){
             model.addAttribute("message", "이미 결제 완료된 내역입니다");
