@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class SocialUser {
-    private String sno;
+    private int sno;
     private String s_name;
     private String s_id;
     private String s_pwd;

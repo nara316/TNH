@@ -2,16 +2,15 @@ package go.travel.dnh.controller;
 
 
 import go.travel.dnh.domain.notice.NoticeDTO;
+import go.travel.dnh.domain.notice.NoticePageResponse;
+import go.travel.dnh.domain.notice.NoticeSearchDTO;
 import go.travel.dnh.mapper.NoticeBoardMapper;
 import go.travel.dnh.service.NoticeBoardService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -22,8 +21,9 @@ public class NoticeController {
     private final NoticeBoardService noticeBoardService;
 
     @GetMapping("/list")
-    public String noticeList(Model model) {
-        model.addAttribute("list", noticeBoardService.boardList());
+    public String noticeList( @ModelAttribute("params") NoticeSearchDTO params,Model model) {
+        NoticePageResponse<NoticeDTO> response = noticeBoardService.boardList(params);
+        model.addAttribute("response",response );
         return "admin/notice/list";
     }
     //공지 글 상세

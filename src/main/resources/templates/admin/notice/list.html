@@ -3,7 +3,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="admin/admin-fragments/script :: script">
-
 </head>
 <style>
         .layout {
@@ -14,6 +13,23 @@
         .layout a{
             color: #333;
         }
+        .pagination {
+            margin: 0 auto;
+            width: 550px;
+            height: 50px;
+            font-size: 25px;
+        }
+        .pagination a{
+            color: #0b0a12;
+            margin: 8px;
+        }
+        .pagination a:focus,.pagination a:hover {
+            color:#fff;
+            border-radius: 5%;
+            border:1px solid rgba(246, 217, 246, 0.51);
+            background-color:rgba(246, 217, 246, 0.51);
+        }
+
 
 </style>
 
@@ -21,6 +37,17 @@
 <div th:replace="admin/admin-fragments/nav :: nav">
 </div>
     <div class="layout">
+        <div class="search_box">
+            <form id="searchForm"  autocomplete="off">
+                <div class="sch_group fl">
+                    <select id="searchType" name="searchType" title="검색 유형 선택">
+                        <option value="title" >제목</option>
+                    </select>
+                    <input type="text" id="keyword" name="keyword" th:value="${params.keyword}" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+                    <button type=submit class="bt_search" >검색</button>
+                </div>
+            </form>
+        </div>
        <table>
            <thead>
                <tr>
@@ -30,7 +57,7 @@
                </tr>
            </thead>
            <tbody>
-               <tr th:each="noticeDTO : ${list}">
+               <tr th:each="noticeDTO : ${response.getList()}">
                    <th th:text="${noticeDTO.nno}"></th>
                    <th>
                        <a th:text="${noticeDTO.n_title}" th:href="@{/notice/list/detail(nno=${noticeDTO.nno})}"></a>
@@ -41,8 +68,18 @@
                </tr>
            </tbody>
        </table>
+        <div class="pagination">
+            <li class="page-item" style="color: #0b0a12; display: inline-block" th:classappend="${response.getNoticePagination().isExistPrevPage() == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/notice/list(page=${response.getNoticePagination().getStartPage()-1})}">&laquo;</a>
+            </li>
+            <li class="page-item" style="color: #0b0a12; display: inline-block" th:each="page: ${#numbers.sequence(response.getNoticePagination().startPage, response.getNoticePagination().endPage)}" th:classappend="${page == params.getPage()} ? 'active'">
+                <a class="page-link" th:text="${page}" th:href="@{/notice/list(page=${page})}"></a>
+            </li>
+            <li class="page-item" style="color: #0b0a12; display: inline-block" th:classappend="${response.getNoticePagination().existNextPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/notice/list(page=${response.getNoticePagination().getEndPage()+1})}">&raquo;</a>
+            </li>
+        </div>
     </div>
-
 
 
 </body>

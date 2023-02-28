@@ -1,6 +1,7 @@
 package go.travel.dnh.controller;
 
 import go.travel.dnh.domain.User.LoginUser;
+import go.travel.dnh.domain.User.WithdrawalForm;
 import go.travel.dnh.domain.User.updateForm;
 import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.mapper.UserMapper;
@@ -83,6 +84,13 @@ public class LoginController {
 
         model.addAttribute("memberDTO", findUser);
         return "login/mypage";
+    }
+
+    @PostMapping("/withdrawal")
+    public @ResponseBody boolean deleteMember( @RequestBody Map<String, Object> deleteUser, HttpServletRequest request, HttpServletResponse response)  {
+        memberLoginService.deleteMember(deleteUser);
+        logout(request, response);
+        return true;
     }
 
     @PostMapping("/mypage")

@@ -1,5 +1,6 @@
 package go.travel.dnh.repository;
 
+import go.travel.dnh.domain.User.WithdrawalForm;
 import go.travel.dnh.domain.User.updateForm;
 import go.travel.dnh.domain.member.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,4 +12,8 @@ public interface MemberLoginRepository {
     MemberDTO findById(String mem_id);
 
     void update(MemberDTO memberDTO);
+
+    void delete(int mno);
+
+    void andInsert(WithdrawalForm withdrawalForm);
 }

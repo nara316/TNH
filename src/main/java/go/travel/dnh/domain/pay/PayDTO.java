@@ -14,7 +14,7 @@ import java.util.Date;
 public class PayDTO {
 
     private String pno;
-    private Integer rno;
+    private Long rno;
     private Integer mno;
     private Integer pay_tot_price;
     private Date pay_date;

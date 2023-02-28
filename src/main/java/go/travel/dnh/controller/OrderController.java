@@ -35,19 +35,19 @@ public class OrderController {
     }
 
     //예약상세로 가는 메서드
-    @GetMapping("/orderList/{rno}")
-    public String payPractice(@PathVariable("rno") Integer rno, Model model) {
-        ReservationDTO rev = reservationService.getReservation(rno);
-        totalPrice = rev.getArp_price() * rev.getArp_count();
-        model.addAttribute("list",rev);
-        return "order/payPractice";
-    }
+//    @GetMapping("/orderList/{rno}")
+//    public String payPractice(@PathVariable("rno") Long rno, Model model) {
+//        ReservationDTO rev = reservationService.getReservation(rno);
+//        totalPrice = rev.getArp_price() * rev.getArp_count();
+//        model.addAttribute("list",rev);
+//        return "order/payPractice";
+//    }
 
 
     //카드결제 성공 후
     @PostMapping("/payment/complete")
     @ResponseBody
-    public ResponseEntity<String> paymentComplete(String imp_uid,int merchant_uid,String pay_method) throws IOException {
+    public ResponseEntity<String> paymentComplete(String imp_uid,Long merchant_uid,String pay_method) throws IOException {
 
         //1. 아임포트 API키와 SECRET키로 토큰을 생성
         String token = paymentService.getToken();
