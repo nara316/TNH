@@ -24,6 +24,7 @@ public class AirReservationListDTO {
     private String arp_state;
     private Integer arp_count;
     private Integer arp_price;
+    private Integer ar_time;
     private String ko_name;
     private String en_lname;
     private String en_fname;

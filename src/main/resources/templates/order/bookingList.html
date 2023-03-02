@@ -132,7 +132,8 @@
 
                                             <!-- Button -->
                                             <div class="mt-2 mt-md-0">
-                                                <a href="#" th:onclick="|location.href='@{/order/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a>
+                                                <!--a href="#" th:onclick="|location.href='@{/order/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a-->
+                                                <a href="#" th:onclick="|location.href='@{/reservation/bookingList/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a>
                                             </div>
                                         </div>
 

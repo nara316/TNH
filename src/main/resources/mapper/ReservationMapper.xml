@@ -10,9 +10,9 @@
         order by rno;
     </select>
 
-    <!--결제창 예약단건조회-->
+    <!--결제 및 예약상세 예약단건조회-->
     <select id="getReservation" parameterType="Long" resultType="AirReservationListDTO">
-        select res.rno, res.mno, res.arp_count, res.arp_price, p.ar_from_date, res.arp_state, m.mem_name,
+        select res.rno, res.mno, res.arp_count, res.arp_price, p.ar_from_date, p.ar_to_date, res.arp_state, m.mem_name, p.ar_time,
             (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,
                (select ap_code_name from airport where ap_code = p.ar_to) ar_to,
                (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code

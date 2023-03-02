@@ -2,9 +2,13 @@ package go.travel.dnh.controller;
 
 import go.travel.dnh.domain.User.LoginUser;
 import go.travel.dnh.domain.air.*;
+import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.domain.reservation.AirReservationDTO;
+import go.travel.dnh.domain.reservation.AirReservationListDTO;
 import go.travel.dnh.domain.reservation.ReservationDetail;
 import go.travel.dnh.service.AirProductService;
+import go.travel.dnh.service.MemberLoginService;
+import go.travel.dnh.service.ReservationService;
 import go.travel.dnh.validation.ReservationInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -24,6 +28,8 @@ import java.util.*;
 public class AirController {
 
     private final AirProductService airProductService;
+    private final MemberLoginService memberLoginService;
+    private final ReservationService reservationService;
 
 
     //항공권 전체 목록
@@ -153,24 +159,35 @@ public class AirController {
 
 
     //예약정보 저장하기
+//    @PostMapping("/reservation")
+//    public String reservation(AirReservationDTO dto, @ModelAttribute("reservationDetails") ReservationDetail reservationDetails, Model m, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
+//        airProductService.reservation(dto,reservationDetails,loginUser,authentication);
+//        AirProductDTO outDTO = airProductService.readRes(dto.getOut_ano());
+//        AirProductDTO inDTO = airProductService.readRes(dto.getIn_ano());
+//        AirReservationDTO resDTO = dto;
+//
+//
+//
+//        m.addAttribute("resDTO", resDTO);
+//        m.addAttribute("outDTO", outDTO);
+//        m.addAttribute("inDTO", inDTO);
+//
+//        if(inDTO==null){
+//            return "air/order-oneway";}
+//        else
+//            return "air/order-round";
+//    }
 
     @PostMapping("/reservation")
     public String reservation(AirReservationDTO dto, @ModelAttribute("reservationDetails") ReservationDetail reservationDetails, Model m, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
         airProductService.reservation(dto,reservationDetails,loginUser,authentication);
-        AirProductDTO outDTO = airProductService.readRes(dto.getOut_ano());
-        AirProductDTO inDTO = airProductService.readRes(dto.getIn_ano());
-        AirReservationDTO resDTO = dto;
 
+        MemberDTO memberDTO = memberLoginService.findMember(loginUser,authentication);
+        List<AirReservationListDTO> revList = reservationService.selectMyRes(loginUser,authentication);
 
-
-        m.addAttribute("resDTO", resDTO);
-        m.addAttribute("outDTO", outDTO);
-        m.addAttribute("inDTO", inDTO);
-
-        if(inDTO==null){
-            return "air/order-oneway";}
-        else
-            return "air/order-round";
+        m.addAttribute("memberDTO", memberDTO);
+        m.addAttribute("revList", revList);
+        return "order/bookingList";
     }
 
 
