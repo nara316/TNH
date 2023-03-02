@@ -2,13 +2,32 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
 <head>
-    <div th:replace="fragments/script :: script">
+    <meta charset="UTF-8">
+    <title>::: Go Travel :::</title>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Webestica.com">
 
-    </div>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/bootstrap/images/favicon.ico">
 
+    <!-- Google Font -->
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/font-awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/bootstrap-icons/bootstrap-icons.css">
+
+    <!-- Theme CSS -->
     <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/flatpickr/css/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/choices/css/choices.min.css">
-
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/doc.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/prism.css">
 
 </head>
 
@@ -125,7 +144,7 @@ Main Banner START -->
                                     <div class="col-lg-4">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="YMd" placeholder="Select date" th:field="*{sch.oneFromDate}">
+                                            <input type="text" class="form-control flatpickr" data-date-format="Ymd" placeholder="Select date" th:field="*{sch.oneFromDate}">
                                         </div>
                                     </div>
 
@@ -170,7 +189,7 @@ Main Banner START -->
                                     <div class="col-md-6 col-xl-3">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="YMd" placeholder="Select date" name="roundFromDate" >
+                                            <input type="text" class="form-control flatpickr" data-date-format="Ymd" placeholder="Select date" name="roundFromDate" >
                                         </div>
                                     </div>
 
@@ -178,7 +197,7 @@ Main Banner START -->
                                     <div class="col-md-6 col-xl-3">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Return</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="YMd" placeholder="Select date" name="roundToDate">
+                                            <input type="text" class="form-control flatpickr" data-date-format="Ymd" placeholder="Select date" name="roundToDate">
                                         </div>
                                     </div>
 
@@ -205,7 +224,20 @@ Main Banner START -->
 <br>
 <div th:replace="fragments/footer :: footer">
 </div>
+<!-- =======================
+JavaScripts -->
 
+<!-- Bootstrap JS -->
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="/bootstrap/js/simple-scrollbar.min.js"></script>
+<script src="/bootstrap/js/prism.js"></script>
+<script src="/bootstrap/js/clipboard.min.js"></script>
+<script src="/bootstrap/vendor/flatpickr/js/flatpickr.min.js"></script>
+<script src="/bootstrap/vendor/choices/js/choices.min.js"></script>
+
+<!-- ThemeFunctions -->
+<script src="/bootstrap/js/functions.js"></script>
 </body>
 
 

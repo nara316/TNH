@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-<head th:replace="fragments/script :: script">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>::: Go Travel :::</title>
     <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Webestica.com">
     <meta name="description" content="Booking - Multipurpose Online Booking Theme">
-
     <!-- Favicon -->
     <link rel="shortcut icon" href="/bootstrap/images/favicon.ico">
 
-    <!-- Plugins CSS -->
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
 
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/font-awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/flatpickr/css/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/choices/css/choices.min.css">
     <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/nouislider/nouislider.css">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
 
 </head>
 
@@ -389,7 +402,7 @@
                                         <div class="form-check form-floating col-1 align-items-baseline"
                                              style="top:20px; left:20px;">
                                             <input class="form-check-input" type="checkbox" name="air_to_check"
-                                                   onclick="checkFromOnlyOne(this)" th:value="${list.ano}">
+                                                   onclick="checkToOnlyOne(this)" th:value="${list.ano}">
                                         </div>
                                         <!-- Airport detail -->
                                         <div class="col-sm-4 col-md-3">
