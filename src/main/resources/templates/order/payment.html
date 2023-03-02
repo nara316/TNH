@@ -26,13 +26,21 @@ Main Content START -->
                         <div class="card-body p-0 mt-3">
                             <!-- Alert box -->
                             <div class="alert alert-success" role="alert">
-                                원하는 결제수단을 선택하신 뒤 <strong class="mx-1">Pay Now</strong>를 눌러주세요!
+                                원하는 결제수단을 선택하신 뒤 <strong class="mx-1">Pay Now</strong>를 클릭해주세요!
                             </div>
-
+                            <br>
+                            <div class="bg-light rounded-3 p-4">
+                                <!--결제 전 확인사항-->
+                                <h3>결제 전 확인사항</h3>
+                                <p>결제금액에 포함된 발권대행수수료는 항공권과 별도로 결제되며, 예약 당일 이후 취소 시 환불되지 않습니다.</p>
+                                <p>결제 완료 후 정상 예약이 되지 않는 경우가 있습니다. 마이페이지에서 예약내역을 꼭 확인해주세요.</p>
+                                <p style="color: red;">결제 완료 후에는 결제수단 변경이 불가합니다.</p>
+                            </div>
+                            <br>
                             <div class="bg-light rounded-3 p-4">
                                 <!-- Card options -->
                                 <div>
-                                    <label><input type="radio" name="method" value="kcp" onchange="getselect(this)"/> 신용카드 <i class="fa-solid fa-credit-card"></i></label>
+                                    <label><input type="radio" name="method" value="kcp" onchange="getselect(this)"/>신용카드</label>
                                     <label><input type="radio" name="method" value="kakaopay" onchange="getselect(this)"/> 카카오페이</label>
                                 </div>
                                 <br>
@@ -63,11 +71,11 @@ Main Content START -->
                                 <div class="card-body">
                                     <ul class="list-group list-group-borderless">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-										<span class="h6 fw-normal mb-0">공급가액</span>
+										<span class="h6 fw-normal mb-0">항공요금</span>
                                             <span class="fs-5">[[${#numbers.formatInteger(list.arp_price * 0.9, 3, 'COMMA')}]]  <i class="fa-solid fa-won-sign"></i></span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <span class="h6 fw-normal mb-0">부가세</span>
+                                            <span class="h6 fw-normal mb-0">유류할증료</span>
                                             <span class="fs-5">[[${#numbers.formatInteger(list.arp_price * 0.1, 3, 'COMMA')}]]  <i class="fa-solid fa-won-sign"></i></span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -80,7 +88,7 @@ Main Content START -->
                                 <!-- Card footer -->
                                 <div class="card-footer border-top bg-light">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <span class="h5 fw-normal mb-0">총 금액</span>
+                                        <span class="h5 fw-normal mb-0">합계 금액</span>
                                         <span class="h5 fw-normal mb-0"> [[${#numbers.formatInteger(list.arp_price * list.arp_count, 3, 'COMMA')}]] <i class="fa-solid fa-won-sign"></i></span>
                                     </div>
                                 </div>

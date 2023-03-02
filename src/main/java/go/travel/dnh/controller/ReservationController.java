@@ -17,10 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import java.security.Principal;
@@ -47,6 +44,7 @@ public class ReservationController {
         return "admin/main";
     }
 
+    /*마이페이지 내 예약리스트*/
     @GetMapping("/bookingList")
     public String bookingList(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
 
@@ -61,15 +59,25 @@ public class ReservationController {
         return "order/bookingList";
     }
 
-    //연습용 메서드
-    @GetMapping("/bookingList2")
-    public String orderForm(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
-
-        List<AirReservationDTO> reservationList = reservationService.readList(loginUser, authentication);
-
-        model.addAttribute("reservationList", reservationList);
-
-        return "order/bookingList2";
+    /*예약상세*/
+    @GetMapping("/bookingList/{rno}")
+    public String showRevDetail(@PathVariable("rno") Long rno, Model model) {
+        AirReservationListDTO revDto = reservationService.getReservation(rno);
+        List<AirReservationListDTO> revDtDto = reservationService.getReservationDetail(rno);
+        model.addAttribute("list", revDto);
+        model.addAttribute("listDetail", revDtDto);
+        return "order/bookingDetail";
     }
+
+//    //연습용 메서드
+//    @GetMapping("/bookingList2")
+//    public String orderForm(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
+//
+//        List<AirReservationDTO> reservationList = reservationService.readList(loginUser, authentication);
+//
+//        model.addAttribute("reservationList", reservationList);
+//
+//        return "order/bookingList2";
+//    }
 
 }

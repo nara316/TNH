@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/script :: script">
+
+</head>
+
+<body>
+<div th:replace="fragments/nav :: nav">
+</div>
+
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+    <!-- =======================
+    Main Content START -->
+    <section>
+        <div class="container position-relative" data-sticky-container>
+            <div class="row g-4">
+                <!-- Left Content START -->
+                <div class="col-xl-9">
+                    <div class="vstack gap-4">
+
+                        <!-- Title START -->
+                        <div class="d-flex align-items-center">
+                            <!-- Icon -->
+                            <h2 class="display-4 mb-0"><i class="fa-solid fa-plane rtl-flip"></i></h2>
+
+                            <!-- Title and content START -->
+                            <div class="ms-3">
+                                <!-- Title -->
+                                <ul class="list-inline mb-2">
+                                    <li class="list-inline-item me-2">
+                                        <h4 class="mb-0" th:text="${list.ar_from}"/>
+                                    </li>
+                                    <li class="list-inline-item me-2">
+                                        <h4 class="mb-0"><i class="bi bi-arrow-right"></i></h4>
+                                    </li>
+                                    <li class="list-inline-item me-0">
+                                        <h4 class="mb-0" th:text="${list.ar_to}"/>
+                                    </li>
+                                </ul>
+
+                                <!-- List -->
+                                <ul class="nav nav-divider h6 fw-normal text-body mb-0">
+                                    <li class="nav-item">25 Jan</li>
+                                    <li class="nav-item">05h 25m</li>
+                                </ul>
+                            </div>
+                            <!-- Title and content END -->
+                        </div>
+                        <!-- Title END -->
+
+                        <!-- Ticket START -->
+                        <div class="card border">
+                            <!-- Card header -->
+                            <div class="card-header d-flex justify-content-between pb-0">
+                                <h6 class="fw-normal mb-0"><span class="text-body">좌석 등급 :</span> [[${list.agop_code}]]</h6>
+                            </div>
+
+                            <!-- Card body START -->
+                            <div class="card-body p-4">
+                                <!-- 가는편 Ticket item START -->
+                                <div class="row g-4">
+                                    <!-- Air line name -->
+                                    <div class="col-md-3">
+                                        <!-- Image -->
+                                        <!--img th:src="${onewayPro.airlineDTO.al_logo_uri}+'/'+${onewayPro.airlineDTO.al_logo_name}" class="w-80px mb-3" alt=""-->
+                                        <!-- Title -->
+                                        <!--h6 class="fw-normal mb-0" th:text="${onewayPro.airlineDTO.al_name}"/-->
+                                        <!--h6 class="fw-normal mb-0" th:text="${onewayPro.ar_fl_no}+' 편'"/-->
+                                    </div>
+
+                                    <!-- Airport detail -->
+                                    <div class="col-sm-4 col-md-3">
+                                        <!-- Title -->
+                                        <h4 th:text="${list.ar_from}"/> <!--여기 수정예정-->
+                                        <h6 th:text="${#temporals.format(list.ar_from_date, 'HH:mm')}"/>
+                                        <!-- Address -->
+                                        <p class="mb-2" th:text="${#temporals.format(list.ar_from_date, 'YYYY-MM-dd')}"/>
+                                        <!--p class="mb-2" th:text="${onewayPro.ar_from}+'공항'"/-->
+                                    </div>
+
+                                    <!-- Time -->
+                                    <div class="col-sm-4 col-md-3 text-center my-sm-auto">
+                                        <!-- Time -->
+                                        <h5 th:text="${list.ar_time + '분'}"/>
+
+                                        <div class="position-relative my-4">
+                                            <!-- Line -->
+                                            <hr class="bg-primary opacity-5 position-relative">
+                                            <!-- Icon -->
+                                            <div class="icon-md bg-primary text-white rounded-circle position-absolute top-50 start-50 translate-middle">
+                                                <i class="fa-solid fa-fw fa-plane rtl-flip"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Airport detail -->
+                                    <div class="col-sm-4 col-md-3">
+                                        <!-- Title -->
+                                        <h4 th:text="${list.ar_to}"/> <!--여기 수정예정-->
+                                        <h6 th:text="${#temporals.format(list.ar_to_date, 'HH:mm')}"/>
+                                        <!-- Address -->
+                                        <p class="mb-2" th:text="${#temporals.format(list.ar_to_date, 'YYYY-MM-dd')}"/>
+                                        <!--p class="mb-2" th:text="${onewayPro.ar_to}+'공항'"/-->
+                                    </div>
+                                </div>
+                                <!-- 가는편 Ticket item END -->
+                            </div>
+                            <!-- Card body END -->
+                        </div>
+                        <!-- Ticket END -->
+
+                        <!-- Booking form START -->
+                        <form th:action="@{/air/reservation}" method="post"  class="card border">
+                            <!-- Card header -->
+                            <div class="card-header border-bottom px-4">
+                                <h3 class="card-title mb-0"> 탑승객 정보입력</h3>
+                            </div>
+
+                            <!-- Card body START -->
+                            <div class="card-body py-4">
+                                <!-- Form START -->
+                                <div class="row g-4" th:each="listDetail : ${listDetail}">
+                                        <!-- Select item -->
+                                        <div class="col-md-4">
+                                            <label class="form-label">한글 이름</label>
+                                            <span class=form-control" th:text="${listDetail.ko_name}"></span>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <label class="form-label">영문 이름</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="이름  :: ex) GILDONG">
+                                                <input type="text" class="form-control" placeholder="성  :: ex) HONG">
+                                            </div>
+                                        </div>
+
+                                        <!-- Select group -->
+                                        <div class="col-md-6">
+                                            <label class="form-label">생년월일</label>
+                                            <span class=form-control" th:text="${#dates.format(listDetail.birth, 'yyyy-MM-dd')}"></span>
+                                        </div>
+
+                                        <!-- Select item -->
+                                        <div class="col-md-6">
+                                            <label class="form-label">성별</label>
+                                            <span class=form-control" th:text="${listDetail.gender}"></span>
+                                        </div>
+                                        <hr class="bg-primary opacity-5 position-relative">
+                                </div>
+                                <!-- Form END -->
+
+                                <!-- Button -->
+                                <div class="d-grid mt-4">
+                                    <input type="submit" class="btn btn-primary mb-0" value="결제하기"></a>
+                                </div>
+                            </div>
+                            <!-- Card body END -->
+                        </form>
+                        <!-- Booking form END -->
+                    </div>
+                </div>
+                <!-- Left Content END -->
+
+                <!-- Right content START -->
+                <aside class="col-xl-3">
+                    <div data-sticky data-margin-top="80" data-sticky-for="1199">
+                        <div class="row g-4">
+                            <!-- Fare summary START -->
+                            <div class="col-md-6 col-xl-12">
+                                <div class="card bg-light rounded-2">
+                                    <!-- card header -->
+                                    <div class="card-header border-bottom bg-light">
+                                        <h5 class="card-title mb-0">결제 세부내역</h5>
+                                    </div>
+
+                                    <!-- Card body -->
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-borderless">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+											<span class="h6 fw-normal mb-0">항공요금
+											</span>
+                                                <span class="fs-5">[[${#numbers.formatInteger(list.arp_price * 0.9, 3, 'COMMA')}]]  <i class="fa-solid fa-won-sign"></i></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span class="h6 fw-normal mb-0">유류할증료</span>
+                                                <span class="fs-5">[[${#numbers.formatInteger(list.arp_price * 0.1, 3, 'COMMA')}]]  <i class="fa-solid fa-won-sign"></i></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span class="h6 fw-normal mb-0">선택 수량</span>
+                                                <span class="fs-5" th:text="${list.arp_count}"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Card footer -->
+                                    <div class="card-footer border-top bg-light">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="h5 fw-normal mb-0">합계 금액</span>
+                                            <span class="h5 fw-normal mb-0"> [[${#numbers.formatInteger(list.arp_price * list.arp_count, 3, 'COMMA')}]] <i class="fa-solid fa-won-sign"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fare summary END -->
+                        </div>
+                    </div>
+                </aside>
+                <!-- Right content END -->
+
+            </div>
+        </div>
+    </section>
+    <!-- =======================
+    Main Content END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+
+<div th:replace="fragments/footer :: footer">
+</div>
+
+</body>
+
+
+<script>
+
+</script>
+
+
+</html>
