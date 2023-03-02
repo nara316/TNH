@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments/script :: script">
-
+<head>
+  <meta charset="UTF-8">
+  <title>::: Go Travel :::</title>
   <!-- Meta Tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Webestica.com">
   <meta name="description" content="Booking - Multipurpose Online Booking Theme">
-
   <!-- Favicon -->
   <link rel="shortcut icon" href="/bootstrap/images/favicon.ico">
 
-  <!-- Plugins CSS -->
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
 
+  <!-- Plugins CSS -->
+  <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/font-awesome/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/bootstrap-icons/bootstrap-icons.css">
   <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/flatpickr/css/flatpickr.min.css">
   <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/choices/css/choices.min.css">
   <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/nouislider/nouislider.css">
+
+  <!-- Theme CSS -->
+  <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
 
 </head>
 
@@ -224,9 +236,15 @@
                         <input type="text" class="text-body input-with-range-min">
                         <input type="text" class="text-body input-with-range-max">
                       </div>
-                      <div class="noui-slider-range mt-2" data-range-min='500' data-range-max='2000' data-range-selected-min='700' data-range-selected-max='1500'></div>
+                      <div class="noui-slider-range mt-2" onclick="priceSlider(this)"
+                           th:data-range-min='500' th:data-range-max='2000' th:data-range-selected-min='700' th:data-range-selected-max='1500'></div>
                     </div>
                   </div>
+                </div>
+                <!--검색값 넘기기!!!!!!-->
+                <div>
+                  <input type="hidden" id="min" name="min">
+                  <input type="hidden" id="max" name="max">
                 </div>
                 <!-- Price END -->
 
@@ -239,7 +257,6 @@
                   <!-- Preferred Airline group -->
                   <div class="col-12">
                     <!-- Checkbox -->
-                    <!--항공사 리스트 담아와서 뿌려주기!!!!!!!!!!!!!!!!!!!!-->
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" value="" id="airlineType1">
                       <label class="form-check-label" for="airlineType1">
@@ -255,7 +272,7 @@
             <!-- Buttons -->
             <div class="d-flex justify-content-between p-2 p-xl-0 mt-xl-4">
               <button class="btn btn-link p-0 mb-0">Clear all</button>
-              <button class="btn btn-primary btn-sm mb-0">Filter Result</button>
+              <button class="btn btn-primary mb-0">Filter Result</button>
             </div>
 
           </div>
@@ -358,7 +375,6 @@
 <!-- **************** MAIN CONTENT END **************** -->
 
 
-
 <!-- Back to top -->
 <div class="back-top"></div>
 
@@ -436,6 +452,32 @@
     location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
   }
 
+  //체크박스 하나만 선택
+
+  function checkFromOnlyOne(element) {
+
+    const checkboxes
+            = document.getElementsByName("air_oneway_check");
+    checkboxes.forEach((cb) => {
+      cb.checked = false;
+    })
+    element.checked = true;
+  }
+
+
+  // 상세검색 price-slider 클릭한 값 가져오기
+
+  const inputMin = document.querySelector('#min');
+  const inputMax = document.querySelector('#max');
+
+  function priceSlider(document){
+
+    const min = document.querySelector('.noUi-handle-lower').getAttribute('aria-valuenow');
+    const max = document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow');
+
+    inputMin.value = min;
+    inputMax.value = max;
+  };
 
 </script>
 </body>
