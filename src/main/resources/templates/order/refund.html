@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments/payment :: payment">
+<head th:replace="fragments/refund :: refund">
 </head>
 <body class="dashboard">
 <div th:replace="fragments/nav :: nav"></div>
@@ -18,7 +18,7 @@ Main Content START -->
                     <div class="card bg-transparent p-0">
                         <!-- Card header START -->
                         <div class="card-header bg-transparent p-0">
-                            <h1 class="card-title fs-2 mb-0">결제를 완료해주세요!</h1>
+                            <h1 class="card-title fs-2 mb-0">정말 환불하실건가요?</h1>
                         </div>
                         <!-- Card header END -->
 
@@ -26,27 +26,31 @@ Main Content START -->
                         <div class="card-body p-0 mt-3">
                             <!-- Alert box -->
                             <div class="alert alert-success" role="alert">
-                                원하는 결제수단을 선택하신 뒤 <strong class="mx-1">Pay Now</strong>를 클릭해주세요!
+                                <strong class="mx-1">환불 전 확인사항</strong>을 꼼꼼히 읽어보신 뒤 환불사유를 선택하고 Refund Now를 클릭해주세요!
                             </div>
                             <br>
                             <div class="bg-light rounded-3 p-4">
                                 <!--결제 전 확인사항-->
-                                <h3>결제 전 확인사항</h3>
-                                <p>결제금액에 포함된 발권대행수수료는 항공권과 별도로 결제되며, 예약 당일 이후 취소 시 환불되지 않습니다.</p>
-                                <p>결제 완료 후 정상 예약이 되지 않는 경우가 있습니다. 마이페이지에서 예약내역을 꼭 확인해주세요.</p>
-                                <p style="color: red;">결제 완료 후에는 결제수단 변경이 불가합니다.</p>
+                                <h3>환불 전 확인사항</h3>
+                                <p>결제 후 환불시 해당 항공사의 환불 정책에 따라 수수료가 부과됩니다.</p>
+                                <p>천재지변, 기상악화 또는 항공사 사정에 의한 결항 및 스케쥴 변경의 경우 취소 수수료가 발생하지 않습니다.</p>
+                                <p>단, 당사 마이페이지를 통하여 취소시 수수료가 자동 부과되오니, 반드시 당사 Q&A 게시판 요청 또는 각 항공사로 취소 요청을 해주시기 바랍니다.</p>
+                                <p>환불정보는 카드결제의 경우 카드사로 확인까지 7~10일 정도 소요되며, 카드결제일에 따라 신용카드 대금이 청구될 수도 있습니다.</p>
+                                <p style="color: red;">결제 환불 후에는 취소가 불가합니다.</p>
                             </div>
                             <br>
                             <div class="bg-light rounded-3 p-4">
                                 <!-- Card options -->
                                 <div>
-                                    <label><input type="radio" name="method" value="kcp" onchange="getselect(this)"/>신용카드</label>
-                                    <label><input type="radio" name="method" value="kakaopay" onchange="getselect(this)"/> 카카오페이</label>
+                                    <label><input type="radio" name="method" value="단순변심" onchange="getselect(this)"/>단순변심</label>
+                                    <label><input type="radio" name="method" value="취소 후 재구매" onchange="getselect(this)"/>취소 후 재구매</label>
+                                    <label><input type="radio" name="method" value="항공편 결항" onchange="getselect(this)"/>항공편 결항</label>
+                                    <label><input type="radio" name="method" value="기타" onchange="getselect(this)"/>기타</label>
                                 </div>
                                 <br>
                                     <!-- Buttons -->
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100 mb-0" onclick="requestPay()">Pay Now</button>
+                                        <button class="btn btn-primary w-100 mb-0" onclick="refundPay()">Refund Now</button>
                                     </div>
                                 <!-- Form END -->
                             </div>
@@ -64,23 +68,23 @@ Main Content START -->
                             <div class="card bg-light rounded-2">
                                 <!-- card header -->
                                 <div class="card-header border-bottom bg-light">
-                                    <h5 class="card-title mb-0">결제 세부내역</h5>
+                                    <h5 class="card-title mb-0">환불 세부내역</h5>
                                 </div>
 
                                 <!-- Card body -->
                                 <div class="card-body">
                                     <ul class="list-group list-group-borderless">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-										<span class="h6 fw-normal mb-0">항공요금</span>
-                                            <span class="fs-5">[[${#numbers.formatInteger(list.arp_price * 0.9, 3, 'COMMA')}]]  <i class="fa-solid fa-won-sign"></i></span>
+										<span class="h6 fw-normal mb-0">결제요금</span>
+                                            <span class="fs-5">[[${#numbers.formatInteger(plist.pay_tot_price, 3, 'COMMA')}]]<i class="fa-solid fa-won-sign"></i></span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <span class="h6 fw-normal mb-0">유류할증료</span>
-                                            <span class="fs-5">[[${#numbers.formatInteger(list.arp_price * 0.1, 3, 'COMMA')}]]  <i class="fa-solid fa-won-sign"></i></span>
+                                            <span class="h6 fw-normal mb-0">구매대행 수수료</span>
+                                            <span class="fs-5 text-success">-[[${#numbers.formatInteger(rlist.arp_count*2000, 3, 'COMMA')}]]<i class="fa-solid fa-won-sign"></i></span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <span class="h6 fw-normal mb-0">선택 수량</span>
-                                            <span class="fs-5" th:text="${list.arp_count}"></span>
+                                            <span class="h6 fw-normal mb-0">항공사 수수료</span>
+                                            <span class="fs-5 text-success">-[[${#numbers.formatInteger(rlist.arp_count*3000, 3, 'COMMA')}]]<i class="fa-solid fa-won-sign"></i></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -89,7 +93,7 @@ Main Content START -->
                                 <div class="card-footer border-top bg-light">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="h5 fw-normal mb-0">합계 금액</span>
-                                        <span class="h5 fw-normal mb-0"> [[${#numbers.formatInteger(list.arp_price * list.arp_count, 3, 'COMMA')}]] <i class="fa-solid fa-won-sign"></i></span>
+                                        <span class="h5 fw-normal mb-0">[[${#numbers.formatInteger(plist.pay_tot_price-(rlist.arp_count*2000)-(rlist.arp_count*3000), 3, 'COMMA')}]]<i class="fa-solid fa-won-sign"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -113,21 +117,21 @@ Main Content START -->
                                         <h6 class="fw-normal mb-0">[[${rlist.ar_from}]] <i class="fa-solid fa-right-left"></i> [[${rlist.ar_to}]]</h6>
                                     </div>
                                     <ul class="nav nav-divider small text-body mt-1 mb-0">
-                                        <li class="nav-item" th:text="${#temporals.format(list.ar_from_date, 'yy년 MM월 dd일 HH:mm')}">25 Jan</li>
-                                        <li class="nav-item" th:text="${list.agop_code}"></li>
+                                        <li class="nav-item" th:text="${#temporals.format(rlist.ar_from_date, 'yy년 MM월 dd일 HH:mm')}">25 Jan</li>
+                                        <li class="nav-item" th:text="${rlist.agop_code}"></li>
                                     </ul>
 
                                     <hr> <!-- Divider -->
 
                                     <!-- Traveler detail -->
                                     <small><i class="bi bi-person me-1"></i>Traveler detail</small>
-                                    <div th:each="listDetail : ${listDetail}">
-                                        <h6 class="mb-0 fw-normal mt-2"><i class="fa-solid fa-user"></i> <strong class="mx-1">[[${listDetail.ko_name}]]</strong></h6>
-                                    <ul class="nav nav-divider small text-body mt-1 mb-0">
-                                        <li class="nav-item" >[[${listDetail.en_fname}]] [[${listDetail.en_lname}]]</li>
-                                        <li class="nav-item" th:text="${listDetail.gender}">Female</li>
-                                        <li class="nav-item" th:text="${#dates.format(listDetail.birth, 'yyyy-MM-dd')}">Dec-2-1990</li>
-                                    </ul>
+                                    <div th:each="rdtlist : ${rdtlist}">
+                                        <h6 class="mb-0 fw-normal mt-2"><i class="fa-solid fa-user"></i> <strong class="mx-1">[[${rdtlist.ko_name}]]</strong></h6>
+                                        <ul class="nav nav-divider small text-body mt-1 mb-0">
+                                            <li class="nav-item" >[[${rdtlist.en_fname}]] [[${rdtlist.en_lname}]]</li>
+                                            <li class="nav-item" th:text="${rdtlist.gender}">Female</li>
+                                            <li class="nav-item" th:text="${#dates.format(rdtlist.birth, 'yyyy-MM-dd')}">Dec-2-1990</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>

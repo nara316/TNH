@@ -18,7 +18,7 @@
 
     <!--결제 단건 조회-->
     <select id="readOne" parameterType="String" resultType="PayDTO">
-        select pno, rno, mno, pay_tot_price, pay_date, pay_state
+        select pno, rno, mno, pay_tot_price, pay_date, pay_state, pay_method
         from Pay
         where pno = #{pno};
     </select>
@@ -33,7 +33,7 @@
     <!--결제취소 시 결제상태 변경-->
     <update id="update" parameterType="String">
         UPDATE Pay
-        SET pay_state = '결제취소'
+        SET pay_state = '결제 취소'
         WHERE pno = #{pno};
     </update>
 
@@ -46,6 +46,13 @@
     <!--환불단건조회-->
     <select id="readOneRefund" parameterType="String" resultType="int">
         select count(*)
+        from refund
+        where pno = #{pno};
+    </select>
+
+    <!--환불단건상세조회-->
+    <select id="readRefund" parameterType="String" resultType="RefundDTO">
+        select rf_reason, rf_date, rf_state
         from refund
         where pno = #{pno};
     </select>

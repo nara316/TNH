@@ -12,10 +12,13 @@
 
     <!--결제 및 예약상세 예약단건조회-->
     <select id="getReservation" parameterType="Long" resultType="AirReservationListDTO">
-        select res.rno, res.mno, res.arp_count, res.arp_price, p.ar_from_date, p.ar_to_date, res.arp_state, m.mem_name, p.ar_time,
+        select res.rno, res.mno, res.arp_count, res.arp_price, p.ar_from_date, p.ar_to_date, res.arp_state, m.mem_name, p.ar_time,p.ar_fl_no,
             (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,
-               (select ap_code_name from airport where ap_code = p.ar_to) ar_to,
-               (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code
+            (select ap_code_name from airport where ap_code = p.ar_to) ar_to,
+            (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code,
+            (select al_logo_uri from air_line al where al.al_code = p.al_code) al_logo_uri,
+            (select al_logo_name from air_line al where al.al_code = p.al_code ) al_logo_name,
+            (select al_name from air_line al where al.al_code = p.al_code ) al_name
         from reservation2 res, air_product p, member m
         where p.ano = res.out_ano and res.mno = m.mno and rno = #{rno};
     </select>
@@ -56,6 +59,13 @@
     <update id="update" parameterType="Long">
         UPDATE reservation2
         SET arp_state = '결제 완료'
+        WHERE rno = #{rno};
+    </update>
+
+    <!--결제취소 시 예약테이블 상태 변경-->
+    <update id="updateRefund" parameterType="Long">
+        UPDATE reservation2
+        SET arp_state = '예약 취소'
         WHERE rno = #{rno};
     </update>
 

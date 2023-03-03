@@ -3,10 +3,13 @@ package go.travel.dnh.controller;
 import go.travel.dnh.domain.User.LoginUser;
 import go.travel.dnh.domain.air.AirProductDTO;
 import go.travel.dnh.domain.member.MemberDTO;
+import go.travel.dnh.domain.pay.PayDTO;
+import go.travel.dnh.domain.pay.RefundDTO;
 import go.travel.dnh.domain.reservation.AirReservationDTO;
 import go.travel.dnh.domain.reservation.AirReservationListDTO;
 import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.service.MemberLoginService;
+import go.travel.dnh.service.PaymentService;
 import go.travel.dnh.service.ReservationService;
 import go.travel.dnh.validation.MemberjoinForm;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +33,7 @@ public class ReservationController {
 
     private final ReservationService reservationService;
     private final MemberLoginService memberLoginService;
+    private final PaymentService paymentService;
 
     @GetMapping("/air")
     public String reservationForm(ReservationDTO reservationDTO) {
@@ -54,8 +58,6 @@ public class ReservationController {
         model.addAttribute("memberDTO", memberDTO);
         model.addAttribute("revList", revList);
 
-        System.out.println(revList);
-
         return "order/bookingList";
     }
 
@@ -64,20 +66,17 @@ public class ReservationController {
     public String showRevDetail(@PathVariable("rno") Long rno, Model model) {
         AirReservationListDTO revDto = reservationService.getReservation(rno);
         List<AirReservationListDTO> revDtDto = reservationService.getReservationDetail(rno);
+        PayDTO payDTO = paymentService.readPay(paymentService.readPno(rno));
+
+        if(payDTO !=null){
+            RefundDTO refundDTO = paymentService.readRefund(payDTO.getPno());
+            model.addAttribute("rflist",refundDTO);
+        }
+
         model.addAttribute("list", revDto);
         model.addAttribute("listDetail", revDtDto);
+        model.addAttribute("plist", payDTO);
         return "order/bookingDetail";
     }
-
-//    //연습용 메서드
-//    @GetMapping("/bookingList2")
-//    public String orderForm(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
-//
-//        List<AirReservationDTO> reservationList = reservationService.readList(loginUser, authentication);
-//
-//        model.addAttribute("reservationList", reservationList);
-//
-//        return "order/bookingList2";
-//    }
 
 }

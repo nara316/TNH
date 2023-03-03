@@ -26,4 +26,6 @@ public interface ReservationService {
 
     public void update(Long rno);
 
+    public void updateRefund(Long rno);
+
 }

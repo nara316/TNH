@@ -20,6 +20,10 @@ public class AirReservationListDTO {
     private String mem_name;
     private String ar_from;
     private String ar_to;
+    private String al_logo_uri;
+    private String al_logo_name;
+    private String al_name;
+    private String ar_fl_no;
     private String agop_code;
     private String arp_state;
     private Integer arp_count;
