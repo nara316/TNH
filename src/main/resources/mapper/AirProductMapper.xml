@@ -56,8 +56,25 @@
              ,p.ar_fl_no ,p.ar_from_date, p.ar_time, p.ar_to_date
              ,ar_price ,ar_res_cnt
     </sql>
+
+
+    <!--상품 리스트 전체 조회-->
+    <select id="selectPro" parameterType="SearchDTO" resultMap="AirProductDTO">
+        select
+        <include refid="productColumns"/>
+        from air_product p
+        where p.ar_from_date > now() and p.ar_sales_state = 'Y'
+        order by p.ano
+        limit #{pagination.limitStart}, #{amount}
+    </select>
+    <!--게시글 수 카운팅-->
+    <select id="count" parameterType="SearchDTO" resultType="int">
+        select COUNT(*)
+        from air_product
+    </select>
+    
     <!--상품 리스트 검색 조회-->
-    <!--왕복가는편-->
+    <!--편도가는편-->
     <select id="searchAirOneWay" parameterType="SearchDTO" resultMap="AirProductDTO">
         select
         <include refid="productColumns"/>
@@ -69,6 +86,7 @@
         order by p.ano
         limit #{pagination.limitStart}, #{amount}
     </select>
+    <!--왕복가는편-->
     <select id="searchAirFrom" parameterType="SearchDTO" resultMap="AirProductDTO">
         select
         <include refid="productColumns"/>
@@ -117,29 +135,30 @@
           and ar_from = #{roundTo} and ar_to = #{roundFrom}
           and agop_code = #{airGrade}
     </select>
-
-    <!--상품 리스트 전체 조회-->
-    <select id="selectPro" parameterType="SearchDTO" resultMap="AirProductDTO">
-        select
-            <include refid="productColumns"/>
-        from air_product p
-        where p.ar_from_date > now() and p.ar_sales_state = 'Y'
-        order by p.ano
-        limit #{pagination.limitStart}, #{amount}
-    </select>
-
-    <!--게시글 수 카운팅-->
-    <select id="count" parameterType="SearchDTO" resultType="int">
-        select COUNT(*)
-        from air_product
-    </select>
     
+    <!--상세검색-->
+    <!--상세검색바-->
+<!--    <select id="detailSearchByPriceBar" parameterType="SearchDTO" resultType="int">-->
+<!--        select MIN(ar_price), MAX(ar_price)-->
+<!--        from air_product-->
+<!--        where date_format(ar_from_date, '%Y-%m-%d') = date_format( #{oneFromDate}, '%Y-%m-%d')-->
+<!--          and ar_from = #{oneFrom} and ar_to = #{oneTo}-->
+<!--          and ar_res_cnt > #{ea}-->
+<!--          and agop_code = #{airGrade}-->
+<!--    </select>-->
+
+    <!--공항리스트 읽어오기-->
     <select id="selectAP" parameterType="map" resultMap="AirportDTO">
         select ap_code,
                ap_name, ap_code_name
         from airport
     </select>
-
+    <!--항공사 리스트 읽어오기-->
+    <select id="selectAL" parameterType="map" resultMap="AirlineDTO">
+        select *
+        from air_line
+    </select>
+    <!--예약정보 읽어오기-->
     <select id="selectRes" resultMap="AirProductDTO">
         select
             (select ap_name from airport where ap_code = p.ar_from) ar_from

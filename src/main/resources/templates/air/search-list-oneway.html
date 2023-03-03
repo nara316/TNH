@@ -237,7 +237,7 @@
                         <input type="text" class="text-body input-with-range-max">
                       </div>
                       <div class="noui-slider-range mt-2" onclick="priceSlider(this)"
-                           th:data-range-min='500' th:data-range-max='2000' th:data-range-selected-min='700' th:data-range-selected-max='1500'></div>
+                           th:data-range-min='${minPrice}' th:data-range-max='${maxPrice}' th:data-range-selected-min='${minPrice}' th:data-range-selected-max='${maxPrice}'></div>
                     </div>
                   </div>
                 </div>
@@ -257,10 +257,11 @@
                   <!-- Preferred Airline group -->
                   <div class="col-12">
                     <!-- Checkbox -->
-                    <div class="form-check">
+                    <div th:each="list : ${airline}" class="form-check">
                       <input class="form-check-input" type="checkbox" value="" id="airlineType1">
                       <label class="form-check-label" for="airlineType1">
-                        <img src="/bootstrap/images/element/12.svg" class="h-15px fa-fw me-2" alt="">Blogzine
+                        <img th:src="@{${list.al_logo_uri}}+'/'+ ${list.al_logo_name}" class="h-15px fa-fw me-2" alt="">
+                        [[${list.al_name}]]
                       </label>
                     </div>
                   </div>
@@ -282,8 +283,8 @@
 
         <!-- Main content START -->
         <div class="col-xl-8 col-xxl-9">
+          <form th:action="@{/air/res-check}" method="post">
           <div class="vstack gap-4">
-            <form th:action="@{/air/res-check}" method="post">
 
             <!-- Ticket item START -->
             <div th:each="list : ${airOneWay.list}" class="card border">
@@ -349,20 +350,21 @@
             </div>
             <!-- Ticket item END -->
 
-            <div class="d-flex p-xl-1 mt-xl-1 mx-xl-2 justify-content-lg-end">
-              <input type="submit" class="btn btn-primary px-lg-3" value="예약하기"/>
-            </div>
+
             <!-- Pagination START -->
             <nav class="pagingFrom d-flex justify-content-center" aria-label="navigation">
               <!--항공권 페이징-->
             </nav>
             <!-- Pagination END -->
+            <div class="d-flex p-xl-1 mt-xl-1 mx-xl-2 justify-content-lg-end">
+              <input type="submit" class="btn btn-primary px-lg-3" value="예약하기"/>
+            </div>
 
               <input type="hidden" th:value="${fromAP}" name="air_from"/>
               <input type="hidden" th:value="${toAP}" name="air_to"/>
               <input type="hidden" th:value="${sch.ea}" name="ea" />
-            </form>
           </div>
+          </form>
         </div>
         <!-- Main content END -->
       </div> <!-- Row END -->
@@ -374,6 +376,10 @@
 </main>
 <!-- **************** MAIN CONTENT END **************** -->
 
+<br>
+<br>
+<div th:replace="fragments/footer :: footer">
+</div>
 
 <!-- Back to top -->
 <div class="back-top"></div>
@@ -478,6 +484,8 @@
     inputMin.value = min;
     inputMax.value = max;
   };
+
+
 
 </script>
 </body>

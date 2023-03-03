@@ -108,6 +108,11 @@ public class AirProductRepositoryImpl implements AirProductRepository{
         return airProductMapper.selectAP();
     }
 
+    @Override
+    public List<AirlineDTO> airlineList() {
+        return airProductMapper.selectAL();
+    }
+
 
 
     ////예약

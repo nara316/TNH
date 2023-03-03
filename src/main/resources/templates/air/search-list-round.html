@@ -259,11 +259,15 @@
                                                 <input type="text" class="text-body input-with-range-min">
                                                 <input type="text" class="text-body input-with-range-max">
                                             </div>
-                                            <div class="noui-slider-range mt-2" data-range-min='500'
-                                                 data-range-max='2000' data-range-selected-min='700'
-                                                 data-range-selected-max='1500'></div>
+                                            <div class="noui-slider-range mt-2" onclick="priceSlider(this)"
+                                                 th:data-range-min='${minPrice}' th:data-range-max='${maxPrice}' th:data-range-selected-min='${minPrice}' th:data-range-selected-max='${maxPrice}'></div>
                                         </div>
                                     </div>
+                                </div>
+                                <!--검색값 넘기기!!!!!!-->
+                                <div>
+                                    <input type="hidden" id="min" name="min">
+                                    <input type="hidden" id="max" name="max">
                                 </div>
                                 <!-- Price END -->
 
@@ -276,12 +280,11 @@
                                     <!-- Preferred Airline group -->
                                     <div class="col-12">
                                         <!-- Checkbox -->
-                                        <!--항공사 리스트 담아와서 뿌려주기!!!!!!!!!!!!!!!!!!!!-->
-                                        <div class="form-check">
+                                        <div th:each="list : ${airline}" class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" id="airlineType1">
                                             <label class="form-check-label" for="airlineType1">
-                                                <img src="/bootstrap/images/element/12.svg" class="h-15px fa-fw me-2"
-                                                     alt="">Blogzine
+                                                <img th:src="@{${list.al_logo_uri}}+'/'+ ${list.al_logo_name}" class="h-15px fa-fw me-2" alt="">
+                                                [[${list.al_name}]]
                                             </label>
                                         </div>
                                     </div>
@@ -304,8 +307,8 @@
                 <!-- Main content START -->
 
                 <div class="col-xl-8 col-xxl-9">
+                    <form th:action="@{/air/res-check}" method="post">
                     <div class="vstack gap-4">
-                        <form th:action="@{/air/res-check}" method="post">
                         <!-- 가는편 -->
                             <!-- Ticket item START -->
                             <div th:each="list : ${airFrom.list}" class="card border">
@@ -459,9 +462,10 @@
                             <input type="hidden" th:value="${fromAP}" name="air_from"/>
                             <input type="hidden" th:value="${toAP}" name="air_to"/>
                             <input type="hidden" th:value="${sch.ea}" name="ea"/>
-                        </form>
 
                     </div>
+                    </form>
+                </div>
                 <!-- Main content END -->
             </div> <!-- Row END -->
         </div>
@@ -513,29 +517,29 @@
         // 첫 페이지, 이전 페이지
         if (pagination.existPrevPage) {
             html += `
-            <a href="javascript:void(0);" onclick="movePage(1)">&lt;&lt;&nbsp;</a>
-            <a href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})" class="page_bt prev">&lt;&nbsp;</a>
-        `;
+            <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})">i class="fa-solid fa-angle-left"></i></a></li>
+          `;
         }
 
         // 페이지 번호
-        html += '<p>';
+        html += `<nav class="d-flex justify-content-center" aria-label="navigation">
+              <ul class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">`;
         for (let i = pagination.startPage; i <= pagination.endPage; i++) {
             if (pagination.endPage > pagination.totalPageCount) {
                 pagination.endPage = pagination.totalPageCount;
             }
             html += (i !== params.pageNum)
-                ? `<a href="javascript:void(0);" onclick="movePage(${i});">&nbsp;${i}&nbsp;</a>`
-                : `<span class="on">&nbsp;${i}&nbsp;</span>`
+                ? `<li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${i});">${i}</a></li>`
+                : `<span class="page-item mb-0 page-link on">&nbsp;${i}&nbsp;</span>`
         }
-        html += '</p>';
+        html += `</ul>
+            </nav>`;
 
         // 다음 페이지, 마지막 페이지
         if (pagination.existNextPage) {
             html += `
-            <a href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next">&nbsp;&gt;&nbsp;</a>
-            <a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">&gt;&gt;</a>
-        `;
+            <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next"><i class="fa-solid fa-angle-right"></i></a></li>
+          `;
         }
         if (pagination == pagination1) {
             document.querySelector('.pagingFrom').innerHTML = html;
@@ -549,7 +553,7 @@
     function movePage(pageNum) {
         const queryParams = {
             pageNum: (pageNum) ? pageNum : 1,
-            amount: 10,
+            amount: 5,
             pageSize: 5
         }
         location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
