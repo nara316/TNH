@@ -16,6 +16,8 @@ public interface AirProductMapper {
     List<AirProductDTO> searchAirTo(SearchDTO sch);
     List<AirProductDTO> searchAirOneWay(SearchDTO sch);
 
+    List<AirProductDTO> detailSearchOneWay(SearchDTO sch);
+
     int count(SearchDTO sch);
 
     int searchCntOneWay(SearchDTO sch);

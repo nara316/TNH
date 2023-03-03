@@ -128,6 +128,42 @@ public class AirController {
         return "air/search";
     }
 
+    @PostMapping("/search-detail-oneway")
+    public String onewayDetailSearch(@ModelAttribute("sch") final SearchDTO sch, HttpServletResponse res, Model m){
+        PagingResponse<AirProductDTO> detailSearchOne = airProductService.detailSearchOneWay(sch);
+        List<AirportDTO> airportList = airProductService.getListAirport();
+        List<AirlineDTO> airlineList = airProductService.getListAirline();
+
+        sch.setMinPrice(Integer.parseInt(String.valueOf(sch.getMinPrice())));
+        sch.setMaxPrice(Integer.parseInt(String.valueOf(sch.getMaxPrice())));
+
+        m.addAttribute("airline", airlineList);
+        m.addAttribute("airport",airportList);
+
+        List<AirProductDTO> priceListOneway = detailSearchOne.getList();
+        Integer minPrice = Integer.parseInt(String.valueOf(priceListOneway.stream().mapToInt(AirProductDTO::getAr_price).min()).replaceAll("[^\\d]", ""));
+        Integer maxPrice = Integer.parseInt(String.valueOf(priceListOneway.stream().mapToInt(AirProductDTO::getAr_price).max()).replaceAll("[^\\d]", ""));
+
+        m.addAttribute("airOneWay", detailSearchOne);
+        m.addAttribute("minPrice", minPrice);
+        m.addAttribute("maxPrice", maxPrice);
+
+
+        String from = "";
+        String to = "";
+        for (int i = 0; i < airportList.size(); i++) {
+            if(sch.getOneFrom().equals(airportList.get(i).getAp_code())){
+                from = airportList.get(i).getAp_name();
+            } else if(sch.getOneTo().equals(airportList.get(i).getAp_code())){
+                to = airportList.get(i).getAp_name();
+            }
+        }
+        m.addAttribute("fromAP",from);
+        m.addAttribute("toAP",to);
+
+        return "air/search-list-oneway";
+    }
+
     @GetMapping("/search-list-oneway")
     public String onewaySchList(@ModelAttribute("sch") final SearchDTO sch,Model m){
         PagingResponse<AirProductDTO> listOneWay = airProductService.getSearchOneWayList(sch);

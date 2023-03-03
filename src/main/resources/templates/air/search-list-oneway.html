@@ -220,15 +220,15 @@
               <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Advance Filters</h5>
               <button  type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasSidebar" aria-label="Close"></button>
             </div>
-
+            <form action="/air/search-detail-oneway" method="post">
             <!-- Offcanvas body -->
             <div class="offcanvas-body flex-column p-3 p-xl-0">
-              <form class="rounded-3 shadow">
+              <div class="rounded-3 shadow">
 
                 <!-- Price START -->
                 <div class="card card-body rounded-0 p-4">
                   <!-- Title -->
-                  <h6 class="mb-2">Price</h6>
+                  <h6 class="mb-2">가격</h6>
                   <!-- Price group -->
                   <div class="position-relative">
                     <div class="noui-wrapper">
@@ -243,8 +243,8 @@
                 </div>
                 <!--검색값 넘기기!!!!!!-->
                 <div>
-                  <input type="hidden" id="min" name="min">
-                  <input type="hidden" id="max" name="max">
+                  <input type="hidden" id="min" name="minPrice" th:value="${minPrice}">
+                  <input type="hidden" id="max" name="maxPrice" th:value="${maxPrice}">
                 </div>
                 <!-- Price END -->
 
@@ -253,29 +253,33 @@
                 <!-- Preferred Airline START -->
                 <div class="card card-body rounded-0 p-4">
                   <!-- Title -->
-                  <h6 class="mb-2">Preferred Airline</h6>
+                  <h6 class="mb-2">항공사 선택</h6>
                   <!-- Preferred Airline group -->
                   <div class="col-12">
                     <!-- Checkbox -->
                     <div th:each="list : ${airline}" class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="airlineType1">
-                      <label class="form-check-label" for="airlineType1">
+                      <input class="form-check-input" type="checkbox" th:value="${list.al_code}" id="airlineType" checked name="airline">
+                      <label class="form-check-label" for="airlineType">
                         <img th:src="@{${list.al_logo_uri}}+'/'+ ${list.al_logo_name}" class="h-15px fa-fw me-2" alt="">
                         [[${list.al_name}]]
                       </label>
                     </div>
                   </div>
                 </div>
+                <input type="hidden" name="oneFromDate" th:value="${sch.oneFromDate}">
+                <input type="hidden" name="oneFrom" th:value="${sch.oneFrom}">
+                <input type="hidden" name="oneTo" th:value="${sch.oneTo}">
+                <input type="hidden" name="ea" th:value="${sch.ea}">
+                <input type="hidden" name="airGrade" th:value="${sch.airGrade}">
                 <!-- Preferred Airline END -->
-              </form><!-- Form End -->
+              </div><!-- Form End -->
             </div>
 
             <!-- Buttons -->
-            <div class="d-flex justify-content-between p-2 p-xl-0 mt-xl-4">
-              <button class="btn btn-link p-0 mb-0">Clear all</button>
-              <button class="btn btn-primary mb-0">Filter Result</button>
+            <div class="d-flex justify-content-center p-2 p-xl-0 mt-xl-4">
+              <button type="submit" class="btn btn-primary mb-0">Filter Result</button>
             </div>
-
+          </form>
           </div>
           <!-- Responsive offcanvas body END -->
         </aside>
@@ -481,8 +485,11 @@
     const min = document.querySelector('.noUi-handle-lower').getAttribute('aria-valuenow');
     const max = document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow');
 
-    inputMin.value = min;
-    inputMax.value = max;
+    const minFloored = Math.floor(min);
+    const maxFloored = Math.floor(max);
+
+    inputMin.value = minFloored;
+    inputMax.value = maxFloored;
   };
 
 

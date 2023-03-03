@@ -58,6 +58,12 @@ public class AirProductServiceImpl implements AirProductService{
     public PagingResponse<AirProductDTO> getSearchOneWayList(SearchDTO sch) {
         return airProductRepository.airProductSchOneWay(sch);
     }
+
+    @Override
+    public PagingResponse<AirProductDTO> detailSearchOneWay(SearchDTO sch) {
+        return airProductRepository.detailSearchOneWay(sch);
+    }
+
     @Override
     public PagingResponse<AirProductDTO> getSearchFromList(SearchDTO sch) {
         return airProductRepository.airProductSchFrom(sch);
