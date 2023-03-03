@@ -1,10 +1,7 @@
 package go.travel.dnh.service;
 
 import go.travel.dnh.domain.User.LoginUser;
-import go.travel.dnh.domain.air.AirProductDTO;
-import go.travel.dnh.domain.air.AirportDTO;
-import go.travel.dnh.domain.air.PagingResponse;
-import go.travel.dnh.domain.air.SearchDTO;
+import go.travel.dnh.domain.air.*;
 import go.travel.dnh.domain.reservation.AirReservationDTO;
 import go.travel.dnh.domain.reservation.ReservationDetail;
 import org.springframework.security.core.Authentication;
@@ -31,6 +28,8 @@ public interface AirProductService {
     PagingResponse<AirProductDTO> getSearchToList(SearchDTO sch);
 
     List<AirportDTO> getListAirport();
+
+    List<AirlineDTO> getListAirline();
 
 
     //예약

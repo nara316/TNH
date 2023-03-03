@@ -53,6 +53,11 @@ public class AirController {
         PagingResponse<AirProductDTO> listFrom = airProductService.getSearchFromList(sch);
         PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
         List<AirportDTO> airportList = airProductService.getListAirport();
+        List<AirlineDTO> airlineList = airProductService.getListAirline();
+
+
+        m.addAttribute("airline", airlineList);
+        m.addAttribute("airport",airportList);
         
         //편도
         if(sch.getRoundFrom()==null){
@@ -61,11 +66,15 @@ public class AirController {
                 PrintWriter out = res.getWriter();
                 out.println("<script>alert('해당 항공편은 존재하지 않습니다. 다시 검색해주세요'); </script>");
                 out.flush();
-                m.addAttribute("airport",airportList);
                 return "air/search";
             }
+            List<AirProductDTO> priceListOneway = listOneWay.getList();
+            Integer minPrice = Integer.parseInt(String.valueOf(priceListOneway.stream().mapToInt(AirProductDTO::getAr_price).min()).replaceAll("[^\\d]", ""));
+            Integer maxPrice = Integer.parseInt(String.valueOf(priceListOneway.stream().mapToInt(AirProductDTO::getAr_price).max()).replaceAll("[^\\d]", ""));
+
             m.addAttribute("airOneWay", listOneWay);
-            m.addAttribute("airport",airportList);
+            m.addAttribute("minPrice", minPrice);
+            m.addAttribute("maxPrice", maxPrice);
 
             String from = "";
             String to = "";
@@ -92,9 +101,16 @@ public class AirController {
                 m.addAttribute("airport",airportList);
                 return "air/search";
             }
+
+            List<AirProductDTO> priceListOut = listFrom.getList();
+            Integer minPrice = Integer.parseInt(String.valueOf(priceListOut.stream().mapToInt(AirProductDTO::getAr_price).min()).replaceAll("[^\\d]", ""));
+            Integer maxPrice = Integer.parseInt(String.valueOf(priceListOut.stream().mapToInt(AirProductDTO::getAr_price).max()).replaceAll("[^\\d]", ""));
+
+            m.addAttribute("minPrice", minPrice);
+            m.addAttribute("maxPrice", maxPrice);
+
             m.addAttribute("airFrom", listFrom);
             m.addAttribute("airTo", listTo);
-            m.addAttribute("airport",airportList);
 
             String from = "";
             String to = "";
@@ -116,6 +132,7 @@ public class AirController {
     public String onewaySchList(@ModelAttribute("sch") final SearchDTO sch,Model m){
         PagingResponse<AirProductDTO> listOneWay = airProductService.getSearchOneWayList(sch);
         List<AirportDTO> airportList = airProductService.getListAirport();
+
 
         m.addAttribute("airOneWay", listOneWay);
         m.addAttribute("airport",airportList);

@@ -1,6 +1,7 @@
 package go.travel.dnh.mapper;
 
 import go.travel.dnh.domain.air.AirProductDTO;
+import go.travel.dnh.domain.air.AirlineDTO;
 import go.travel.dnh.domain.air.AirportDTO;
 import go.travel.dnh.domain.air.SearchDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,6 +23,9 @@ public interface AirProductMapper {
     int searchCntTo(SearchDTO sch);
 
     List<AirportDTO> selectAP();
+    List<AirlineDTO> selectAL();
+
+
 
     AirProductDTO selectRes(Integer ano);
 

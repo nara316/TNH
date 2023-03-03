@@ -1,10 +1,7 @@
 package go.travel.dnh.service;
 
 import go.travel.dnh.domain.User.LoginUser;
-import go.travel.dnh.domain.air.AirProductDTO;
-import go.travel.dnh.domain.air.AirportDTO;
-import go.travel.dnh.domain.air.PagingResponse;
-import go.travel.dnh.domain.air.SearchDTO;
+import go.travel.dnh.domain.air.*;
 import go.travel.dnh.domain.reservation.AirReservationDTO;
 import go.travel.dnh.domain.reservation.ReservationDetail;
 import go.travel.dnh.repository.AirProductRepository;
@@ -73,6 +70,11 @@ public class AirProductServiceImpl implements AirProductService{
     @Override
     public List<AirportDTO> getListAirport() {
         return airProductRepository.airportList();
+    }
+
+    @Override
+    public List<AirlineDTO> getListAirline() {
+        return airProductRepository.airlineList();
     }
 
 
