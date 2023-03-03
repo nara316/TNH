@@ -114,7 +114,7 @@
                                 <!-- Tab content item START -->
                                 <div class="tab-pane fade show active" id="tab-1">
                                     <!-- Card item START -->
-                                    <div class="card border mb-4" th:each="list : ${revList}">
+                                    <div class="card border mb-4" th:each="list : ${revList}" th:if="${list.arp_state!='예약 취소'}">
                                         <!-- Card header -->
                                         <div class="card-header border-bottom d-md-flex justify-content-md-between align-items-center">
                                             <!-- Icon and Title -->
@@ -132,7 +132,6 @@
 
                                             <!-- Button -->
                                             <div class="mt-2 mt-md-0">
-                                                <!--a href="#" th:onclick="|location.href='@{/order/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a-->
                                                 <a href="#" th:onclick="|location.href='@{/reservation/bookingList/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a>
                                             </div>
                                         </div>
@@ -150,9 +149,12 @@
                                                     <h6 th:text="${#temporals.format(list.ar_to_date, 'yy-MM-dd HH:mm')}" class="mb-0"/>
                                                 </div>
 
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <span>결제상태</span>
                                                     <h6 class="mb-0">[[${list.arp_state}]]</h6>
+                                                </div>
+                                                <div class="col-md-2" th:if="${list.arp_state=='결제 대기'}">&nbsp;&nbsp;
+                                                    <a href="#" th:onclick="|location.href='@{/order/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">결제 하기</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -175,31 +177,28 @@
                                 </div>
                                 <!-- Tabs content item END 끝-->
 
-
-                                <!-- 여기는 건들지 마시오-->
-                                <!-- Tab content item START -->
-                                <div class="tab-pane fade" id="tab-2">
+                                <!--tab 2-->
+                                <div class="tab-pane fade" id="tab-2" th:each="list : ${revList}" th:if="${list.arp_state=='예약 취소'}">
                                     <!-- Card item START -->
                                     <div class="card border">
                                         <!-- Card header -->
                                         <div class="card-header border-bottom d-md-flex justify-content-md-between align-items-center">
                                             <!-- Icon and Title -->
                                             <div class="d-flex align-items-center">
-                                                <div class="icon-lg bg-light rounded-circle flex-shrink-0"><i class="fa-solid fa-hotel"></i></div>
+                                                <div class="icon-lg bg-light rounded-circle flex-shrink-0"><i class="fa-solid fa-plane"></i></div>
                                                 <!-- Title -->
                                                 <div class="ms-2">
-                                                    <h6 class="card-title mb-0">Courtyard by Marriott New York</h6>
+                                                    <h6 class="card-title mb-0">[[${list.ar_from}]] <i class="fa-solid fa-right-left"></i> [[${list.ar_to}]]</h6>
                                                     <ul class="nav nav-divider small">
-                                                        <li class="nav-item">Booking ID: CGDSUAHA12548</li>
-                                                        <li class="nav-item">AC</li>
+                                                        <li class="nav-item">Booking Num : [[${list.rno}]]</li>
+                                                        <li class="nav-item">[[${list.agop_code}]]</li>
                                                     </ul>
                                                 </div>
                                             </div>
 
                                             <!-- Button -->
                                             <div class="mt-2 mt-md-0">
-                                                <a href="#" class="btn btn-primary-soft mb-0">Manage Booking</a>
-                                                <p class="text-danger text-md-end mb-0">Booking cancelled</p>
+                                                <a href="#" th:onclick="|location.href='@{/reservation/bookingList/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a>
                                             </div>
                                         </div>
 
@@ -207,38 +206,23 @@
                                         <div class="card-body">
                                             <div class="row g-3">
                                                 <div class="col-sm-6 col-md-4">
-                                                    <span>Check in time</span>
-                                                    <h6 class="mb-0">Tue 05 Aug 12:00 AM</h6>
+                                                    <span>출발 시각</span>
+                                                    <h6 th:text="${#temporals.format(list.ar_from_date, 'yy-MM-dd HH:mm')}" class="mb-0"/>
                                                 </div>
 
                                                 <div class="col-sm-6 col-md-4">
-                                                    <span>Check out time</span>
-                                                    <h6 class="mb-0">Tue 12 Aug 4:00 PM</h6>
+                                                    <span>도착 시각</span>
+                                                    <h6 th:text="${#temporals.format(list.ar_to_date, 'yy-MM-dd HH:mm')}" class="mb-0"/>
                                                 </div>
 
-                                                <div class="col-md-4">
-                                                    <span>Payment status</span>
-                                                    <h6 class="mb-0">Frances Guerrero</h6>
+                                                <div class="col-md-2">
+                                                    <span>결제상태</span>
+                                                    <h6 class="mb-0 text-danger">[[${list.arp_state}]]</h6>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Card item END -->
-
-                                    <div class="bg-mode shadow p-4 rounded overflow-hidden">
-                                        <div class="row g-4 align-items-center">
-                                            <!-- Content -->
-                                            <div class="col-md-9">
-                                                <h6>Looks like you have never booked with BOOKING</h6>
-                                                <h4 class="mb-2">When you book your trip will be shown here.</h4>
-                                                <a href="hotel-list.html" class="btn btn-primary-soft mb-0">Start booking now</a>
-                                            </div>
-                                            <!-- Image -->
-                                            <div class="col-md-3 text-end">
-                                                <img src="/bootstrap/images/element/17.svg" class="mb-n5" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <!-- Tabs content item END -->
 
