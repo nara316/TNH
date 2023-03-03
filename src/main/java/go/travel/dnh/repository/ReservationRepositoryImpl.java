@@ -50,4 +50,9 @@ public class ReservationRepositoryImpl implements ReservationRepository{
     public void update(Long rno){
         reservationMapper.update(rno);
     }
+
+    @Override
+    public void updateRefund(Long rno){
+        reservationMapper.updateRefund(rno);
+    }
 }

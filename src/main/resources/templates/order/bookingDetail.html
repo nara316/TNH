@@ -73,10 +73,10 @@
                                     <!-- Air line name -->
                                     <div class="col-md-3">
                                         <!-- Image -->
-                                        <!--img th:src="${onewayPro.airlineDTO.al_logo_uri}+'/'+${onewayPro.airlineDTO.al_logo_name}" class="w-80px mb-3" alt=""-->
+                                        <img th:src="${list.al_logo_uri}+'/'+${list.al_logo_name}" class="w-80px mb-3" alt=""/>
                                         <!-- Title -->
-                                        <!--h6 class="fw-normal mb-0" th:text="${onewayPro.airlineDTO.al_name}"/-->
-                                        <!--h6 class="fw-normal mb-0" th:text="${onewayPro.ar_fl_no}+' 편'"/-->
+                                        <h6 class="fw-normal mb-0" th:text="${list.al_name}"/>
+                                        <h6 class="fw-normal mb-0" th:text="${list.ar_fl_no}+' 편'"/>
                                     </div>
 
                                     <!-- Airport detail -->
@@ -120,8 +120,72 @@
                         </div>
                         <!-- Ticket END -->
 
+                        <!-- revDetail START -->
+                        <div class="card border">
+                            <!-- Card header -->
+                            <div class="card-header border-bottom px-4">
+                                <h3 class="card-title mb-0">예약 세부정보</h3>
+                            </div>
+
+                            <!-- Card body START -->
+                            <div class="card-body p-4">
+                                <div class="row g-4">
+                                <!-- Select item -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">예약 번호</label><br>
+                                        <label class="form-label" id="font" th:text="${list.rno}"></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">결제 상태</label><br>
+                                        <label class="form-label" id="font" th:text="${list.arp_state}"></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">예약자 성함</label><br>
+                                        <label class="form-label" id="font" th:text="${list.mem_name}"></label>
+                                    </div>
+                                    <div class="col-md-6" th:if="${plist?.pno!=null}">
+                                        <label class="form-label">결제 일자</label><br>
+                                        <label class="form-label" id="font" th:text="${#dates.format(plist?.pay_date, 'yyyy-MM-dd')}"></label>
+                                    </div>
+                                    <hr class="bg-primary opacity-5 position-relative">
+                                </div>
+                            </div>
+                            <!-- Card body END -->
+                        </div>
+                        <!-- revDetail END -->
+
+                        <!--refund START -->
+                        <div class="card border" th:if="${plist?.pno!=null}">
+                            <!-- Card header -->
+                            <div class="card-header border-bottom px-4">
+                                <h3 class="card-title mb-0">환불 세부정보</h3>
+                            </div>
+
+                            <!-- Card body START -->
+                            <div class="card-body p-4">
+                                <div class="row g-4">
+                                    <!-- Select item -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">환불 사유</label><br>
+                                        <label class="form-label" id="font" th:text="${rflist?.rf_reason}"></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">환불 수단</label><br>
+                                        <label class="form-label" id="font" th:text="${plist?.pay_method}"></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">환불요청 일자</label><br>
+                                        <label class="form-label" id="font" th:text="${#dates.format(rflist?.rf_date, 'yyyy-MM-dd')}"></label>
+                                    </div>
+                                    <hr class="bg-primary opacity-5 position-relative">
+                                </div>
+                            </div>
+                            <!-- Card body END -->
+                        </div>
+                        <!--refund END -->
+
                         <!-- Booking form START -->
-                        <form th:action="@{/air/reservation}" method="post"  class="card border">
+                        <div class="card border">
                             <!-- Card header -->
                             <div class="card-header border-bottom px-4">
                                 <h3 class="card-title mb-0"> 탑승객 세부정보</h3>
@@ -163,12 +227,18 @@
                                 <!-- Form END -->
 
                                 <!-- Button -->
-                                <div class="d-grid mt-4">
-                                    <input type="submit" class="btn btn-primary mb-0" value="결제하기"></a>
+                                <div class="d-grid mt-4" th:if="${list.arp_state=='결제 대기'}">
+                                    <a href="#" th:onclick="|location.href='@{/order/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">결제하기</a>
+                                </div>
+                                <div class="d-grid mt-4" th:if="${plist?.pay_state=='결제 완료'}">
+                                    <a href="#" th:onclick="|location.href='@{/order/payList/{pno}(pno=${plist.pno})}'|" class="btn btn-primary-soft mb-0">결제취소</a>
+                                </div>
+                                <div class="d-grid mt-4" th:if="${plist?.pay_state=='결제 취소'}">
+                                    <a class="btn btn-primary-soft mb-0">취소된 예약내역입니다.</a>
                                 </div>
                             </div>
                             <!-- Card body END -->
-                        </form>
+                        </div>
                         <!-- Booking form END -->
                     </div>
                 </div>
@@ -210,6 +280,42 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="h5 fw-normal mb-0">합계 금액</span>
                                             <span class="h5 fw-normal mb-0"> [[${#numbers.formatInteger(list.arp_price * list.arp_count, 3, 'COMMA')}]] <i class="fa-solid fa-won-sign"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--환불내역-->
+                            <div class="col-md-6 col-xl-12" th:if="${list.arp_state =='예약 취소'}">
+                                <div class="card bg-light rounded-2">
+                                    <!-- card header -->
+                                    <div class="card-header border-bottom bg-light">
+                                        <h5 class="card-title mb-0">환불 세부내역</h5>
+                                    </div>
+
+                                    <!-- Card body -->
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-borderless">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span class="h6 fw-normal mb-0">결제요금</span>
+                                                <span class="fs-5">[[${#numbers.formatInteger(plist?.pay_tot_price, 3, 'COMMA')}]]<i class="fa-solid fa-won-sign"></i></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span class="h6 fw-normal mb-0">구매대행 수수료</span>
+                                                <span class="fs-5 text-success">-[[${#numbers.formatInteger(list.arp_count*2000, 3, 'COMMA')}]]<i class="fa-solid fa-won-sign"></i></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span class="h6 fw-normal mb-0">항공사 수수료</span>
+                                                <span class="fs-5 text-success">-[[${#numbers.formatInteger(list.arp_count*3000, 3, 'COMMA')}]]<i class="fa-solid fa-won-sign"></i></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Card footer -->
+                                    <div class="card-footer border-top bg-light">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="h5 fw-normal mb-0">합계 금액</span>
+                                            <span class="h5 fw-normal mb-0">[[${#numbers.formatInteger(plist?.pay_tot_price-(list.arp_count*2000)-(list.arp_count*3000), 3, 'COMMA')}]]<i class="fa-solid fa-won-sign"></i></span>
                                         </div>
                                     </div>
                                 </div>

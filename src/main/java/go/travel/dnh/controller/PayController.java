@@ -35,11 +35,17 @@ public class PayController {
         return "order/payList";
     }
 
+    /*환불*/
     @GetMapping("/payList/{pno}")
-    public String payPractice(@PathVariable("pno") String pno, Model model) {
+    public String payPractice(@PathVariable("pno") String pno, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
         PayDTO pay = paymentService.readPay(pno);
-        model.addAttribute("list", pay);
-        return "order/refundPractice";
+        AirReservationListDTO revDto = reservationService.getReservation(pay.getRno());
+        List<AirReservationListDTO> revDtDto = reservationService.getReservationDetail(pay.getRno());
+
+        model.addAttribute("plist", pay);
+        model.addAttribute("rlist", revDto);
+        model.addAttribute("rdtlist", revDtDto);
+        return "order/refund";
     }
 
     @GetMapping("/confirm")
@@ -47,31 +53,23 @@ public class PayController {
         AirReservationListDTO revDto = reservationService.getReservation(rno);
         PayDTO payDTO = paymentService.readPay(paymentService.readPno(rno));
 
+        /*결제 완료된 경우 여기 페이지로 오면 안된다.*/
+        if(revDto.getArp_state().equalsIgnoreCase("결제 취소")){
+            model.addAttribute("message", "이미 결제 취소된 내역입니다");
+            model.addAttribute("searchURL", "/");
+            return "message";
+        }
+
         model.addAttribute("rlist", revDto);
         model.addAttribute("plist", payDTO);
         return "order/bookingConfirm";
     }
 
-//    @GetMapping("{rno}")
-//    public String payrev(@PathVariable("rno") Long rno, Model model) {
-//        AirReservationListDTO revDto = reservationService.getReservation(rno);
-//        List<AirReservationListDTO> revDtDto = reservationService.getReservationDetail(rno);
-//        model.addAttribute("list", revDto);
-//        model.addAttribute("listDetail", revDtDto);
-//        return "order/payment";
-//    }
-
     @PostMapping("/refund/complete")
     @ResponseBody
     public int refund (String pno, String rf_reason) {
 
-        //이미 환불완료된 건은 넘어가면 안된다.
-        if(paymentService.readOneRefund(pno)==1){
-           result = 1;
-        } else {
-            result = paymentService.refund(pno,rf_reason);
-        }
-        return result;
+        return result = paymentService.refund(pno,rf_reason);
     }
 
 }

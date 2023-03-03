@@ -115,11 +115,6 @@ public class PaymentServiceImpl implements PaymentService{
 
     @Override
     public void paymentCancle(String access_token, String imp_uid, int amount, String reason) throws IOException{
-        System.out.println("결제 취소");
-
-        System.out.println(access_token);
-
-        System.out.println(imp_uid);
 
         HttpsURLConnection conn = null;
         URL url = new URL("https://api.iamport.kr/payments/cancel");
@@ -187,6 +182,7 @@ public class PaymentServiceImpl implements PaymentService{
     public int refund(String pno, String rf_reason) {
         //pno로 db에 결제완료된 리스트가 있는지 확인하고 있으면 pay테이블은 update
         //그리고 refund테이블에 Insert
+        //reservation 테이블도 업데이트
 
         PayDTO payDTO = paymentRepository.readPay(pno);
 
@@ -200,6 +196,7 @@ public class PaymentServiceImpl implements PaymentService{
             refundDTO.setRf_reason(rf_reason);
 
             paymentRepository.insertRefund(refundDTO);
+            reservationRepository.updateRefund(payDTO.getRno());
         }
         return 0;
     }
@@ -214,4 +211,8 @@ public class PaymentServiceImpl implements PaymentService{
         return paymentRepository.readPno(rno);
     }
 
+    @Override
+    public RefundDTO readRefund(String pno){
+        return paymentRepository.readRefund(pno);
+    }
 }

@@ -25,4 +25,6 @@ public interface PaymentService {
     public int readOneRefund(String pno);
 
     public String readPno(Long rno);
+
+    public RefundDTO readRefund(String pno);
 }

@@ -49,4 +49,9 @@ public class PaymentRepositoryImpl implements PaymentRepository {
         return paymentMapper.readPno(rno);
     }
 
+    @Override
+    public RefundDTO readRefund(String pno){
+        return paymentMapper.readRefund(pno);
+    }
+
 }
