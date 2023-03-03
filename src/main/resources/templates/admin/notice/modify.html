@@ -25,9 +25,10 @@
 <div th:replace="admin/admin-fragments/nav :: nav">
 </div>
 <div class="layout">
-    <form th:action="@{/notice/list/update/{nno}(nno=${board.nno})}" method="post">
-        <input name="title" type="text" th:value="${board.n_title}" />
-        <textarea name="content" th:text="${board.n_content}"></textarea>
+    <form th:action="@{/notice/list/update/{nno}(nno=${board.nno})}" method="post" enctype="multipart/form-data">
+        <input name="n_title" type="text" th:value="${board.n_title}" /><br>
+        <img th:src="@{${board.n_filepath}}" style="width: inherit; width:100%;"/><br>
+        <textarea name="n_content" th:text="${board.n_content}"></textarea>
         <input type="file" name="file">
         <button type="submit">수정</button>
     </form>

@@ -6,18 +6,42 @@
     <div th:replace="fragments/script :: script">
 
     </div>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/tiny-slider/tiny-slider.css">
 <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
 <!--    &lt;!&ndash; default header name is X-CSRF-TOKEN &ndash;&gt;-->
 <!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <style>
-
+        .information {
+            width: 600px;
+            height: 180px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .information-list ul:hover {
+            color: #3d32a3;
+            transition: 0.3s;
+        }
+        .tns-controls {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
+<!-- Slider START -->
+<div class="tiny-slider" style="margin: 10px auto 0 auto; width: 600px; height: 25px;text-align: center">
+    <div class="tiny-slider-inner" data-autoplay="true"  data-edge="2" data-dots="false" data-items-xl="1" data-items-lg="1" data-items-md="1">
+        <ul th:each="noticeDTO : ${response.getList()}" th:if="${noticeDTO.nno > 218}" >
+            <li style="list-style: none; color:#333; font-size:18px; text-align: center">
+                <i class="bi bi-chat-right-dots"></i>  <a th:text="${noticeDTO.n_title}" th:href="@{/notice/list/detail(nno=${noticeDTO.nno})}" style="margin: 0 auto;text-decoration: none;color:#333;"></a>
+            </li>
+        </ul>
+    </div>
+</div>
 <div th:replace="fragments/nav :: nav">
 </div>
 
+</div>
 <div style="text-align: center;">
     <h1>광기의 3인 프로젝트</h1>
     <img style="width: 600px;" src="https://item.kakaocdn.net/do/dd733898eca7906638478893abfe6a038f324a0b9c48f77dbce3a43bd11ce785">
@@ -141,9 +165,17 @@
         </div> <!-- Row END -->
     </div>
 </section>
+
 <div th:replace="fragments/footer :: footer">
 </div>
+<script src="/bootstrap/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- Vendors -->
+<script src="/bootstrap/vendor/tiny-slider/tiny-slider.js"></script>
+<script src="/bootstrap/vendor/purecounterjs/dist/purecounter_vanilla.js"></script>
+
+<!-- ThemeFunctions -->
+<script src="/bootstrap/js/functions.js"></script>
 </body>
 
 

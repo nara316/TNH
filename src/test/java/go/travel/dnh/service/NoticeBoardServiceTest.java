@@ -27,5 +27,11 @@ class NoticeBoardServiceTest {
         list.get(1).getN_title();
         System.out.println("list.get(1).getN_title() = " + list.get(1).getN_title());
     }
+    @Test
+    void delete() {
+        for (int i = 1; i <219 ; i++) {
+            noticeBoardService.boardDelete(i);
+        }
+    }
 
 }

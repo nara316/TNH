@@ -58,8 +58,16 @@ public class NoticeBoardService {
         noticeBoardMapper.delete(nno);
     }
 
-    public void modifyBoard(Integer nno) {
-        noticeBoardMapper.update(nno);
+    public void modifyBoard(NoticeDTO noticeDTO, MultipartFile file)throws Exception {
+        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + "_" + file.getOriginalFilename();
+        File saveFile = new File(projectPath, fileName);
+        file.transferTo(saveFile);
+        noticeDTO.setN_filename(fileName);
+        noticeDTO.setN_filepath("/files/"+fileName);
+
+        noticeBoardMapper.update(noticeDTO);
     }
 
 }

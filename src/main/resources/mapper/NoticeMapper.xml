@@ -14,8 +14,8 @@
     <delete id="delete" parameterType="Integer">
         delete from notice where nno = #{nno}
     </delete>
-    <update id="update" parameterType="Integer">
-        update notice set n_title = #{n_title}, n_content = #{n_content}
+    <update id="update" parameterType="NoticeDTO">
+        update notice set n_title = #{n_title}, n_content = #{n_content}, n_filepath = #{n_filepath}, n_filename = #{n_filename} where nno = #{nno}
     </update>
     <select id="count" parameterType="go.travel.dnh.domain.notice.NoticeSearchDTO" resultType="int">
         select count(*) from notice <include refid="search" />

@@ -62,8 +62,7 @@ public class NoticeController {
         NoticeDTO noticeTemp = noticeBoardService.boardView(nno);
         noticeTemp.setN_title(noticeDTO.getN_title());
         noticeTemp.setN_content(noticeDTO.getN_content());
-        noticeBoardService.write(noticeDTO, file);
-
+        noticeBoardService.modifyBoard(noticeDTO, file);
         return "redirect:/notice/list";
     }
 }
