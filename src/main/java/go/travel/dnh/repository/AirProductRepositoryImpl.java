@@ -74,6 +74,20 @@ public class AirProductRepositoryImpl implements AirProductRepository{
         List<AirProductDTO> list = airProductMapper.searchAirOneWay(sch);
         return new PagingResponse<>(list,pagination);
     }
+
+    @Override
+    public PagingResponse<AirProductDTO> detailSearchOneWay(SearchDTO sch) {
+        int count = airProductMapper.searchCntOneWay(sch);
+        if (count < 1) {
+            return new PagingResponse<>(Collections.emptyList(), null);
+        }
+        Pagination pagination = new Pagination(count, sch);
+        sch.setPagination(pagination);
+
+        List<AirProductDTO> list = airProductMapper.detailSearchOneWay(sch);
+        return new PagingResponse<>(list,pagination);
+    }
+
     @Override
     public PagingResponse<AirProductDTO> airProductSchFrom(SearchDTO sch) {
         int count = airProductMapper.searchCntFrom(sch);

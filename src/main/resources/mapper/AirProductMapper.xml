@@ -137,15 +137,21 @@
     </select>
     
     <!--상세검색-->
-    <!--상세검색바-->
-<!--    <select id="detailSearchByPriceBar" parameterType="SearchDTO" resultType="int">-->
-<!--        select MIN(ar_price), MAX(ar_price)-->
-<!--        from air_product-->
-<!--        where date_format(ar_from_date, '%Y-%m-%d') = date_format( #{oneFromDate}, '%Y-%m-%d')-->
-<!--          and ar_from = #{oneFrom} and ar_to = #{oneTo}-->
-<!--          and ar_res_cnt > #{ea}-->
-<!--          and agop_code = #{airGrade}-->
-<!--    </select>-->
+    <!--편도가는편-->
+    <select id="detailSearchOneWay" parameterType="SearchDTO" resultMap="AirProductDTO">
+        select
+        <include refid="productColumns"/>
+        from air_product p
+        where date_format(p.ar_from_date, '%Y-%m-%d') = date_format( #{oneFromDate}, '%Y-%m-%d')
+        and p.ar_from = #{oneFrom} and p.ar_to = #{oneTo}
+        and p.ar_res_cnt > #{ea}
+        and p.agop_code = #{airGrade}
+        and p.al_code = #{airline}
+        and p.ar_price >= #{minPrice}
+        and p.ar_price <![CDATA[<=]]> #{maxPrice}
+        limit #{pagination.limitStart}, #{amount}
+    </select>
+
 
     <!--공항리스트 읽어오기-->
     <select id="selectAP" parameterType="map" resultMap="AirportDTO">

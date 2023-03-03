@@ -19,6 +19,9 @@ public class SearchDTO {
     private Integer roundTo;
     private Integer ea;
     private String airGrade;
+    private Integer minPrice;
+    private Integer maxPrice;
+    private Integer airline;
     private Pagination pagination;
 
 
