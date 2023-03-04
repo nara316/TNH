@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/script :: script">
+</head>
+
+<body>
+<div th:replace="fragments/nav :: nav">
+</div>
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+    <!-- =======================
+    Main banner START -->
+    <section>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-10 text-center mx-auto">
+                    <!-- Image -->
+                    <img src="/bootstrap/images/element/error.svg" class="h-lg-500px mb-4" alt="">
+                    <!-- Title -->
+                    <h1 class="display-1 text-primary mb-0">Error!</h1>
+                    <!-- Subtitle -->
+                    <h3>잘못된 페이지 접근입니다</h3>
+                    <!-- Button -->
+                    <a href="/" class="btn btn-light mb-0">메인페이지로 돌아가기</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =======================
+    Main banner START -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+<div th:replace="fragments/footer :: footer">
+</div>
+</html>

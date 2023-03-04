@@ -16,6 +16,8 @@ public interface ReservationService {
 
     public AirReservationListDTO getReservation(Long rno);
 
+    public AirReservationListDTO getReservationRound(Long rno);
+
     public void insert(ReservationDTO reservationDTO, int mno);
 
     public List<AirReservationDTO> readList(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
