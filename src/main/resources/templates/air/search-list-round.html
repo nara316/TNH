@@ -142,8 +142,7 @@
                                     </div>
 
                                     <div class="col-12 text-end pt-0">
-                                        <input type="submit" class="btn btn-primary mb-n4" value="Find ticket"><i
-                                            class="bi bi-arrow-right ps-3"></i></input>
+                                        <button type="submit"  class="btn btn-primary mb-n4" >Find ticket <i class="bi bi-arrow-right ps-3"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -233,58 +232,27 @@
             <div class="row">
 
                 <!-- Left sidebar START -->
-                <aside class="col-xl-4 col-xxl-3">
-                    <!-- Responsive offcanvas body START -->
-                    <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="offcanvasSidebar"
-                         aria-labelledby="offcanvasSidebarLabel">
-                        <!-- Offcanvas header -->
-                        <div class="offcanvas-header">
-                            <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Advance Filters</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                    data-bs-target="#offcanvasSidebar" aria-label="Close"></button>
+                <aside class="col-xl-4 col-xxl-2">
+                    <form class="rounded-3">
+                        <!-- 정렬 -->
+                        <div class="card card-body rounded-0 rounded-top py-1">
+                            <!-- Title -->
+                            <select class="form-select js-choice" id="sort">
+                                <option>추천순</option>
+                                <option value="rowPrice">낮은가격순</option>
+                                <option value="highPrice">낮은가격순</option>
+                                <option value="departureTime">출발시간순</option>
+                                <option value="arrivalTime">도착시간순</option>
+                            </select>
                         </div>
-
-                        <!-- Offcanvas body -->
-                        <div class="offcanvas-body flex-column p-3 p-xl-0">
-                            <form class="rounded-3 shadow">
-
-
-
-                                <hr class="my-0"> <!-- Divider -->
-
-                                <!-- Preferred Airline START -->
-                                <div class="card card-body rounded-0 p-4">
-                                    <!-- Title -->
-                                    <h6 class="mb-2">항공사 선택</h6>
-                                    <!-- Preferred Airline group -->
-                                    <div class="col-12">
-                                        <!-- Checkbox -->
-                                        <div th:each="list : ${airline}" class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="airlineType1">
-                                            <label class="form-check-label" for="airlineType1">
-                                                <img th:src="@{${list.al_logo_uri}}+'/'+ ${list.al_logo_name}" class="h-15px fa-fw me-2" alt="">
-                                                [[${list.al_name}]]
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Preferred Airline END -->
-                            </form><!-- Form End -->
-                        </div>
-
-                        <!-- Buttons -->
-                        <div class="d-flex justify-content-center p-2 p-xl-0 mt-xl-4">
-                            <button class="btn btn-primary btn-sm mb-0">Filter Result</button>
-                        </div>
-
-                    </div>
-                    <!-- Responsive offcanvas body END -->
+                        <!-- 정렬 -->
+                    </form><!-- Form End -->
                 </aside>
                 <!-- Left sidebar END -->
 
                 <!-- Main content START -->
 
-                <div class="col-xl-8 col-xxl-9">
+                <div class="col-xl-8 col-xxl-10">
                     <form th:action="@{/air/res-check}" method="post">
                     <div class="vstack gap-4">
                         <!-- 가는편 -->
@@ -313,7 +281,7 @@
                                                    onclick="checkFromOnlyOne(this)" th:value="${list.ano}">
                                         </div>
                                         <!-- Airport detail -->
-                                        <div class="col-sm-4 col-md-3">
+                                        <div class="col-sm-4 col-md-3 text-center">
                                             <h4 th:text="${#temporals.format(list.ar_from_date, 'HH:mm')}"/>
                                             <p class="mb-0" th:text="${list.ar_from}"/>
                                         </div>
@@ -333,7 +301,7 @@
                                         </div>
 
                                         <!-- Airport detail -->
-                                        <div class="col-sm-4 col-md-3">
+                                        <div class="col-sm-4 col-md-3 text-center">
                                             <h4 th:text="${#temporals.format(list.ar_to_date, 'HH:mm')}"/>
                                             <p class="mb-0" th:text="${list.ar_to}"/>
                                         </div>

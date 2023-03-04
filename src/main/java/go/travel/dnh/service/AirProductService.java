@@ -24,9 +24,10 @@ public interface AirProductService {
     PagingResponse<AirProductDTO> getList(SearchDTO sch);
 
     PagingResponse<AirProductDTO> getSearchOneWayList(SearchDTO sch);
-    PagingResponse<AirProductDTO> detailSearchOneWay(SearchDTO sch);
     PagingResponse<AirProductDTO> getSearchFromList(SearchDTO sch);
     PagingResponse<AirProductDTO> getSearchToList(SearchDTO sch);
+
+    PagingResponse<AirProductDTO> OneWaySort(SearchDTO sch);
 
 
     List<AirportDTO> getListAirport();

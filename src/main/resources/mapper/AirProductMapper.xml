@@ -135,10 +135,9 @@
           and ar_from = #{roundTo} and ar_to = #{roundFrom}
           and agop_code = #{airGrade}
     </select>
-    
-    <!--상세검색-->
-    <!--편도가는편-->
-    <select id="detailSearchOneWay" parameterType="SearchDTO" resultMap="AirProductDTO">
+
+    <!--검색 정렬-->
+    <select id="sortAirOneWay" parameterType="SearchDTO" resultMap="AirProductDTO">
         select
         <include refid="productColumns"/>
         from air_product p
@@ -146,9 +145,26 @@
         and p.ar_from = #{oneFrom} and p.ar_to = #{oneTo}
         and p.ar_res_cnt > #{ea}
         and p.agop_code = #{airGrade}
-        and p.al_code = #{airline}
+        <choose>
+            <when test="sortValue == 'priceAsc'">
+                ORDER BY ar_price ASC
+            </when>
+            <when test="sortValue == 'priceDesc'">
+                ORDER BY ar_price DESC
+            </when>
+            <when test="sortValue == 'earlyDeparture'">
+                ORDER BY ar_from_date ASC
+            </when>
+            <when test="sortValue == 'lateDeparture'">
+                ORDER BY ar_from_date DESC
+            </when>
+            <otherwise>
+                ORDER BY p.ano
+            </otherwise>
+        </choose>
         limit #{pagination.limitStart}, #{amount}
     </select>
+
 
 
     <!--공항리스트 읽어오기-->
