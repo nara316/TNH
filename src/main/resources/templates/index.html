@@ -24,6 +24,15 @@
         .tns-controls {
             display: none;
         }
+        @media (min-width:768px) {
+          #kakao-talk-channel-add-button {
+                       position:fixed;
+                       z-index: 999;
+                       right : 40px;
+                       bottom : 40px;
+                    }
+          }
+
     </style>
 </head>
 
@@ -46,6 +55,12 @@
     <h1>광기의 3인 프로젝트</h1>
     <img style="width: 600px;" src="https://item.kakaocdn.net/do/dd733898eca7906638478893abfe6a038f324a0b9c48f77dbce3a43bd11ce785">
 </div>
+<div
+        id="kakao-talk-channel-add-button"
+        data-channel-public-id="_hcxdDxj"
+        data-size="large"
+        data-support-multiple-densities="true"
+></div>
 <section class="pt-0 pt-lg-5">
     <div class="container">
 
@@ -283,7 +298,27 @@ Faqs END-->
 
 <!-- ThemeFunctions -->
 <script src="/bootstrap/js/functions.js"></script>
+
+
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </body>
+<script>
+    window.kakaoAsyncInit = function() {
+        Kakao.Channel.createAddChannelButton({
+            container: '#kakao-talk-channel-add-button',
+        });
+    };
+
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.channel.min.js';
+        js.integrity = 'sha384-MEvxc+j9wOPB2TZ85/N6G3bt3K1/CgHSGNSM+88GoytFuzP4C9szmANjTCNfgKep';
+        js.crossOrigin = 'anonymous';
+        fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'kakao-js-sdk');
+</script>
 
 
 </html>
