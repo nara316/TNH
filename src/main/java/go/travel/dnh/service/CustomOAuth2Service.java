@@ -37,7 +37,7 @@ import java.util.Random;
 public class CustomOAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final SocialUserMapper socialUserMapper;
     private final HttpSession httpSession;
-    private final MemberLoginRepository memberLoginRepository;
+    private final UserMapper userMapper;
 
     @Override
     @Transactional
@@ -81,8 +81,11 @@ public class CustomOAuth2Service implements OAuth2UserService<OAuth2UserRequest,
             httpSession.setAttribute("socialEmail", socialEmail);
             httpSession.setAttribute("socialPwd", "!"+resultNum+"a");
             LoginUser loginUser = new LoginUser(attributes.getAttributes());
-            String role = "ROLE_[USER]";
+            int mno = userMapper.findById(socialEmail).getMno();
+            String role = userMapper.readAuthority(mno).toString();
+            
             loginUser.setAuthorities(Collections.singleton(new SimpleGrantedAuthority(role)));
+//        System.out.println("loginUser.getAuthorities() = " + loginUser.getAuthorities());
             loginUser.setMem_id(socialEmail);
 //            return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("USER")),
 //                    attributes.getAttributes(),
@@ -95,7 +98,6 @@ public class CustomOAuth2Service implements OAuth2UserService<OAuth2UserRequest,
 
     }
     private SocialUser saveOrUpdate(OAuthAttributes attributes) {
-        //가입이 되어도 시큐리티 UserDetail 객체가 아니라서 권한이 의미없음
         //추후 최초 로그인시 바로 회원정보 수정으로 넘어가서 회원정보 수정-시큐리티 객체로 회원 저장
 
         SocialUser socialUser;

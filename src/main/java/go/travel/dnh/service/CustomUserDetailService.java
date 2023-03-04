@@ -31,9 +31,6 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         LoginUser user = userMapper.findById(username);
-        String role = "USER";
-        user.setAuthorities(Collections.singleton(new SimpleGrantedAuthority(role)));
-
         String mem_id_DB = user.getUsername();
 //        System.out.println("mem_id_DB = " + mem_id_DB);
         String mem_pwd_DB = user.getPassword();
@@ -56,14 +53,10 @@ public class CustomUserDetailService implements UserDetailsService {
 
     }
     private UserDetails createUserDetails(UserDetails user){
-//        System.out.println("createUserdetail드러옴");
-
         int mno = userMapper.findByMnoFromId(user.getUsername());
-//        System.out.println("mno = " + mno);
-//        System.out.println("user.getUsername() = " + user.getUsername());
-//        System.out.println("user.getPassword() = " + user.getPassword());
                 //role -> mno로 찾기
         String role = userMapper.readAuthority(mno).toString();
+//        System.out.println("user.getAuthorities() = " + user.getAuthorities());
         //roles는 권한이 ROLE_로 시작하는걸 읽어옴
 //        System.out.println("createUserDetailsrole = " + role);
         //ROLE이아니라 [ROLE]로 들어왔는데 상관이 없나?

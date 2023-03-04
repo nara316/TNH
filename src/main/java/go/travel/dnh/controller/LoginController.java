@@ -80,8 +80,9 @@ public class LoginController {
     }
     @GetMapping("/mypage")
     public String MyPage(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
-        MemberDTO findUser = memberLoginService.findMember(loginUser,authentication);
-
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        MemberDTO findUser = memberLoginService.findById(username);
+//        MemberDTO findUser = memberLoginService.findMember(loginUser,authentication);
         model.addAttribute("memberDTO", findUser);
         return "login/mypage";
     }

@@ -35,8 +35,8 @@
         <p th:text="${board.n_content}"></p>
     <img th:src="@{${board.n_filepath}}" style="width: inherit; width:100%; margin-bottom: 50px"/>
         <div class="admin-button">
-            <a th:href="@{/notice/list/modify/{nno}(nno=${board.nno})}" sec:authorize="isAuthenticated()"><button class="btn btn-secondary-soft">게시글 수정</button></a>
-            <a th:href="@{/notice/list/delete(nno=${board.nno})}" sec:authorize="isAuthenticated()"><button class="btn btn-secondary-soft">게시글 삭제</button></a>
+            <a th:href="@{/notice/list/modify/{nno}(nno=${board.nno})}" sec:authorize="hasRole('[ADMIN]')"><button class="btn btn-secondary-soft">게시글 수정</button></a>
+            <a th:href="@{/notice/list/delete(nno=${board.nno})}" sec:authorize="hasRole('[ADMIN]')"><button class="btn btn-secondary-soft">게시글 삭제</button></a>
         </div>
 </div>
 
