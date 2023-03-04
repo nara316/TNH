@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Booking - Multipurpose Online Booking Theme</title>
-
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <!-- Meta Tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,7 +11,6 @@
     <meta name="description" content="Booking - Multipurpose Online Booking Theme">
 
     <script>
-
     </script>
 
     <!-- Favicon -->
@@ -122,7 +122,8 @@
                                                 <div class="icon-lg bg-light rounded-circle flex-shrink-0"><i class="fa-solid fa-plane"></i></div>
                                                 <!-- Title -->
                                                 <div class="ms-2">
-                                                    <h6 class="card-title mb-0">[[${list.ar_from}]] <i class="fa-solid fa-right-left"></i> [[${list.ar_to}]]</h6>
+                                                    <h6 class="card-title mb-0">[[${list.ar_from}]] <i class="fa-solid fa-arrow-right-arrow-left" th:if="${not #strings.isEmpty(list.in_ano)}"></i>
+                                                        <i class="fa-solid fa-arrow-right" th:if="${#strings.isEmpty(list.in_ano)}"></i> [[${list.ar_to}]]</h6>
                                                     <ul class="nav nav-divider small">
                                                         <li class="nav-item">Booking Num : [[${list.rno}]]</li>
                                                         <li class="nav-item">[[${list.agop_code}]]</li>
@@ -188,7 +189,8 @@
                                                 <div class="icon-lg bg-light rounded-circle flex-shrink-0"><i class="fa-solid fa-plane"></i></div>
                                                 <!-- Title -->
                                                 <div class="ms-2">
-                                                    <h6 class="card-title mb-0">[[${list.ar_from}]] <i class="fa-solid fa-right-left"></i> [[${list.ar_to}]]</h6>
+                                                    <h6 class="card-title mb-0">[[${list.ar_from}]] <i class="fa-solid fa-arrow-right-arrow-left" th:if="${not #strings.isEmpty(list.in_ano)}"></i>
+                                                        <i class="fa-solid fa-arrow-right" th:if="${#strings.isEmpty(list.in_ano)}"></i> [[${list.ar_to}]]</h6>
                                                     <ul class="nav nav-divider small">
                                                         <li class="nav-item">Booking Num : [[${list.rno}]]</li>
                                                         <li class="nav-item">[[${list.agop_code}]]</li>
