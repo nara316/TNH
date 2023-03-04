@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="airOneWay">
 <head>
   <meta charset="UTF-8">
   <title>::: Go Travel :::</title>
@@ -26,7 +26,7 @@
   <!-- Theme CSS -->
   <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 </head>
 
@@ -215,7 +215,7 @@
         <!-- Left sidebar START -->
         <aside class="col-xl-4 col-xxl-2">
 
-          <form th:action="@{/air/search-list-oneway}" method="post" th:object="${sch}"class="rounded-3">
+          <form th:action="@{/air/sort-oneway}" method="post" th:object="${sch}"class="rounded-3">
             <!-- Hidden input fields -->
             <input type="hidden" th:field="*{oneFrom}">
             <input type="hidden" th:field="*{oneTo}">
@@ -428,31 +428,41 @@
 
 
 
+
 </script>
 <script>
+
   $(document).ready(function() {
     // 셀렉트 박스에서 선택 값이 변경될 때
     $('#sort').change(function() {
       // 선택된 값 가져오기
       let sortValue = $(this).val();
 
-      // Ajax 요청 보내기
       $.ajax({
-        type: 'POST',
-        url: '/air/sort-oneway',
+        type: "POST",
+        url: "/air/sort-oneway",
         data: {
+          oneFrom: $('#oneFrom').val(),
+          oneTo: $('#oneTo').val(),
+          ea: $('#ea').val(),
+          oneFromDate: $('#oneFromDate').val(),
+          airGrade: $('#airGrade').val(),
           sortValue: sortValue
         },
         success: function(result) {
-          // 서버에서 보내온 결과를 사용하여 화면을 갱신
           $('#airOneWay').html(result);
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.log(textStatus, errorThrown);
         }
       });
+
+
+
+
     });
   });
+
 </script>
 </body>
 </html>

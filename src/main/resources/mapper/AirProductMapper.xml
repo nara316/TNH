@@ -153,10 +153,10 @@
                 ORDER BY ar_price DESC
             </when>
             <when test="sortValue == 'earlyDeparture'">
-                ORDER BY ar_from_date ASC, ar_time ASC
+                ORDER BY ar_from_date ASC
             </when>
             <when test="sortValue == 'lateDeparture'">
-                ORDER BY ar_from_date ASC, ar_time DESC
+                ORDER BY ar_from_date DESC
             </when>
             <otherwise>
                 ORDER BY p.ano
@@ -164,6 +164,8 @@
         </choose>
         limit #{pagination.limitStart}, #{amount}
     </select>
+
+
 
     <!--공항리스트 읽어오기-->
     <select id="selectAP" parameterType="map" resultMap="AirportDTO">

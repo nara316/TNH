@@ -118,19 +118,20 @@ public class AirController {
     }
 
     @PostMapping("/sort-oneway")
-    public String searchListOneWay( @ModelAttribute("sch") final SearchDTO sch, Model m) {
-        System.out.println("searchListOneWay 메서드 호출됨");
+    public String sortListOneWay(@RequestParam("sortValue") String sortValue, @ModelAttribute("sch") final SearchDTO sch, Model m) {
         List<AirportDTO> airportList = airProductService.getListAirport();
         List<AirlineDTO> airlineList = airProductService.getListAirline();
 
+        System.out.println("sort value : "+sortValue);
         m.addAttribute("airline", airlineList);
         m.addAttribute("airport", airportList);
 
         PagingResponse<AirProductDTO> sortOneWay = airProductService.OneWaySort(sch);
-        System.out.println(sch.getSortValue());
+        sch.setSortValue(sortValue);
         m.addAttribute("airOneWay", sortOneWay);
         return "/air/search-list-oneway";
     }
+
 
 
 
