@@ -15,6 +15,8 @@ public interface ReservationMapper {
 
     public AirReservationListDTO getReservation(Long rno);
 
+    public AirReservationListDTO getReservationRound(Long rno);
+
     public void insert(ReservationDTO reservationDTO);
 
     public List<AirReservationDTO> readList(int mno);

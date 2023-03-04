@@ -65,6 +65,7 @@ public class ReservationController {
     @GetMapping("/bookingList/{rno}")
     public String showRevDetail(@PathVariable("rno") Long rno, Model model) {
         AirReservationListDTO revDto = reservationService.getReservation(rno);
+        AirReservationListDTO revRoundDto = reservationService.getReservationRound(rno);
         List<AirReservationListDTO> revDtDto = reservationService.getReservationDetail(rno);
         PayDTO payDTO = paymentService.readPay(paymentService.readPno(rno));
 
@@ -74,6 +75,7 @@ public class ReservationController {
         }
 
         model.addAttribute("list", revDto);
+        model.addAttribute("rolist",revRoundDto);
         model.addAttribute("listDetail", revDtDto);
         model.addAttribute("plist", payDTO);
         return "order/bookingDetail";

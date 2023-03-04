@@ -35,6 +35,11 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
+    public AirReservationListDTO getReservationRound(Long rno){
+        return reservationRepository.getReservationRound(rno);
+    }
+
+    @Override
     public void insert(ReservationDTO reservationDTO, int mno) {
 
         ReservationDTO rv = new ReservationDTO();

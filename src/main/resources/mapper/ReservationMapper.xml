@@ -24,6 +24,20 @@
         where p.ano = res.out_ano and res.mno = m.mno and rno = #{rno};
     </select>
 
+    <!--결제 및 예약상세 예약단건조회(왕복)-->
+    <select id="getReservationRound" parameterType="Long" resultType="AirReservationListDTO">
+        select p.ar_from_date, p.ar_to_date,
+               p.ar_time, p.ar_fl_no, res.in_ano,
+               (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,
+               (select ap_code_name from airport where ap_code = p.ar_to) ar_to,
+               (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code,
+               (select al_logo_uri from air_line al where al.al_code = p.al_code) al_logo_uri,
+               (select al_logo_name from air_line al where al.al_code = p.al_code ) al_logo_name,
+               (select al_name from air_line al where al.al_code = p.al_code ) al_name
+        from reservation2 res, air_product p, member m
+        where p.ano = res.in_ano and res.mno = m.mno and rno = #{rno};
+    </select>
+
     <!--결제창 이용자 세부조회-->
     <select id="getReservationDetail" parameterType="Long" resultType="AirReservationListDTO">
         select resdt.ko_name, resdt.en_lname, resdt.en_fname, resdt.birth, resdt.gender
@@ -44,7 +58,7 @@
         where mno = #{mno};
     </select>
 
-    <!--마이페이지 개인 예약내역-->
+    <!--마이페이지 개인 예약내역(왕복)-->
     <select id="selectMyRes" resultType="AirReservationListDTO" parameterType="int">
         select
                 (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,

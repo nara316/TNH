@@ -121,6 +121,67 @@
                         </div>
                         <!-- Ticket END -->
 
+                        <!--round Ticket-->
+                        <div class="card border" th:if="${not #strings.isEmpty(rolist?.in_ano)}">
+                            <!-- Card header -->
+                            <div class="card-header d-flex justify-content-between pb-0">
+                                <h6 class="fw-normal mb-0"><span class="text-body">좌석 등급 :</span> [[${rolist?.agop_code}]]</h6>
+                            </div>
+
+                            <!-- Card body START -->
+                            <div class="card-body p-4">
+                                <!-- 가는편 Ticket item START -->
+                                <div class="row g-4">
+                                    <!-- Air line name -->
+                                    <div class="col-md-3">
+                                        <!-- Image -->
+                                        <img th:src="${rolist?.al_logo_uri}+'/'+${rolist?.al_logo_name}" class="w-80px mb-3" alt=""/>
+                                        <!-- Title -->
+                                        <h6 class="fw-normal mb-0" th:text="${rolist?.al_name}"/>
+                                        <h6 class="fw-normal mb-0" th:text="${rolist?.ar_fl_no}+' 편'"/>
+                                    </div>
+
+                                    <!-- Airport detail -->
+                                    <div class="col-sm-4 col-md-3">
+                                        <!-- Title -->
+                                        <h4 th:text="${rolist?.ar_from}"/> <!--여기 수정예정-->
+                                        <h6 th:text="${#temporals.format(rolist?.ar_from_date, 'HH:mm')}"/>
+                                        <!-- Address -->
+                                        <p class="mb-2" th:text="${#temporals.format(rolist?.ar_from_date, 'YYYY-MM-dd')}"/>
+                                        <!--p class="mb-2" th:text="${onewayPro.ar_from}+'공항'"/-->
+                                    </div>
+
+                                    <!-- Time -->
+                                    <div class="col-sm-4 col-md-3 text-center my-sm-auto">
+                                        <!-- Time -->
+                                        <h5 th:text="${rolist?.ar_time + '분'}"/>
+
+                                        <div class="position-relative my-4">
+                                            <!-- Line -->
+                                            <hr class="bg-primary opacity-5 position-relative">
+                                            <!-- Icon -->
+                                            <div class="icon-md bg-primary text-white rounded-circle position-absolute top-50 start-50 translate-middle">
+                                                <i class="fa-solid fa-fw fa-plane rtl-flip"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Airport detail -->
+                                    <div class="col-sm-4 col-md-3">
+                                        <!-- Title -->
+                                        <h4 th:text="${rolist?.ar_to}"/> <!--여기 수정예정-->
+                                        <h6 th:text="${#temporals.format(rolist?.ar_to_date, 'HH:mm')}"/>
+                                        <!-- Address -->
+                                        <p class="mb-2" th:text="${#temporals.format(rolist?.ar_to_date, 'YYYY-MM-dd')}"/>
+                                        <!--p class="mb-2" th:text="${onewayPro.ar_to}+'공항'"/-->
+                                    </div>
+                                </div>
+                                <!-- 가는편 Ticket item END -->
+                            </div>
+                            <!-- Card body END -->
+                        </div>
+                        <!-- round END -->
+
                         <!-- revDetail START -->
                         <div class="card border">
                             <!-- Card header -->
@@ -341,11 +402,5 @@
 </div>
 
 </body>
-
-
-<script>
-
-</script>
-
 
 </html>
