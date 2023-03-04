@@ -12,7 +12,8 @@
 
     <!--결제 및 예약상세 예약단건조회-->
     <select id="getReservation" parameterType="Long" resultType="AirReservationListDTO">
-        select res.rno, res.mno, res.arp_count, res.arp_price, p.ar_from_date, p.ar_to_date, res.arp_state, m.mem_name, p.ar_time,p.ar_fl_no,
+        select res.rno, res.mno, res.arp_count, res.arp_price, p.ar_from_date, p.ar_to_date,
+               res.arp_state, m.mem_name, p.ar_time,p.ar_fl_no, res.in_ano,
             (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,
             (select ap_code_name from airport where ap_code = p.ar_to) ar_to,
             (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code,
@@ -49,7 +50,7 @@
                 (select ap_code_name from airport  where ap_code = p.ar_from) ar_from,
                 (select ap_code_name from airport where ap_code = p.ar_to) ar_to,
                 (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code,
-                p.ar_from_date, p.ar_to_date, res.rno, res.arp_state
+                p.ar_from_date, p.ar_to_date, res.rno, res.arp_state,  res.in_ano
         from air_product p, reservation2 res
         where p.ano = res.out_ano and mno = #{mno}
         order by p.ar_from_date desc
