@@ -26,6 +26,8 @@
   <!-- Theme CSS -->
   <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
@@ -42,7 +44,7 @@
       <div class="row">
         <div class="col-12">
           <!-- Booking from START -->
-          <form th:action="@{/air/search}" method="post" class="bg-mode border rounded position-relative px-4 pt-4 mb-4 mb-sm-0">
+          <form th:action="@{/air/search}" method="post" id="searchForm" class="bg-mode border rounded position-relative px-4 pt-4 mb-4 mb-sm-0">
             <div class="row g-4">
               <!-- Nav tabs START -->
               <div class="col-lg-6">
@@ -128,7 +130,7 @@
                   </div>
 
                   <div class="col-12 text-end pt-0">
-                    <input  type="submit" class="btn btn-primary mb-n4" value="Find ticket" ><i class="bi bi-arrow-right ps-3"></i></input>
+                    <button type="submit"  class="btn btn-primary mb-n4" >Find ticket <i class="bi bi-arrow-right ps-3"></i></button>
                   </div>
                 </div>
               </div>
@@ -186,8 +188,7 @@
                   </div>
 
                   <div class="col-12 text-end pt-0">
-
-                    <input  type="submit" class="btn btn-primary mb-n4" value="Find ticket" ><i class="bi bi-arrow-right ps-3"></i></input>
+                    <button type="submit"  class="btn btn-primary mb-n4" >Find ticket <i class="bi bi-arrow-right ps-3"></i></button>
                   </div>
                 </div>
               </div>
@@ -212,82 +213,32 @@
       <div class="row">
 
         <!-- Left sidebar START -->
-        <aside class="col-xl-4 col-xxl-3">
-          <!-- Responsive offcanvas body START -->
-          <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
-            <!-- Offcanvas header -->
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Advance Filters</h5>
-              <button  type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasSidebar" aria-label="Close"></button>
-            </div>
-            <form action="/air/search-detail-oneway" method="post">
-            <!-- Offcanvas body -->
-            <div class="offcanvas-body flex-column p-3 p-xl-0">
-              <div class="rounded-3 shadow">
+        <aside class="col-xl-4 col-xxl-2">
 
-                <div class="card card-body rounded-0 p-4">
-                  <!-- Title -->
-                  <h6 class="mb-2">출발시간</h6>
-                  <!-- Return Stops group -->
-                  <ul class="list-inline mb-0 g-3">
-                    <!-- Item -->
-                    <li class="list-inline-item mb-0">
-                      <input type="checkbox" class="btn-check" id="btn-check-6">
-                      <label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-6">Direct</label>
-                    </li>
-                    <!-- Item -->
-                    <li class="list-inline-item mb-0">
-                      <input type="checkbox" class="btn-check" id="btn-check-7">
-                      <label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-7">1 Stop</label>
-                    </li>
-                    <!-- Item -->
-                    <li class="list-inline-item mb-0">
-                      <input type="checkbox" class="btn-check" id="btn-check-8">
-                      <label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-8">2+ Stops</label>
-                    </li>
-                  </ul>
-                </div>
+          <form th:action="@{/air/search-list-oneway}" method="post" th:object="${sch}"class="rounded-3">
+            <!-- Hidden input fields -->
+            <input type="hidden" th:field="*{oneFrom}">
+            <input type="hidden" th:field="*{oneTo}">
+            <input type="hidden" th:field="*{ea}">
+            <input type="hidden" th:field="*{oneFromDate}">
+            <input type="hidden" th:field="*{airGrade}">
 
-
-                <hr class="my-0"> <!-- Divider -->
-
-                <!-- Preferred Airline START -->
-                <div class="card card-body rounded-0 p-4">
-                  <!-- Title -->
-                  <h6 class="mb-2">항공사 선택</h6>
-                  <!-- Preferred Airline group -->
-                  <div class="col-12">
-                    <!-- Checkbox -->
-                    <div th:each="list : ${airline}" class="form-check">
-                      <input class="form-check-input" type="checkbox" th:value="${list.al_code}" id="airlineType" checked name="airline">
-                      <label class="form-check-label" for="airlineType">
-                        <img th:src="@{${list.al_logo_uri}}+'/'+ ${list.al_logo_name}" class="h-15px fa-fw me-2" alt="">
-                        [[${list.al_name}]]
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <input type="hidden" name="oneFromDate" th:value="${sch.oneFromDate}">
-                <input type="hidden" name="oneFrom" th:value="${sch.oneFrom}">
-                <input type="hidden" name="oneTo" th:value="${sch.oneTo}">
-                <input type="hidden" name="ea" th:value="${sch.ea}">
-                <input type="hidden" name="airGrade" th:value="${sch.airGrade}">
-                <!-- Preferred Airline END -->
-              </div><!-- Form End -->
-            </div>
-
-            <!-- Buttons -->
-            <div class="d-flex justify-content-center p-2 p-xl-0 mt-xl-4">
-              <button type="submit" class="btn btn-primary mb-0">Filter Result</button>
+            <!-- Sort select box -->
+            <div class="card card-body rounded-0 rounded-top py-1">
+              <select class="form-select js-choice" id="sort">
+                <option>선택정렬</option>
+                <option value="priceAsc">낮은가격순</option>
+                <option value="priceDesc">높은가격순</option>
+                <option value="earlyDeparture">출발시간순</option>
+                <option value="lateDeparture">도착시간순</option>
+              </select>
             </div>
           </form>
-          </div>
-          <!-- Responsive offcanvas body END -->
         </aside>
         <!-- Left sidebar END -->
 
         <!-- Main content START -->
-        <div class="col-xl-8 col-xxl-9">
+        <div class="col-xl-8 col-xxl-10">
           <form th:action="@{/air/res-check}" method="post">
           <div class="vstack gap-4">
 
@@ -312,7 +263,7 @@
                     <input class="form-check-input" type="checkbox" name="air_oneway_check" onclick="checkFromOnlyOne(this)" th:value="${list.ano}">
                   </div>
                   <!-- Airport detail -->
-                  <div class="col-sm-4 col-md-3">
+                  <div class="col-sm-4 col-md-3 text-center">
                     <h4 th:text="${#temporals.format(list.ar_from_date, 'HH:mm')}"/>
                     <p class="mb-0" th:text="${list.ar_from}"/>
                   </div>
@@ -332,7 +283,7 @@
                   </div>
 
                   <!-- Airport detail -->
-                  <div class="col-sm-4 col-md-3">
+                  <div class="col-sm-4 col-md-3 text-center">
                     <h4 th:text="${#temporals.format(list.ar_to_date, 'HH:mm')}"/>
                     <p class="mb-0" th:text="${list.ar_to}"/>
                   </div>
@@ -476,25 +427,32 @@
   }
 
 
-  // 상세검색 price-slider 클릭한 값 가져오기
 
-  const inputMin = document.querySelector('#min');
-  const inputMax = document.querySelector('#max');
+</script>
+<script>
+  $(document).ready(function() {
+    // 셀렉트 박스에서 선택 값이 변경될 때
+    $('#sort').change(function() {
+      // 선택된 값 가져오기
+      let sortValue = $(this).val();
 
-  function priceSlider(document){
-
-    const min = document.querySelector('.noUi-handle-lower').getAttribute('aria-valuenow');
-    const max = document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow');
-
-    const minFloored = Math.floor(min);
-    const maxFloored = Math.floor(max);
-
-    inputMin.value = minFloored;
-    inputMax.value = maxFloored;
-  };
-
-
-
+      // Ajax 요청 보내기
+      $.ajax({
+        type: 'POST',
+        url: '/air/sort-oneway',
+        data: {
+          sortValue: sortValue
+        },
+        success: function(result) {
+          // 서버에서 보내온 결과를 사용하여 화면을 갱신
+          $('#airOneWay').html(result);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus, errorThrown);
+        }
+      });
+    });
+  });
 </script>
 </body>
 </html>

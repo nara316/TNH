@@ -76,7 +76,7 @@ public class AirProductRepositoryImpl implements AirProductRepository{
     }
 
     @Override
-    public PagingResponse<AirProductDTO> detailSearchOneWay(SearchDTO sch) {
+    public PagingResponse<AirProductDTO> OneWaySort(SearchDTO sch) {
         int count = airProductMapper.searchCntOneWay(sch);
         if (count < 1) {
             return new PagingResponse<>(Collections.emptyList(), null);
@@ -84,7 +84,7 @@ public class AirProductRepositoryImpl implements AirProductRepository{
         Pagination pagination = new Pagination(count, sch);
         sch.setPagination(pagination);
 
-        List<AirProductDTO> list = airProductMapper.detailSearchOneWay(sch);
+        List<AirProductDTO> list = airProductMapper.sortAirOneWay(sch);
         return new PagingResponse<>(list,pagination);
     }
 

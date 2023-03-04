@@ -68,13 +68,8 @@ public class AirController {
                 out.flush();
                 return "air/search";
             }
-            List<AirProductDTO> priceListOneway = listOneWay.getList();
-            Integer minPrice = Integer.parseInt(String.valueOf(priceListOneway.stream().mapToInt(AirProductDTO::getAr_price).min()).replaceAll("[^\\d]", ""));
-            Integer maxPrice = Integer.parseInt(String.valueOf(priceListOneway.stream().mapToInt(AirProductDTO::getAr_price).max()).replaceAll("[^\\d]", ""));
 
             m.addAttribute("airOneWay", listOneWay);
-            m.addAttribute("minPrice", minPrice);
-            m.addAttribute("maxPrice", maxPrice);
 
             String from = "";
             String to = "";
@@ -122,32 +117,25 @@ public class AirController {
         return "air/search";
     }
 
-    @PostMapping("/search-detail-oneway")
-    public String onewayDetailSearch(@ModelAttribute("sch") final SearchDTO sch, HttpServletResponse res, Model m){
-        PagingResponse<AirProductDTO> detailSearchOne = airProductService.detailSearchOneWay(sch);
+    @PostMapping("/sort-oneway")
+    public String searchListOneWay( @ModelAttribute("sch") final SearchDTO sch, Model m) {
+        System.out.println("searchListOneWay 메서드 호출됨");
         List<AirportDTO> airportList = airProductService.getListAirport();
         List<AirlineDTO> airlineList = airProductService.getListAirline();
 
-
         m.addAttribute("airline", airlineList);
-        m.addAttribute("airport",airportList);
-        m.addAttribute("airOneWay", detailSearchOne);
+        m.addAttribute("airport", airportList);
 
-
-        String from = "";
-        String to = "";
-        for (int i = 0; i < airportList.size(); i++) {
-            if(sch.getOneFrom().equals(airportList.get(i).getAp_code())){
-                from = airportList.get(i).getAp_name();
-            } else if(sch.getOneTo().equals(airportList.get(i).getAp_code())){
-                to = airportList.get(i).getAp_name();
-            }
-        }
-        m.addAttribute("fromAP",from);
-        m.addAttribute("toAP",to);
-
-        return "air/search-list-oneway";
+        PagingResponse<AirProductDTO> sortOneWay = airProductService.OneWaySort(sch);
+        System.out.println(sch.getSortValue());
+        m.addAttribute("airOneWay", sortOneWay);
+        return "/air/search-list-oneway";
     }
+
+
+
+
+
 
     @GetMapping("/search-list-oneway")
     public String onewaySchList(@ModelAttribute("sch") final SearchDTO sch,Model m){
@@ -187,6 +175,8 @@ public class AirController {
             m.addAttribute("onewayPro",onewayPro);
             return "air/res-oneway";
         } else {
+
+            System.out.println(resInfo.getEa());
             m.addAttribute("resInfo", resInfo);
             m.addAttribute("outPro", outPro);
             m.addAttribute("inPro", inPro);

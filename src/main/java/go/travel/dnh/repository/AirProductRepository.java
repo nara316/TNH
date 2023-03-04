@@ -23,8 +23,8 @@ public interface AirProductRepository {
     PagingResponse<AirProductDTO> airProductSchFrom(SearchDTO sch);
     PagingResponse<AirProductDTO> airProductSchTo(SearchDTO sch);
     PagingResponse<AirProductDTO> airProductSchOneWay(SearchDTO sch);
+    PagingResponse<AirProductDTO> OneWaySort(SearchDTO sch);
 
-    PagingResponse<AirProductDTO> detailSearchOneWay(SearchDTO sch);
 
     List<AirportDTO> airportList();
     List<AirlineDTO> airlineList();

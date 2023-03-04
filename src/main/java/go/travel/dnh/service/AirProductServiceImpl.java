@@ -60,17 +60,17 @@ public class AirProductServiceImpl implements AirProductService{
     }
 
     @Override
-    public PagingResponse<AirProductDTO> detailSearchOneWay(SearchDTO sch) {
-        return airProductRepository.detailSearchOneWay(sch);
-    }
-
-    @Override
     public PagingResponse<AirProductDTO> getSearchFromList(SearchDTO sch) {
         return airProductRepository.airProductSchFrom(sch);
     }
     @Override
     public PagingResponse<AirProductDTO> getSearchToList(SearchDTO sch) {
         return airProductRepository.airProductSchTo(sch);
+    }
+
+    @Override
+    public PagingResponse<AirProductDTO> OneWaySort(SearchDTO sch) {
+        return airProductRepository.OneWaySort(sch);
     }
 
     @Override

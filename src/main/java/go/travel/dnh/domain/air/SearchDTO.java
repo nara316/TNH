@@ -24,6 +24,7 @@ public class SearchDTO {
     private Integer airline;
     private Pagination pagination;
 
+    private String sortValue;
 
     public SearchDTO(){
         this.pageNum = 1;
