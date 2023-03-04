@@ -102,12 +102,6 @@ public class AirController {
                 return "air/search";
             }
 
-            List<AirProductDTO> priceListOut = listFrom.getList();
-            Integer minPrice = Integer.parseInt(String.valueOf(priceListOut.stream().mapToInt(AirProductDTO::getAr_price).min()).replaceAll("[^\\d]", ""));
-            Integer maxPrice = Integer.parseInt(String.valueOf(priceListOut.stream().mapToInt(AirProductDTO::getAr_price).max()).replaceAll("[^\\d]", ""));
-
-            m.addAttribute("minPrice", minPrice);
-            m.addAttribute("maxPrice", maxPrice);
 
             m.addAttribute("airFrom", listFrom);
             m.addAttribute("airTo", listTo);
@@ -134,19 +128,10 @@ public class AirController {
         List<AirportDTO> airportList = airProductService.getListAirport();
         List<AirlineDTO> airlineList = airProductService.getListAirline();
 
-        sch.setMinPrice(Integer.parseInt(String.valueOf(sch.getMinPrice())));
-        sch.setMaxPrice(Integer.parseInt(String.valueOf(sch.getMaxPrice())));
 
         m.addAttribute("airline", airlineList);
         m.addAttribute("airport",airportList);
-
-        List<AirProductDTO> priceListOneway = detailSearchOne.getList();
-        Integer minPrice = Integer.parseInt(String.valueOf(priceListOneway.stream().mapToInt(AirProductDTO::getAr_price).min()).replaceAll("[^\\d]", ""));
-        Integer maxPrice = Integer.parseInt(String.valueOf(priceListOneway.stream().mapToInt(AirProductDTO::getAr_price).max()).replaceAll("[^\\d]", ""));
-
         m.addAttribute("airOneWay", detailSearchOne);
-        m.addAttribute("minPrice", minPrice);
-        m.addAttribute("maxPrice", maxPrice);
 
 
         String from = "";

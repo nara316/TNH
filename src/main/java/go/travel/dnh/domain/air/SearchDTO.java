@@ -3,6 +3,8 @@ package go.travel.dnh.domain.air;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalTime;
+
 @Getter
 @Setter
 public class SearchDTO {
@@ -19,8 +21,6 @@ public class SearchDTO {
     private Integer roundTo;
     private Integer ea;
     private String airGrade;
-    private Integer minPrice;
-    private Integer maxPrice;
     private Integer airline;
     private Pagination pagination;
 

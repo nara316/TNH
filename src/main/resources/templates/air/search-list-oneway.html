@@ -225,28 +225,29 @@
             <div class="offcanvas-body flex-column p-3 p-xl-0">
               <div class="rounded-3 shadow">
 
-                <!-- Price START -->
                 <div class="card card-body rounded-0 p-4">
                   <!-- Title -->
-                  <h6 class="mb-2">가격</h6>
-                  <!-- Price group -->
-                  <div class="position-relative">
-                    <div class="noui-wrapper">
-                      <div class="d-flex justify-content-between">
-                        <input type="text" class="text-body input-with-range-min">
-                        <input type="text" class="text-body input-with-range-max">
-                      </div>
-                      <div class="noui-slider-range mt-2" onclick="priceSlider(this)"
-                           th:data-range-min='${minPrice}' th:data-range-max='${maxPrice}' th:data-range-selected-min='${minPrice}' th:data-range-selected-max='${maxPrice}'></div>
-                    </div>
-                  </div>
+                  <h6 class="mb-2">출발시간</h6>
+                  <!-- Return Stops group -->
+                  <ul class="list-inline mb-0 g-3">
+                    <!-- Item -->
+                    <li class="list-inline-item mb-0">
+                      <input type="checkbox" class="btn-check" id="btn-check-6">
+                      <label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-6">Direct</label>
+                    </li>
+                    <!-- Item -->
+                    <li class="list-inline-item mb-0">
+                      <input type="checkbox" class="btn-check" id="btn-check-7">
+                      <label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-7">1 Stop</label>
+                    </li>
+                    <!-- Item -->
+                    <li class="list-inline-item mb-0">
+                      <input type="checkbox" class="btn-check" id="btn-check-8">
+                      <label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-8">2+ Stops</label>
+                    </li>
+                  </ul>
                 </div>
-                <!--검색값 넘기기!!!!!!-->
-                <div>
-                  <input type="hidden" id="min" name="minPrice" th:value="${minPrice}">
-                  <input type="hidden" id="max" name="maxPrice" th:value="${maxPrice}">
-                </div>
-                <!-- Price END -->
+
 
                 <hr class="my-0"> <!-- Divider -->
 

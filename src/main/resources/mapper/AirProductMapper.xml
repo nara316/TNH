@@ -147,8 +147,6 @@
         and p.ar_res_cnt > #{ea}
         and p.agop_code = #{airGrade}
         and p.al_code = #{airline}
-        and p.ar_price >= #{minPrice}
-        and p.ar_price <![CDATA[<=]]> #{maxPrice}
         limit #{pagination.limitStart}, #{amount}
     </select>
 
