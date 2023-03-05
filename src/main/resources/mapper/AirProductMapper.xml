@@ -202,5 +202,16 @@
         from air_product p, reservation2 res
         where p.ano = res.out_ano and mno = #{mno};
     </select>
-    
+    <!--예약수량 조회-->
+    <select id="readCnt" parameterType="Integer" resultType="int">
+        select ar_res_cnt
+        from air_product
+        where ano = #{ano};
+    </select>
+    <!--예약시 수량빼기-->
+    <update id="updateResCnt" parameterType="Integer">
+        UPDATE air_product
+        SET ar_res_cnt = #{ar_res_cnt}
+        WHERE ano = #{ano};
+    </update>
 </mapper>

@@ -37,6 +37,10 @@ public interface AirProductRepository {
 
     int resDetail(ReservationDetail detail);
 
+    void updateResCnt(Integer ano, Integer ar_res_cnt);
+
+    int readCnt(Integer ano);
+
 
 
 

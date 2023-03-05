@@ -8,6 +8,7 @@ import go.travel.dnh.domain.pay.PayDTO;
 import go.travel.dnh.domain.pay.RefundDTO;
 import go.travel.dnh.domain.reservation.AirReservationListDTO;
 import go.travel.dnh.domain.reservation.ReservationDTO;
+import go.travel.dnh.repository.AirProductRepository;
 import go.travel.dnh.repository.PaymentRepository;
 import go.travel.dnh.repository.ReservationRepository;
 import lombok.Data;
@@ -48,6 +49,9 @@ public class PaymentServiceImpl implements PaymentService{
 
     private final PaymentRepository paymentRepository;
     private final ReservationRepository reservationRepository;
+
+    private final AirProductRepository airProductRepository;
+    private Integer ar_res_cnt;
 
 
     @Override
@@ -197,7 +201,18 @@ public class PaymentServiceImpl implements PaymentService{
 
             paymentRepository.insertRefund(refundDTO);
             reservationRepository.updateRefund(payDTO.getRno());
+            /*환불 성공시 air_res_cnt 수량 변경*/
+            /*ar_res_cnt 개수 업데이트*/
+            if(reservationRepository.getReservation(payDTO.getRno()).getIn_ano()!=null){
+                ar_res_cnt = airProductRepository.readCnt(reservationRepository.getReservation(payDTO.getRno()).getIn_ano())+reservationRepository.getReservation(payDTO.getRno()).getArp_count();
+                System.out.println("왕복"+ar_res_cnt);
+                airProductRepository.updateResCnt(reservationRepository.getReservation(payDTO.getRno()).getIn_ano(),ar_res_cnt);
+            }
+            ar_res_cnt = airProductRepository.readCnt(reservationRepository.getReservation(payDTO.getRno()).getOut_ano())+reservationRepository.getReservation(payDTO.getRno()).getArp_count();
+            System.out.println("편도"+ar_res_cnt);
+            airProductRepository.updateResCnt(reservationRepository.getReservation(payDTO.getRno()).getOut_ano(),ar_res_cnt);
         }
+
         return 0;
     }
 

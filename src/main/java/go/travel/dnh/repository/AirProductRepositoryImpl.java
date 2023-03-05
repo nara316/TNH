@@ -146,5 +146,15 @@ public class AirProductRepositoryImpl implements AirProductRepository{
         return airReservationMapper.insertResDetail(detail);
     }
 
+    @Override
+    public void updateResCnt(Integer ano, Integer ar_res_cnt){
+        airProductMapper.updateResCnt(ano, ar_res_cnt);
+    }
+
+    @Override
+    public int readCnt(Integer ano){
+        return airProductMapper.readCnt(ano);
+    }
+
 
 }

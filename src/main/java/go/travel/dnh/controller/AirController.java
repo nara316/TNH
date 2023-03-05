@@ -207,6 +207,7 @@ public class AirController {
 //            return "air/order-round";
 //    }
 
+    /*예약DB 저장*/
     @PostMapping("/reservation")
     public String reservation(AirReservationDTO dto, @ModelAttribute("reservationDetails") ReservationDetail reservationDetails, Model m, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
         airProductService.reservation(dto,reservationDetails,loginUser,authentication);

@@ -3,7 +3,6 @@ package go.travel.dnh.repository;
 import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.mapper.MemberJoinMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

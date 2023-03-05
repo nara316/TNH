@@ -25,16 +25,6 @@ public class PayController {
     private final ReservationService reservationService;
     private int result;
 
-
-    @GetMapping("/payList")
-    public String payForm(Model model) {
-        List<PayDTO> payList = paymentService.readPayList();
-
-        model.addAttribute("payList", payList);
-
-        return "order/payList";
-    }
-
     /*환불*/
     @GetMapping("/payList/{pno}")
     public String payPractice(@PathVariable("pno") String pno, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
@@ -53,7 +43,7 @@ public class PayController {
         AirReservationListDTO revDto = reservationService.getReservation(rno);
         PayDTO payDTO = paymentService.readPay(paymentService.readPno(rno));
 
-        /*결제 완료된 경우 여기 페이지로 오면 안된다.*/
+        /*결제 취소된 이후 여기 페이지로 오면 안된다.*/
         if(revDto.getArp_state().equalsIgnoreCase("결제 취소")){
             model.addAttribute("message", "이미 결제 취소된 내역입니다");
             model.addAttribute("searchURL", "/");
