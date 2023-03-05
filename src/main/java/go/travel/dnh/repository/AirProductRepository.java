@@ -21,7 +21,9 @@ public interface AirProductRepository {
     PagingResponse<AirProductDTO> airProductList(SearchDTO sch);
 
     PagingResponse<AirProductDTO> airProductSchFrom(SearchDTO sch);
+    PagingResponse<AirProductDTO> roundSortOut(SearchDTO sch);
     PagingResponse<AirProductDTO> airProductSchTo(SearchDTO sch);
+    PagingResponse<AirProductDTO> roundSortIn(SearchDTO sch);
     PagingResponse<AirProductDTO> airProductSchOneWay(SearchDTO sch);
     PagingResponse<AirProductDTO> OneWaySort(SearchDTO sch);
 

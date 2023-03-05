@@ -137,12 +137,69 @@
     </select>
 
     <!--검색 정렬-->
+    <!--편도-->
     <select id="sortAirOneWay" parameterType="SearchDTO" resultMap="AirProductDTO">
         select
         <include refid="productColumns"/>
         from air_product p
         where date_format(p.ar_from_date, '%Y-%m-%d') = date_format( #{oneFromDate}, '%Y-%m-%d')
         and p.ar_from = #{oneFrom} and p.ar_to = #{oneTo}
+        and p.ar_res_cnt > #{ea}
+        and p.agop_code = #{airGrade}
+        <choose>
+            <when test="sortValue == 'priceAsc'">
+                ORDER BY ar_price ASC
+            </when>
+            <when test="sortValue == 'priceDesc'">
+                ORDER BY ar_price DESC
+            </when>
+            <when test="sortValue == 'earlyDeparture'">
+                ORDER BY ar_from_date ASC
+            </when>
+            <when test="sortValue == 'lateDeparture'">
+                ORDER BY ar_from_date DESC
+            </when>
+            <otherwise>
+                ORDER BY p.ano
+            </otherwise>
+        </choose>
+        limit #{pagination.limitStart}, #{amount}
+    </select>
+    <!--왕복 가는편-->
+    <select id="sortAirRoundOut" parameterType="SearchDTO" resultMap="AirProductDTO">
+        select
+        <include refid="productColumns"/>
+        from air_product p
+        where date_format(p.ar_from_date, '%Y-%m-%d') = date_format( #{roundFromDate}, '%Y-%m-%d')
+        and p.ar_from = #{roundFrom} and p.ar_to = #{roundTo}
+        and p.ar_res_cnt > #{ea}
+        and p.agop_code = #{airGrade}
+        <choose>
+            <when test="sortValue == 'priceAsc'">
+                ORDER BY ar_price ASC
+            </when>
+            <when test="sortValue == 'priceDesc'">
+                ORDER BY ar_price DESC
+            </when>
+            <when test="sortValue == 'earlyDeparture'">
+                ORDER BY ar_from_date ASC
+            </when>
+            <when test="sortValue == 'lateDeparture'">
+                ORDER BY ar_from_date DESC
+            </when>
+            <otherwise>
+                ORDER BY p.ano
+            </otherwise>
+        </choose>
+        limit #{pagination.limitStart}, #{amount}
+    </select>
+    <!--왕복 오는편-->
+    <select id="sortAirRoundIn" parameterType="SearchDTO" resultMap="AirProductDTO">
+        select
+        <include refid="productColumns"/>
+        from air_product p
+        where date_format(p.ar_from_date, '%Y-%m-%d') = date_format( #{roundToDate}, '%Y-%m-%d')
+        and p.ar_from = #{roundTo} and p.ar_to = #{roundFrom}
         and p.ar_res_cnt > #{ea}
         and p.agop_code = #{airGrade}
         <choose>

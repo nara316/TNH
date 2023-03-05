@@ -76,6 +76,16 @@ public class AirProductServiceImpl implements AirProductService{
     }
 
     @Override
+    public PagingResponse<AirProductDTO> roundSortOut(SearchDTO sch) {
+        return airProductRepository.roundSortOut(sch);
+    }
+
+    @Override
+    public PagingResponse<AirProductDTO> roundSortIn(SearchDTO sch) {
+        return airProductRepository.roundSortIn(sch);
+    }
+
+    @Override
     public List<AirportDTO> getListAirport() {
         return airProductRepository.airportList();
     }

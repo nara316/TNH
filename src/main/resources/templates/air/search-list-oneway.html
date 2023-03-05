@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" id="airOneWay">
+<html lang="en">
+<div id="airOneWayList">
 <head>
   <meta charset="UTF-8">
   <title>::: Go Travel :::</title>
@@ -26,7 +27,7 @@
   <!-- Theme CSS -->
   <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
 
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 </head>
@@ -226,12 +227,13 @@
 
             <!-- Sort select box -->
             <div class="card card-body rounded-0 rounded-top py-1">
-              <select class="form-select js-choice" id="sort">
+              <select class="form-select js-choice" id="sort" name="sortValue">
+
                 <option>선택정렬</option>
                 <option value="priceAsc">낮은가격순</option>
                 <option value="priceDesc">높은가격순</option>
-                <option value="earlyDeparture">출발시간순</option>
-                <option value="lateDeparture">도착시간순</option>
+                <option value="earlyDeparture">출발빠른순</option>
+                <option value="lateDeparture">출발늦은순</option>
               </select>
             </div>
           </form>
@@ -244,7 +246,7 @@
           <div class="vstack gap-4">
 
             <!-- Ticket item START -->
-            <div th:each="list : ${airOneWay.list}" class="card border">
+            <div th:each="list : ${airOneWay.list}" class="card border" id="airOneWaySchList">
               <!-- Card header -->
               <div class="card-header d-sm-flex justify-content-sm-between align-items-center">
                 <!-- Airline Name -->
@@ -352,69 +354,8 @@
 <!-- ThemeFunctions -->
 <script src="/bootstrap/js/functions.js"></script>
 
-<script th:inline="javascript">
 
-  window.onload = () => {
-    drawPage(pagination, params);
-  }
-
-  const pagination = [[ ${airOneWay.pagination} ]];
-  const params = [[ ${sch} ]];
-
-  // 페이지 HTML draw
-  function drawPage(pagination, params) {
-
-    if ( !pagination || !params ) {
-      if(pagination == pagination) {
-        document.querySelector('.pagingFrom').innerHTML = html;
-      }
-      throw new Error('Missing required parameters...');
-    }
-
-    let html = '';
-
-    // 첫 페이지, 이전 페이지
-    if (pagination.existPrevPage) {
-      html += `
-            <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})">i class="fa-solid fa-angle-left"></i></a></li>
-          `;
-    }
-
-    // 페이지 번호
-    html += `<nav class="d-flex justify-content-center" aria-label="navigation">
-              <ul class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">`;
-    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
-      if (pagination.endPage > pagination.totalPageCount) {
-        pagination.endPage = pagination.totalPageCount;
-      }
-      html += (i !== params.pageNum)
-              ? `<li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${i});">${i}</a></li>`
-              : `<span class="page-item mb-0 page-link on">&nbsp;${i}&nbsp;</span>`
-    }
-    html += `</ul>
-            </nav>`;
-
-    // 다음 페이지, 마지막 페이지
-    if (pagination.existNextPage) {
-      html += `
-            <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next"><i class="fa-solid fa-angle-right"></i></a></li>
-          `;
-    }
-    if(pagination == pagination) {
-      document.querySelector('.pagingFrom').innerHTML = html;
-    }
-  }
-
-
-  // 페이지 이동
-  function movePage(pageNum) {
-    const queryParams = {
-      pageNum: (pageNum) ? pageNum : 1,
-      amount: 5,
-      pageSize: 5
-    }
-    location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
-  }
+<script>
 
   //체크박스 하나만 선택
 
@@ -430,15 +371,21 @@
 
 
 </script>
-<script>
 
+</body>
+</div>
 
+<script th:inline="javascript">
+  const pagination = [[ ${airOneWay.pagination} ]];
+  const params = [[ ${sch} ]];
+</script>
+
+<script th:inline="javascript">
   $(document).ready(function() {
-    // 셀렉트 박스에서 선택 값이 변경될 때
-    $('#sort').change(function() {
-      // 선택된 값 가져오기
-      let sortValue = $(this).val();
+    drawPage(pagination, params);
 
+    $('#sort').change(function() {
+      let sortValue = $(this).val();
       $.ajax({
         type: "POST",
         url: "/air/sort-oneway",
@@ -450,18 +397,163 @@
           airGrade: $('#airGrade').val(),
           sortValue: sortValue
         },
+        dataType: "html",
         success: function(result) {
-          $('#airOneWay').html(result);
+          $('#airOneWayList').html(result);
+          // 정렬 결과를 받아온 후 페이징을 다시 그림
+          const pagination = [[ ${airOneWay.pagination} ]];
+          const params = [[ ${sch} ]];
+          drawPage(pagination, params);
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.log(textStatus, errorThrown);
         }
       });
-
-
     });
-  });
 
+    // 페이지 HTML draw
+    function drawPage(pagination, params) {
+      if ( !pagination || !params ) {
+        throw new Error('Missing required parameters...');
+      }
+
+      let html = '';
+
+      // 첫 페이지, 이전 페이지
+      if (pagination.existPrevPage) {
+        html += `
+          <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})"><i class="fa-solid fa-angle-left"></i></a></li>
+        `;
+      }
+
+      // 페이지 번호
+      html += `<nav class="d-flex justify-content-center" aria-label="navigation">
+                <ul class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">`;
+      for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        if (pagination.endPage > pagination.totalPageCount) {
+          pagination.endPage = pagination.totalPageCount;
+        }
+        html += (i !== params.pageNum)
+                ? `<li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${i});">${i}</a></li>`
+                : `<span class="page-item mb-0 page-link on">&nbsp;${i}&nbsp;</span>`
+      }
+      html += `</ul>
+              </nav>`;
+
+      // 다음 페이지, 마지막 페이지
+      if (pagination.existNextPage) {
+        html += `
+          <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next"><i class="fa-solid fa-angle-right"></i></a></li>
+        `;
+      }
+
+      document.querySelector('.pagingFrom').innerHTML = html;
+    }
+
+    // 페이지 이동
+    function movePage(pageNum) {
+      const queryParams = {
+        pageNum: (pageNum) ? pageNum : 1,
+        amount: 5,
+        pageSize: 5
+      }
+      location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+    };
+  });
 </script>
-</body>
-</html>
+
+<!--<script th:inline="javascript">-->
+
+<!--  window.onload = () => {-->
+<!--    drawPage(pagination, params);-->
+<!--  }-->
+
+<!--  const pagination = [[ ${airOneWay.pagination} ]];-->
+<!--  const params = [[ ${sch} ]];-->
+
+ <!--  // 페이지 HTML draw-->
+<!--  function drawPage(pagination, params) {-->
+
+<!--    if ( !pagination || !params ) {-->
+<!--      if(pagination == pagination) {-->
+<!--        document.querySelector('.pagingFrom').innerHTML = html;-->
+<!--      }-->
+<!--      throw new Error('Missing required parameters...');-->
+<!--    }-->
+
+<!--    let html = '';-->
+
+ <!--    // 첫 페이지, 이전 페이지-->
+ <!--    if (pagination.existPrevPage) {-->
+ <!--      html += `-->
+ <!--            <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})">i class="fa-solid fa-angle-left"></i></a></li>-->
+ <!--          `;-->
+ <!--    }-->
+
+ <!--    // 페이지 번호-->
+ <!--    html += `<nav class="d-flex justify-content-center" aria-label="navigation">-->
+<!--              <ul class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">`;-->
+<!--    for (let i = pagination.startPage; i <= pagination.endPage; i++) {-->
+<!--      if (pagination.endPage > pagination.totalPageCount) {-->
+<!--        pagination.endPage = pagination.totalPageCount;-->
+<!--      }-->
+<!--      html += (i !== params.pageNum)-->
+ <!--              ? `<li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${i});">${i}</a></li>`-->
+ <!--              : `<span class="page-item mb-0 page-link on">&nbsp;${i}&nbsp;</span>`-->
+ <!--    }-->
+ <!--    html += `</ul>-->
+ <!--            </nav>`;-->
+
+ <!--    // 다음 페이지, 마지막 페이지-->
+<!--    if (pagination.existNextPage) {-->
+<!--      html += `-->
+ <!--            <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next"><i class="fa-solid fa-angle-right"></i></a></li>-->
+ <!--          `;-->
+<!--    }-->
+<!--    if(pagination == pagination) {-->
+<!--      document.querySelector('.pagingFrom').innerHTML = html;-->
+<!--    }-->
+<!--  }-->
+
+
+ <!--  // 페이지 이동-->
+<!--  function movePage(pageNum) {-->
+<!--    const queryParams = {-->
+<!--      pageNum: (pageNum) ? pageNum : 1,-->
+<!--      amount: 5,-->
+<!--      pageSize: 5-->
+<!--    }-->
+<!--    location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();-->
+<!--  }-->
+
+<!--<script>-->
+<!--  $(document).ready(function() {-->
+<!--    $('#sort').change(function() {-->
+<!--      let sortValue = $(this).val();-->
+<!--      $.ajax({-->
+<!--        type: "POST",-->
+<!--        url: "/air/sort-oneway",-->
+<!--        data: {-->
+<!--          oneFrom: $('#oneFrom').val(),-->
+<!--          oneTo: $('#oneTo').val(),-->
+<!--          ea: $('#ea').val(),-->
+<!--          oneFromDate: $('#oneFromDate').val(),-->
+<!--          airGrade: $('#airGrade').val(),-->
+<!--          sortValue: sortValue-->
+<!--        },-->
+<!--        dataType: "html", // 이 부분 추가-->
+<!--        success: function(result) {-->
+<!--          $('#airOneWayList').html(result);-->
+<!--        },-->
+<!--        error: function(jqXHR, textStatus, errorThrown) {-->
+<!--          console.log(textStatus, errorThrown);-->
+<!--        }-->
+<!--      });-->
+
+<!--    });-->
+<!--  });-->
+
+<!--</script>-->
+
+
+  </html>
