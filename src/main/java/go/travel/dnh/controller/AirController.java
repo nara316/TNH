@@ -77,9 +77,9 @@ public class AirController {
                     to = airportList.get(i).getAp_name();
                 }
             }
+
             m.addAttribute("fromAP",from);
             m.addAttribute("toAP",to);
-
             return "/air/search-list-oneway";
 
         }
@@ -114,14 +114,29 @@ public class AirController {
         return "air/search";
     }
 
+
     @PostMapping("/sort-oneway")
-    public String sortListOneWayP(@RequestParam("sortValue") String sortValue,
+    public String sortListOneWay(@RequestParam("sortValue") String sortValue,
                                   @ModelAttribute("sch") final SearchDTO sch,
                                   Model m) {
         List<AirportDTO> airportList
                 = airProductService.getListAirport();
 
+
         m.addAttribute("airport", airportList);
+
+        String from = "";
+        String to = "";
+        for (int i = 0; i < airportList.size(); i++) {
+            if(sch.getOneFrom().equals(airportList.get(i).getAp_code())){
+                from = airportList.get(i).getAp_name();
+            } else if(sch.getOneTo().equals(airportList.get(i).getAp_code())){
+                to = airportList.get(i).getAp_name();
+            }
+        }
+
+        m.addAttribute("fromAP",from);
+        m.addAttribute("toAP",to);
 
         PagingResponse<AirProductDTO> sortOneWay
                 = airProductService.OneWaySort(sch);
@@ -129,6 +144,41 @@ public class AirController {
         m.addAttribute("airOneWay", sortOneWay);
         return "/air/search-list-oneway";
     }
+
+    @PostMapping("/sort-round")
+    public String sortListOneWayP(@RequestParam("sortValue") String sortValue,
+                                  @ModelAttribute("sch") final SearchDTO sch,
+                                  Model m) {
+
+        System.out.println("동작하니?");
+        System.out.println(sch.getSortValue());
+        List<AirportDTO> airportList = airProductService.getListAirport();
+
+        m.addAttribute("airport", airportList);
+
+        String from = "";
+        String to = "";
+        for (int i = 0; i < airportList.size(); i++) {
+            if(sch.getRoundFrom().equals(airportList.get(i).getAp_code())){
+                from = airportList.get(i).getAp_name();
+            } else if(sch.getRoundTo().equals(airportList.get(i).getAp_code())){
+                to = airportList.get(i).getAp_name();
+            }
+        }
+        m.addAttribute("fromAP",from);
+        m.addAttribute("toAP",to);
+
+        PagingResponse<AirProductDTO> sortRoundOut = airProductService.roundSortOut(sch);
+        PagingResponse<AirProductDTO> sortRoundIN = airProductService.roundSortIn(sch);
+        m.addAttribute("airFrom", sortRoundOut);
+        m.addAttribute("airTo", sortRoundIN);
+
+        System.out.println(sortRoundOut.getList());
+        System.out.println(sortRoundIN.getList());
+
+        return "/air/search-list-round";
+    }
+
 
 
     @GetMapping("/search-list-oneway")
@@ -164,10 +214,10 @@ public class AirController {
         AirProductDTO inPro = airProductService.readRes(resInfo.getAir_to_check());
         AirProductDTO onewayPro = airProductService.readRes(resInfo.getAir_oneway_check());
 
-        System.out.println(resInfo.getEa());
-        System.out.println(resInfo.getAir_to());
-        System.out.println(resInfo.getAir_from());
-        System.out.println(resInfo.getAir_oneway_check());
+        System.out.println("ea "+resInfo.getEa());
+        System.out.println("to "+resInfo.getAir_to());
+        System.out.println("from "+resInfo.getAir_from());
+        System.out.println("ano "+resInfo.getAir_oneway_check());
 
         if(resInfo.getAir_oneway_check()!=null){
             m.addAttribute("resInfo",resInfo);

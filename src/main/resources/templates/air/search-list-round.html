@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<div id="airRoundList">
 <head>
     <meta charset="UTF-8">
     <title>::: Go Travel :::</title>
@@ -26,6 +27,8 @@
 
     <!-- Theme CSS -->
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 
@@ -233,20 +236,28 @@
 
                 <!-- Left sidebar START -->
                 <aside class="col-xl-4 col-xxl-2">
-                    <form class="rounded-3">
-                        <!-- 정렬 -->
+
+                    <form th:action="@{/air/sort-round}" method="post" th:object="${sch}"class="rounded-3">
+                        <!-- Hidden input fields -->
+                        <input type="hidden" th:field="*{roundFrom}">
+                        <input type="hidden" th:field="*{roundTo}">
+                        <input type="hidden" th:field="*{ea}">
+                        <input type="hidden" th:field="*{roundFromDate}">
+                        <input type="hidden" th:field="*{roundToDate}">
+                        <input type="hidden" th:field="*{airGrade}">
+
+                        <!-- Sort select box -->
                         <div class="card card-body rounded-0 rounded-top py-1">
-                            <!-- Title -->
-                            <select class="form-select js-choice" id="sort">
-                                <option>추천순</option>
-                                <option value="rowPrice">낮은가격순</option>
-                                <option value="highPrice">낮은가격순</option>
-                                <option value="departureTime">출발시간순</option>
-                                <option value="arrivalTime">도착시간순</option>
+                            <select class="form-select js-choice" id="sort" name="sortValue">
+
+                                <option>선택정렬</option>
+                                <option value="priceAsc">낮은가격순</option>
+                                <option value="priceDesc">높은가격순</option>
+                                <option value="earlyDeparture">출발빠른순</option>
+                                <option value="lateDeparture">출발늦은순</option>
                             </select>
                         </div>
-                        <!-- 정렬 -->
-                    </form><!-- Form End -->
+                    </form>
                 </aside>
                 <!-- Left sidebar END -->
 
@@ -436,75 +447,9 @@
 
 <!-- ThemeFunctions -->
 <script src="/bootstrap/js/functions.js"></script>
-<script th:inline="javascript">
-    window.onload = () => {
-        drawPage(pagination1, params);
-        drawPage(pagination2, params);
-    }
-
-    const pagination1 = [[ ${airFrom.pagination}]];
-    const pagination2 = [[ ${airTo.pagination}]];
-    const params = [[ ${sch}]];
-
-    // 페이지 HTML draw
-    function drawPage(pagination, params) {
-
-        if (!pagination || !params) {
-            if (pagination == pagination1) {
-                document.querySelector('.pagingFrom').innerHTML = html;
-            } else if (pagination == pagination2) {
-                document.querySelector('.pagingTo').innerHTML = html;
-            }
-            throw new Error('Missing required parameters...');
-        }
-
-        let html = '';
-
-        // 첫 페이지, 이전 페이지
-        if (pagination.existPrevPage) {
-            html += `
-            <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})">i class="fa-solid fa-angle-left"></i></a></li>
-          `;
-        }
-
-        // 페이지 번호
-        html += `<nav class="d-flex justify-content-center" aria-label="navigation">
-              <ul class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">`;
-        for (let i = pagination.startPage; i <= pagination.endPage; i++) {
-            if (pagination.endPage > pagination.totalPageCount) {
-                pagination.endPage = pagination.totalPageCount;
-            }
-            html += (i !== params.pageNum)
-                ? `<li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${i});">${i}</a></li>`
-                : `<span class="page-item mb-0 page-link on">&nbsp;${i}&nbsp;</span>`
-        }
-        html += `</ul>
-            </nav>`;
-
-        // 다음 페이지, 마지막 페이지
-        if (pagination.existNextPage) {
-            html += `
-            <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next"><i class="fa-solid fa-angle-right"></i></a></li>
-          `;
-        }
-        if (pagination == pagination1) {
-            document.querySelector('.pagingFrom').innerHTML = html;
-        } else if (pagination == pagination2) {
-            document.querySelector('.pagingTo').innerHTML = html;
-        }
-    }
 
 
-    // 페이지 이동
-    function movePage(pageNum) {
-        const queryParams = {
-            pageNum: (pageNum) ? pageNum : 1,
-            amount: 5,
-            pageSize: 5
-        }
-        location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
-    }
-
+<script>
 
     //체크박스 하나만 선택
 
@@ -531,4 +476,107 @@
     /*]]>*/
 </script>
 </body>
+</div>
+<script th:inline="javascript">
+    const pagination1 = [[ ${airFrom.pagination}]];
+    const pagination2 = [[ ${airTo.pagination}]];
+    const params = [[ ${sch}]];
+</script>
+
+<script th:inline="javascript">
+    $(document).ready(function() {
+        drawPage(pagination1, params);
+        drawPage(pagination2, params);
+
+        $('#sort').change(function() {
+            let sortValue = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "/air/sort-round",
+                data: {
+                    roundFrom: $('#roundFrom').val(),
+                    roundTo: $('#roundTo').val(),
+                    ea: $('#ea').val(),
+                    roundFromDate: $('#roundFromDate').val(),
+                    roundToDate: $('#roundToDate').val(),
+                    airGrade: $('#airGrade').val(),
+                    sortValue: sortValue
+                },
+                dataType: "html",
+                success: function(result) {
+                    $('#airRoundList').html(result);
+                    // 정렬 결과를 받아온 후 페이징을 다시 그림
+                    const pagination1 = [[ ${airFrom.pagination}]];
+                    const pagination2 = [[ ${airTo.pagination}]];
+                    const params = [[ ${sch} ]];
+                    drawPage(pagination1, params);
+                    drawPage(pagination2, params);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        });
+
+        // 페이지 HTML draw
+        function drawPage(pagination, params) {
+            if (!pagination || !params) {
+                if (pagination == pagination1) {
+                    document.querySelector('.pagingFrom').innerHTML = html;
+                } else if (pagination == pagination2) {
+                    document.querySelector('.pagingTo').innerHTML = html;
+                }
+                throw new Error('Missing required parameters...');
+            }
+
+            let html = '';
+
+            // 첫 페이지, 이전 페이지
+            if (pagination.existPrevPage) {
+                html += `
+          <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})"><i class="fa-solid fa-angle-left"></i></a></li>
+        `;
+            }
+
+            // 페이지 번호
+            html += `<nav class="d-flex justify-content-center" aria-label="navigation">
+                <ul class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">`;
+            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                if (pagination.endPage > pagination.totalPageCount) {
+                    pagination.endPage = pagination.totalPageCount;
+                }
+                html += (i !== params.pageNum)
+                    ? `<li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${i});">${i}</a></li>`
+                    : `<span class="page-item mb-0 page-link on">&nbsp;${i}&nbsp;</span>`
+            }
+            html += `</ul>
+              </nav>`;
+
+            // 다음 페이지, 마지막 페이지
+            if (pagination.existNextPage) {
+                html += `
+          <li class="page-item mb-0"><a class="page-link" href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next"><i class="fa-solid fa-angle-right"></i></a></li>
+        `;
+            }
+
+            if (pagination == pagination1) {
+                document.querySelector('.pagingFrom').innerHTML = html;
+            } else if (pagination == pagination2) {
+                document.querySelector('.pagingTo').innerHTML = html;
+            }
+        }
+
+        // 페이지 이동
+        function movePage(pageNum) {
+            const queryParams = {
+                pageNum: (pageNum) ? pageNum : 1,
+                amount: 5,
+                pageSize: 5
+            }
+            location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+        };
+    });
+
+</script>
+
 </html>

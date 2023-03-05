@@ -103,6 +103,20 @@ public class AirProductRepositoryImpl implements AirProductRepository{
     }
 
     @Override
+    public PagingResponse<AirProductDTO> roundSortOut(SearchDTO sch) {
+        int count = airProductMapper.searchCntFrom(sch);
+
+        if (count < 1) {
+            return new PagingResponse<>(Collections.emptyList(), null);
+        }
+        Pagination pagination = new Pagination(count, sch);
+        sch.setPagination(pagination);
+
+        List<AirProductDTO> list = airProductMapper.sortAirRoundOut(sch);
+        return new PagingResponse<>(list, pagination);
+    }
+
+    @Override
     public PagingResponse<AirProductDTO> airProductSchTo(SearchDTO sch) {
         int count = airProductMapper.searchCntTo(sch);
 
@@ -113,6 +127,20 @@ public class AirProductRepositoryImpl implements AirProductRepository{
         sch.setPagination(pagination);
 
         List<AirProductDTO> list = airProductMapper.searchAirTo(sch);
+        return new PagingResponse<>(list, pagination);
+    }
+
+    @Override
+    public PagingResponse<AirProductDTO> roundSortIn(SearchDTO sch) {
+        int count = airProductMapper.searchCntTo(sch);
+
+        if (count < 1) {
+            return new PagingResponse<>(Collections.emptyList(), null);
+        }
+        Pagination pagination = new Pagination(count, sch);
+        sch.setPagination(pagination);
+
+        List<AirProductDTO> list = airProductMapper.sortAirRoundIn(sch);
         return new PagingResponse<>(list, pagination);
     }
 
