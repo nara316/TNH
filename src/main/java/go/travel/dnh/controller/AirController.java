@@ -53,10 +53,7 @@ public class AirController {
         PagingResponse<AirProductDTO> listFrom = airProductService.getSearchFromList(sch);
         PagingResponse<AirProductDTO> listTo = airProductService.getSearchToList(sch);
         List<AirportDTO> airportList = airProductService.getListAirport();
-        List<AirlineDTO> airlineList = airProductService.getListAirline();
 
-
-        m.addAttribute("airline", airlineList);
         m.addAttribute("airport",airportList);
         
         //편도
@@ -118,24 +115,20 @@ public class AirController {
     }
 
     @PostMapping("/sort-oneway")
-    public String sortListOneWay(@RequestParam("sortValue") String sortValue, @ModelAttribute("sch") final SearchDTO sch, Model m) {
-        List<AirportDTO> airportList = airProductService.getListAirport();
-        List<AirlineDTO> airlineList = airProductService.getListAirline();
+    public String sortListOneWayP(@RequestParam("sortValue") String sortValue,
+                                  @ModelAttribute("sch") final SearchDTO sch,
+                                  Model m) {
+        List<AirportDTO> airportList
+                = airProductService.getListAirport();
 
-        System.out.println("sort value : "+sortValue);
-        m.addAttribute("airline", airlineList);
         m.addAttribute("airport", airportList);
 
-        PagingResponse<AirProductDTO> sortOneWay = airProductService.OneWaySort(sch);
+        PagingResponse<AirProductDTO> sortOneWay
+                = airProductService.OneWaySort(sch);
         sch.setSortValue(sortValue);
         m.addAttribute("airOneWay", sortOneWay);
         return "/air/search-list-oneway";
     }
-
-
-
-
-
 
 
     @GetMapping("/search-list-oneway")
@@ -170,6 +163,11 @@ public class AirController {
         AirProductDTO outPro = airProductService.readRes(resInfo.getAir_from_check());
         AirProductDTO inPro = airProductService.readRes(resInfo.getAir_to_check());
         AirProductDTO onewayPro = airProductService.readRes(resInfo.getAir_oneway_check());
+
+        System.out.println(resInfo.getEa());
+        System.out.println(resInfo.getAir_to());
+        System.out.println(resInfo.getAir_from());
+        System.out.println(resInfo.getAir_oneway_check());
 
         if(resInfo.getAir_oneway_check()!=null){
             m.addAttribute("resInfo",resInfo);
