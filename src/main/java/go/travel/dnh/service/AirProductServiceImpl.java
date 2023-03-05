@@ -24,6 +24,8 @@ public class AirProductServiceImpl implements AirProductService{
     private final AirProductRepository airProductRepository;
     private final MemberLoginService memberLoginService;
 
+    private int ar_res_cnt;
+
     @Override
     public List<AirProductDTO> getListAdmin() {
         return airProductRepository.adminAirProductList();
@@ -110,13 +112,24 @@ public class AirProductServiceImpl implements AirProductService{
         Long rno = Long.parseLong(resNumString);
         dto.setRno(rno);
         System.out.println(dto.getRno());
+        /*예약 db 인서트*/
         airProductRepository.reservation(dto);
+        /*detail 인서트*/
         for (int i = 0; i < dto.getArp_count(); i++) {
             ReservationDetail resDetail = detail.getDetailList().get(i);
             resDetail.setRno(rno);
             airProductRepository.resDetail(detail.getDetailList().get(i));
         }
 
+        /*ar_res_cnt 개수 업데이트*/
+        if(dto.getIn_ano()!=null){
+            ar_res_cnt = airProductRepository.readCnt(dto.getIn_ano())-dto.getArp_count();
+            System.out.println("왕복"+ar_res_cnt);
+            airProductRepository.updateResCnt(dto.getIn_ano(),ar_res_cnt);
+        }
+        ar_res_cnt = airProductRepository.readCnt(ano)-dto.getArp_count();
+        System.out.println("편도"+ar_res_cnt);
+        airProductRepository.updateResCnt(ano,ar_res_cnt);
     }
 
 

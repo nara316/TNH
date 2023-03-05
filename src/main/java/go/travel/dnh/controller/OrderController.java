@@ -25,16 +25,6 @@ public class OrderController {
 
     private int totalPrice;
 
-    //예약리스트 보여주는 메서드
-    @GetMapping("/orderList")
-    public String orderForm(Model model) {
-        List<ReservationDTO> reservationList = reservationService.getReservationList();
-
-        model.addAttribute("reservationList", reservationList);
-
-        return "order/practice";
-    }
-
     @GetMapping("{rno}")
     public String payrev(@PathVariable("rno") Long rno, Model model) {
 
@@ -47,7 +37,7 @@ public class OrderController {
             model.addAttribute("searchURL", "/");
             return "message";
         }
-        totalPrice = revDto.getArp_price() * revDto.getArp_count();
+        totalPrice = revDto.getArp_price();
         model.addAttribute("list", revDto);
         model.addAttribute("listDetail", revDtDto);
         return "order/payment";

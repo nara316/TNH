@@ -9,8 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 @Controller
 @RequiredArgsConstructor
@@ -74,11 +72,6 @@ public class JoinController {
 
         return "member/pwdFindForm";
     }
-
-//    @PostMapping ("/find")
-//    public String pwdFindPost(String mem_id) {
-//        return "login/loginForm";
-//    }
 
     //메일 보내면서 패스워드 바꾸는 메서드
     @PostMapping("/pwdFind")
