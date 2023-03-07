@@ -37,6 +37,9 @@ public class AirController {
     public String air_list_all(@ModelAttribute("sch") final SearchDTO sch, Model m) {
         PagingResponse<AirProductDTO> list = airProductService.getList(sch);
         m.addAttribute("air", list);
+        System.out.println(sch.getAirGrade());
+        System.out.println(sch.getOneTo());
+        System.out.println(sch.getOneFrom());
         return "air/list";
     }
 

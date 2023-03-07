@@ -238,8 +238,9 @@
         select
         <include refid="productColumns"/>
         from air_product p
-        where  p.ar_to = #{oneTo}
-        and p.ar_res_cnt > #{ea}
+        where p.ar_from_date > now() and p.ar_sales_state = 'Y'
+        and p.ar_to = #{oneTo}
+        and p.ar_res_cnt > 1
         order by p.ano
         limit #{pagination.limitStart}, #{amount}
     </select>
