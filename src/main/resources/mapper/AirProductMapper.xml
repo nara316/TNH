@@ -241,6 +241,7 @@
         where p.ar_from_date > now() and p.ar_sales_state = 'Y'
         and p.ar_to = #{oneTo}
         and p.ar_res_cnt > 1
+        and p.agop_code = 'A01'
         order by p.ano
         limit #{pagination.limitStart}, #{amount}
     </select>
@@ -248,8 +249,10 @@
     <select id="indexCount" parameterType="SearchDTO" resultType="int">
         select COUNT(*)
         from air_product
-        where  ar_to = #{oneTo}
-            and ar_res_cnt > 1
+        where  ar_from_date > now() and ar_sales_state = 'Y'
+          and ar_to = #{oneTo}
+          and ar_res_cnt > 1
+          and agop_code = 'A01'
     </select>
 
     <!--예약정보 읽어오기-->
