@@ -81,18 +81,11 @@ public class CustomOAuth2Service implements OAuth2UserService<OAuth2UserRequest,
             httpSession.setAttribute("socialEmail", socialEmail);
             httpSession.setAttribute("socialPwd", "!"+resultNum+"a");
             LoginUser loginUser = new LoginUser(attributes.getAttributes());
-            int mno = userMapper.findById(socialEmail).getMno();
-            String role = userMapper.readAuthority(mno).toString();
+
+            String role = "USER";
             
             loginUser.setAuthorities(Collections.singleton(new SimpleGrantedAuthority(role)));
-//        System.out.println("loginUser.getAuthorities() = " + loginUser.getAuthorities());
             loginUser.setMem_id(socialEmail);
-//            return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("USER")),
-//                    attributes.getAttributes(),
-//                    attributes.getNameAttributeKey());
-//            return new LoginUser(Collections.singleton(new SimpleGrantedAuthority("USER")),
-//                    attributes.getAttributes(),
-//                    attributes.getNameAttributeKey());
         return loginUser;
 
 
