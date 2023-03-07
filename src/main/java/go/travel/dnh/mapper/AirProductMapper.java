@@ -20,12 +20,15 @@ public interface AirProductMapper {
     List<AirProductDTO> sortAirRoundOut(SearchDTO sch);
     List<AirProductDTO> sortAirRoundIn(SearchDTO sch);
 
+    List<AirProductDTO> selectIndex(SearchDTO sch);
+
     int count(SearchDTO sch);
 
     int searchCntOneWay(SearchDTO sch);
     int searchCntFrom(SearchDTO sch);
     int searchCntTo(SearchDTO sch);
 
+    int indexCount(SearchDTO sch);
 
 
 
