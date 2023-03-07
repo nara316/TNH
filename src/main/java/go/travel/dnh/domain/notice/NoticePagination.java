@@ -30,7 +30,7 @@ public class NoticePagination {
             endPage = totalPageCount;
         }
         limitStart = (noticeSearchDTO.getPage() - 1) * noticeSearchDTO.getRecordSize();
-        existPrevPage = startPage!= 1;
+        existPrevPage = startPage != 1;
         existNextPage = (endPage * noticeSearchDTO.getRecordSize()) < totalRecordCount;
     }
 }

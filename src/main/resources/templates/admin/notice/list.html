@@ -23,12 +23,7 @@
             color: #0b0a12;
             margin: 8px;
         }
-        .pagination a:focus,.pagination a:hover {
-            color:#fff;
-            border-radius: 5%;
-            border:1px solid rgba(246, 217, 246, 0.51);
-            background-color:rgba(246, 217, 246, 0.51);
-        }
+
 
 
 </style>
@@ -69,8 +64,8 @@
            </tbody>
        </table>
         <div class="pagination">
-            <li class="page-item" style="color: #0b0a12; display: inline-block" th:classappend="${response.getNoticePagination().isExistPrevPage() == 0} ? 'disabled'">
-                <a class="page-link" th:href="@{/notice/list(page=${response.getNoticePagination().getStartPage()-1})}">&laquo;</a>
+            <li class="page-item" style="color: #0b0a12; display: inline-block" th:classappend="${response.getNoticePagination().startPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/notice/list(page=${response.getNoticePagination().startPage - 1})}">&laquo;</a>
             </li>
             <li class="page-item" style="color: #0b0a12; display: inline-block" th:each="page: ${#numbers.sequence(response.getNoticePagination().startPage, response.getNoticePagination().endPage)}" th:classappend="${page == params.getPage()} ? 'active'">
                 <a class="page-link" th:text="${page}" th:href="@{/notice/list(page=${page})}"></a>

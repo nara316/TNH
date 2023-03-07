@@ -20,4 +20,6 @@ public class NoticeSearchDTO {
         this.pageSize = 10;
     }
 
+
+
 }

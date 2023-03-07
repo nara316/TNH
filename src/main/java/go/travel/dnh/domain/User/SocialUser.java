@@ -11,5 +11,4 @@ public class SocialUser {
     private int sno;
     private String s_name;
     private String s_id;
-    private String s_pwd;
 }

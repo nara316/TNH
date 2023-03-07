@@ -40,8 +40,6 @@ public class OAuthAttributes {
                 .build();
     }
     private static OAuthAttributes ofKakao(String usernameAttributeName, Map<String, Object> attributes) {
-        System.out.println("usernameAttributeName = " + usernameAttributeName);
-        System.out.println("카카오로그인..");
         Map<String, Object> response = (Map<String, Object>) attributes.get("kakao_account");
         Map<String, Object> accountName = (Map<String, Object>) response.get("profile");
         String accountEmail = response.get("email").toString();

@@ -47,9 +47,11 @@ public class NoticeController {
     }
 
     @GetMapping("/list/delete")
-    public String boardDelete(Integer nno) {
+    public String boardDelete(Integer nno, Model model) {
         noticeBoardService.boardDelete(nno);
-        return "redirect:/notice/list";
+        model.addAttribute("message", "글 삭제가 완료되었습니다.");
+        model.addAttribute("searchURL", "/notice/list");
+        return "message";
     }
     @GetMapping("/list/modify/{nno}")
     public String boardModify(@PathVariable("nno") Integer nno,Model model) {
