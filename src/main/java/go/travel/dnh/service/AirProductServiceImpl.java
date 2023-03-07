@@ -15,6 +15,7 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 @Service
@@ -71,6 +72,11 @@ public class AirProductServiceImpl implements AirProductService{
     }
 
     @Override
+    public PagingResponse<AirProductDTO> indexSearch(SearchDTO sch) {
+        return airProductRepository.indexSearch(sch);
+    }
+
+    @Override
     public PagingResponse<AirProductDTO> OneWaySort(SearchDTO sch) {
         return airProductRepository.OneWaySort(sch);
     }
@@ -110,14 +116,23 @@ public class AirProductServiceImpl implements AirProductService{
         dto.setMno(mno);
         Integer ano = dto.getOut_ano();
         //rno 만들기
+        //예약날짜
         LocalDate date = LocalDate.now();
-        String mnoString = String.format("%03d", mno);
-        String anoString = String.format("%03d", ano);
         String dateString = date.toString().replace("-","").substring(2,8);
+        //회원번호
+        String mnoString = String.format("%03d", mno);
+        //예약할 항공권 상품번호(가는편 기준)
+        String anoString = String.format("%03d", ano);
+        //0~99까지 임의의 수 만들기
+        Random r = new Random();
+        int ran= r.nextInt(99);
+        String ranString = String.format("%02d", ran);
+        //위의 세가지 합체
         StringBuffer sb = new StringBuffer();
         sb.append(dateString);
         sb.append(mnoString);
         sb.append(anoString);
+        sb.append(ranString);
         String resNumString = String.valueOf(sb);
         Long rno = Long.parseLong(resNumString);
         dto.setRno(rno);

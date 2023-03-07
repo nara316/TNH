@@ -39,6 +39,21 @@ public class AirController {
         m.addAttribute("air", list);
         return "air/list";
     }
+
+    @GetMapping("/region")
+    public String region(@ModelAttribute("sch") final SearchDTO sch, Model m){
+        PagingResponse<AirProductDTO> listRegion = airProductService.indexSearch(sch);
+        List<AirportDTO> airportList = airProductService.getListAirport();
+        m.addAttribute("airOneWay", listRegion);
+        m.addAttribute("airport",airportList);
+
+        System.out.println(sch.getOneTo());
+        System.out.println(listRegion.getList());
+
+
+        return "/air/search-list-oneway";
+    }
+
     //항공권 검색 페이지
     @GetMapping("/search")
     public String air_search(@ModelAttribute("sch") final SearchDTO sch, Model m) {

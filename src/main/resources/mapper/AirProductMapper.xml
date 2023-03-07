@@ -221,9 +221,6 @@
         </choose>
         limit #{pagination.limitStart}, #{amount}
     </select>
-
-
-
     <!--공항리스트 읽어오기-->
     <select id="selectAP" parameterType="map" resultMap="AirportDTO">
         select ap_code,
@@ -235,6 +232,25 @@
         select *
         from air_line
     </select>
+
+    <!--인덱스 클릭 지역 항공권 리스트-->
+    <select id="selectIndex" parameterType="SearchDTO" resultMap="AirProductDTO">
+        select
+        <include refid="productColumns"/>
+        from air_product p
+        where  p.ar_to = #{oneTo}
+        and p.ar_res_cnt > #{ea}
+        order by p.ano
+        limit #{pagination.limitStart}, #{amount}
+    </select>
+    <!--인덱스 클릭 지역별 항공권 카운트-->
+    <select id="indexCount" parameterType="SearchDTO" resultType="int">
+        select COUNT(*)
+        from air_product
+        where  ar_to = #{oneTo}
+            and ar_res_cnt > 1
+    </select>
+
     <!--예약정보 읽어오기-->
     <select id="selectRes" resultMap="AirProductDTO">
         select
@@ -248,8 +264,10 @@
         from air_product p
         where p.ano = #{ano}
     </select>
-    <!--잉이잉ㅇ!!!!!!!!!!!!-->
-    <!--잉이잉ㅇ!!!!!!!!!!!!-->
+
+
+
+
     <select id="selectMyRes" resultMap="AirProductDTO">
         select
                 (select ap_name from airport  where ap_code = p.ar_from) ar_from,
