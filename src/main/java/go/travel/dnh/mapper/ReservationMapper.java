@@ -2,6 +2,7 @@ package go.travel.dnh.mapper;
 
 import go.travel.dnh.domain.reservation.AirReservationDTO;
 import go.travel.dnh.domain.reservation.AirReservationListDTO;
+import go.travel.dnh.domain.reservation.ReservationDetail;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,17 +10,25 @@ import java.util.List;
 @Mapper
 public interface ReservationMapper {
 
-    public AirReservationListDTO getReservation(Long rno);
+    int insertReservation(AirReservationDTO dto);
 
-    public AirReservationListDTO getReservationRound(Long rno);
+    int insertResDetail(ReservationDetail detail);
 
-    public List<AirReservationDTO> readList(int mno);
+    void updateResCnt(Integer ano, Integer ar_res_cnt);
 
-    public List<AirReservationListDTO> selectMyRes(int mno);
+    int readCnt(Integer ano);
 
-    public List<AirReservationListDTO> getReservationDetail(Long rno);
+    AirReservationListDTO getReservation(Long rno);
 
-    public void update(Long rno);
+    AirReservationListDTO getReservationRound(Long rno);
 
-    public void updateRefund(Long rno);
+    List<AirReservationDTO> readList(int mno);
+
+    List<AirReservationListDTO> selectMyRes(int mno);
+
+    List<AirReservationListDTO> getReservationDetail(Long rno);
+
+    void update(Long rno);
+
+    void updateRefund(Long rno);
 }

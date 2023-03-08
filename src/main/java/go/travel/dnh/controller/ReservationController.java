@@ -24,9 +24,9 @@ import java.util.List;
 @RequestMapping("/reservation")
 public class ReservationController {
 
-    private final AirProductService airProductService;
     private final ReservationService reservationService;
     private final MemberLoginService memberLoginService;
+    private final AirProductService airProductService;
 
     /*예약정보 예약화면에 넘기기*/
     @PostMapping("/res-check")
@@ -35,18 +35,12 @@ public class ReservationController {
         AirProductDTO inPro = airProductService.readRes(resInfo.getAir_to_check());
         AirProductDTO onewayPro = airProductService.readRes(resInfo.getAir_oneway_check());
 
-        System.out.println("ea "+resInfo.getEa());
-        System.out.println("to "+resInfo.getAir_to());
-        System.out.println("from "+resInfo.getAir_from());
-        System.out.println("ano "+resInfo.getAir_oneway_check());
-
         if(resInfo.getAir_oneway_check()!=null){
             m.addAttribute("resInfo",resInfo);
             m.addAttribute("onewayPro",onewayPro);
             return "air/res-oneway";
         } else {
 
-            System.out.println(resInfo.getEa());
             m.addAttribute("resInfo", resInfo);
             m.addAttribute("outPro", outPro);
             m.addAttribute("inPro", inPro);
@@ -57,7 +51,7 @@ public class ReservationController {
     /*예약DB 저장*/
     @PostMapping("/reservation")
     public String reservation(AirReservationDTO dto, @ModelAttribute("reservationDetails") ReservationDetail reservationDetails, Model m, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
-        airProductService.reservation(dto,reservationDetails,loginUser,authentication);
+        reservationService.reservation(dto,reservationDetails,loginUser,authentication);
 
         MemberDTO memberDTO = memberLoginService.findMember(loginUser,authentication);
         List<AirReservationListDTO> revList = reservationService.selectMyRes(loginUser,authentication);

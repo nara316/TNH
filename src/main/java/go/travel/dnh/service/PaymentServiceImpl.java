@@ -201,13 +201,11 @@ public class PaymentServiceImpl implements PaymentService{
             /*환불 성공시 air_res_cnt 수량 변경*/
             /*ar_res_cnt 개수 업데이트*/
             if(reservationRepository.getReservation(payDTO.getRno()).getIn_ano()!=null){
-                ar_res_cnt = airProductRepository.readCnt(reservationRepository.getReservation(payDTO.getRno()).getIn_ano())+reservationRepository.getReservation(payDTO.getRno()).getArp_count();
-                System.out.println("왕복"+ar_res_cnt);
-                airProductRepository.updateResCnt(reservationRepository.getReservation(payDTO.getRno()).getIn_ano(),ar_res_cnt);
+                ar_res_cnt = reservationRepository.readCnt(reservationRepository.getReservation(payDTO.getRno()).getIn_ano())+reservationRepository.getReservation(payDTO.getRno()).getArp_count();
+                reservationRepository.updateResCnt(reservationRepository.getReservation(payDTO.getRno()).getIn_ano(),ar_res_cnt);
             }
-            ar_res_cnt = airProductRepository.readCnt(reservationRepository.getReservation(payDTO.getRno()).getOut_ano())+reservationRepository.getReservation(payDTO.getRno()).getArp_count();
-            System.out.println("편도"+ar_res_cnt);
-            airProductRepository.updateResCnt(reservationRepository.getReservation(payDTO.getRno()).getOut_ano(),ar_res_cnt);
+            ar_res_cnt = reservationRepository.readCnt(reservationRepository.getReservation(payDTO.getRno()).getOut_ano())+reservationRepository.getReservation(payDTO.getRno()).getArp_count();
+            reservationRepository.updateResCnt(reservationRepository.getReservation(payDTO.getRno()).getOut_ano(),ar_res_cnt);
         }
 
         return 0;
