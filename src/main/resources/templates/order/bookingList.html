@@ -65,13 +65,13 @@
                                     <!-- Sidebar menu item START -->
                                     <ul class="nav nav-pills-primary-soft flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" th:href="@{/login/mypage}"><i class="bi bi-person fa-fw me-2"></i>내 프로필</a>
+                                            <a class="nav-link" th:href="@{/mypage}"><i class="bi bi-person fa-fw me-2"></i>내 프로필</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" th:href="@{/reservation/bookingList}"><i class="bi bi-ticket-perforated fa-fw me-2"></i>예약 내역</a>
+                                            <a class="nav-link active" th:href="@{/bookingList}"><i class="bi bi-ticket-perforated fa-fw me-2"></i>예약 내역</a>
                                         </li>
                                         <li class="nav-item" sec:authorize="isAuthenticated()">
-                                            <a class="nav-link text-danger bg-danger-soft-hover" th:href="@{/login/logout}" th:field="logout"><i class="fas fa-sign-out-alt fa-fw me-2"></i>로그아웃</a>
+                                            <a class="nav-link text-danger bg-danger-soft-hover" th:href="@{/logout}" th:field="logout"><i class="fas fa-sign-out-alt fa-fw me-2"></i>로그아웃</a>
                                         </li>
                                     </ul>
                                     <!-- Sidebar menu item END -->
@@ -133,7 +133,7 @@
 
                                             <!-- Button -->
                                             <div class="mt-2 mt-md-0">
-                                                <a href="#" th:onclick="|location.href='@{/reservation/bookingList/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a>
+                                                <a href="#" th:onclick="|location.href='@{/bookingList/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a>
                                             </div>
                                         </div>
 
@@ -200,7 +200,7 @@
 
                                             <!-- Button -->
                                             <div class="mt-2 mt-md-0">
-                                                <a href="#" th:onclick="|location.href='@{/reservation/bookingList/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a>
+                                                <a href="#" th:onclick="|location.href='@{/bookingList/{rno}(rno=${list.rno})}'|" class="btn btn-primary-soft mb-0">예약 상세</a>
                                             </div>
                                         </div>
 
