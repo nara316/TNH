@@ -37,9 +37,6 @@ public class AirController {
     public String air_list_all(@ModelAttribute("sch") final SearchDTO sch, Model m) {
         PagingResponse<AirProductDTO> list = airProductService.getList(sch);
         m.addAttribute("air", list);
-        System.out.println(sch.getAirGrade());
-        System.out.println(sch.getOneTo());
-        System.out.println(sch.getOneFrom());
         return "air/list";
     }
 
@@ -50,11 +47,7 @@ public class AirController {
         m.addAttribute("airOneWay", listRegion);
         m.addAttribute("airport",airportList);
 
-        System.out.println(sch.getOneTo());
-        System.out.println(listRegion.getList());
-
-
-        return "/air/search-list-oneway";
+        return "/air/search-list-region";
     }
 
     //항공권 검색 페이지
@@ -168,8 +161,6 @@ public class AirController {
                                   @ModelAttribute("sch") final SearchDTO sch,
                                   Model m) {
 
-        System.out.println("동작하니?");
-        System.out.println(sch.getSortValue());
         List<AirportDTO> airportList = airProductService.getListAirport();
 
         m.addAttribute("airport", airportList);
@@ -197,7 +188,17 @@ public class AirController {
         return "/air/search-list-round";
     }
 
+    @GetMapping("/search-list-region")
+    public String regionSchList(@ModelAttribute("sch") final SearchDTO sch,Model m){
+        PagingResponse<AirProductDTO> listRegion = airProductService.indexSearch(sch);
+        List<AirportDTO> airportList = airProductService.getListAirport();
 
+
+        m.addAttribute("airOneWay", listRegion);
+        m.addAttribute("airport",airportList);
+
+        return "air/search-list-region";
+    }
 
     @GetMapping("/search-list-oneway")
     public String onewaySchList(@ModelAttribute("sch") final SearchDTO sch,Model m){

@@ -565,17 +565,21 @@
                 document.querySelector('.pagingTo').innerHTML = html;
             }
         }
-
-        // 페이지 이동
-        function movePage(pageNum) {
-            const queryParams = {
-                pageNum: (pageNum) ? pageNum : 1,
-                amount: 5,
-                pageSize: 5
-            }
-            location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
-        };
     });
+    // 페이지 이동
+    function movePage(pageNum) {
+        const queryParams = {
+            pageNum: (pageNum) ? pageNum : 1,
+            amount: 5,
+            pageSize: 5,
+            roundFromDate : params.roundFromDate,
+            roundFrom : params.roundFrom,
+            roundTo : params.roundTo,
+            ea : params.ea,
+            airGrade : params.airGrade
+        }
+        location.href = location.origin + '/air/search-list-round?' + new URLSearchParams(queryParams).toString();
+    };
 
 </script>
 

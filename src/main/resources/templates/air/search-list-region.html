@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<div id="airOneWayList">
+<div id="airRegionList">
   <head>
     <meta charset="UTF-8">
     <title>::: Go Travel :::</title>
@@ -268,6 +268,7 @@
                       <!-- Airport detail -->
                       <div class="col-sm-4 col-md-3 text-center">
                         <h4 th:text="${#temporals.format(list.ar_from_date, 'HH:mm')}"/>
+                        <h6 class="mb-0 fw-normal" th:text="${#temporals.format(list.ar_from_date, 'MM월 dd일')}"/>
                         <p class="mb-0" th:text="${list.ar_from}"/>
                       </div>
 
@@ -288,6 +289,7 @@
                       <!-- Airport detail -->
                       <div class="col-sm-4 col-md-3 text-center">
                         <h4 th:text="${#temporals.format(list.ar_to_date, 'HH:mm')}"/>
+                        <h6 class="mb-0 fw-normal" th:text="${#temporals.format(list.ar_to_date, 'MM월 dd일')}"/>
                         <p class="mb-0" th:text="${list.ar_to}"/>
                       </div>
 
@@ -376,6 +378,7 @@
 <script th:inline="javascript">
   const pagination = [[ ${airOneWay.pagination} ]];
   const params = [[ ${sch} ]];
+
 </script>
 
 <script th:inline="javascript">
@@ -397,7 +400,7 @@
         },
         dataType: "html",
         success: function(result) {
-          $('#airOneWayList').html(result);
+          $('#airRegionList').html(result);
           // 정렬 결과를 받아온 후 페이징을 다시 그림
           const pagination = [[ ${airOneWay.pagination} ]];
           const params = [[ ${sch} ]];
@@ -455,15 +458,15 @@
       pageNum: (pageNum) ? pageNum : 1,
       amount: 5,
       pageSize: 5,
-      oneFromDate : params.oneFromDate,
-      oneFrom : params.oneFrom,
-      oneTo : params.oneTo,
-      ea : params.ea,
-      airGrade : params.airGrade
+      oneFrom: params.oneFrom,
+      oneTo: params.oneTo,
+      ea: params.ea,
+      airGrade: params.airGrade
     }
-    location.href = location.origin + '/air/search-list-oneway?' + new URLSearchParams(queryParams).toString();
+    location.href = location.origin + '/air/search-list-region?' + new URLSearchParams(queryParams).toString();
   };
 </script>
+
 
 
 </html>

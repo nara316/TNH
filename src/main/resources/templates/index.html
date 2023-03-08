@@ -3,9 +3,32 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <div th:replace="fragments/script :: script">
+    <meta charset="UTF-8">
+    <title>::: Go Travel :::</title>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Webestica.com">
 
-    </div>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/bootstrap/images/favicon.ico">
+
+    <!-- Google Font -->
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/font-awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/bootstrap-icons/bootstrap-icons.css">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/flatpickr/css/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/choices/css/choices.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/doc.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/prism.css">
     <link rel="stylesheet" type="text/css" href="/bootstrap/vendor/tiny-slider/tiny-slider.css">
     <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
     <!--    &lt;!&ndash; default header name is X-CSRF-TOKEN &ndash;&gt;-->
@@ -51,16 +74,188 @@
 </div>
 
 </div>
-<div style="text-align: center;">
-    <h1>광기의 3인 프로젝트</h1>
-    <img style="width: 600px;" src="https://item.kakaocdn.net/do/dd733898eca7906638478893abfe6a038f324a0b9c48f77dbce3a43bd11ce785">
-</div>
 <div
         id="kakao-talk-channel-add-button"
         data-channel-public-id="_hcxdDxj"
         data-size="large"
         data-support-multiple-densities="true"
 ></div>
+<main>
+
+    <section class="py-0">
+        <div class="container">
+            <!-- Background image -->
+            <div class="rounded-3 p-3 p-sm-5" style="background-image: url(/bootstrap/images/bg/01.jpg); background-position: center center; background-repeat: no-repeat; background-size: cover;">
+                <!-- Banner title -->
+                <div class="row">
+                    <div class="col-md-10 mx-auto text-center">
+                        <h1 class="text-dark display-3 pt-sm-5 my-5">Ready to take off?</h1>
+                    </div>
+                </div>
+
+                <!-- Booking from START -->
+                <form th:action="@{/air/search}" method="post" class="bg-mode position-relative px-3 px-sm-4 pt-4 mb-4 mb-sm-0">
+
+                    <!-- Svg decoration -->
+                    <figure class="position-absolute top-0 start-0 h-100 ms-n2 ms-sm-n1">
+                        <svg class="h-100" viewBox="0 0 12.9 324" style="enable-background:new 0 0 12.9 324;">
+                            <path class="fill-mode" d="M9.8,316.4c1.1-26.8,2-53.4,1.9-80.2c-0.1-18.2-0.8-36.4-1.2-54.6c-0.2-8.9-0.2-17.7,0.8-26.6 c0.5-4.5,1.1-9,1.4-13.6c0.1-1.9,0.1-3.7,0.1-5.6c-0.2-0.2-0.6-1.5-0.2-3.1c-0.3-1.8-0.4-3.7-0.4-5.5c-1.2-3-1.8-6.3-1.7-9.6 c0.9-19,0.5-38.1,0.8-57.2c0.3-17.1,0.6-34.2,0.2-51.3c-0.1-0.6-0.1-1.2-0.1-1.7c0-0.8,0-1.6,0-2.4c0-0.5,0-1.1,0-1.6 c0-1.2,0-2.3,0.2-3.5H0v11.8c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1V31c3.3,0,6.1,2.7,6.1,6.1S3.3,43.3,0,43.3v6.9 c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1 s-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9 c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1 c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.7,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9 c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.7,6.1,6.1 c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1V324h9.5C9.6,321.4,9.7,318.8,9.8,316.4z"/>
+                        </svg>
+                    </figure>
+
+                    <!-- Svg decoration -->
+                    <figure class="position-absolute top-0 end-0 h-100 rotate-180 me-n2 me-sm-n1">
+                        <svg class="h-100" viewBox="0 0 21 324" style="enable-background:new 0 0 21 324;">
+                            <path class="fill-mode" d="M9.8,316.4c1.1-26.8,2-53.4,1.9-80.2c-0.1-18.2-0.8-36.4-1.2-54.6c-0.2-8.9-0.2-17.7,0.8-26.6 c0.5-4.5,1.1-9,1.4-13.6c0.1-1.9,0.1-3.7,0.1-5.6c-0.2-0.2-0.6-1.5-0.2-3.1c-0.3-1.8-0.4-3.7-0.4-5.5c-1.2-3-1.8-6.3-1.7-9.6 c0.9-19,0.5-38.1,0.8-57.2c0.3-17.1,0.6-34.2,0.2-51.3c-0.1-0.6-0.1-1.2-0.1-1.7c0-0.8,0-1.6,0-2.4c0-0.5,0-1.1,0-1.6 c0-1.2,0-2.3,0.2-3.5H0v11.8c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1V31c3.3,0,6.1,2.7,6.1,6.1S3.3,43.3,0,43.3v6.9 c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1 s-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9 c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1 c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.7,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9 c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.7,6.1,6.1 c0,3.4-2.8,6.1-6.1,6.1v6.9c3.3,0,6.1,2.8,6.1,6.1c0,3.4-2.8,6.1-6.1,6.1V324h9.5C9.6,321.4,9.7,318.8,9.8,316.4z"/>
+                        </svg>
+                    </figure>
+
+                    <div class="row g-4">
+
+                        <!-- Nav tabs START -->
+                        <div class="col-lg-6">
+                            <ul class="nav nav-pills nav-pills-dark" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link mb-0 active" id="pills-one-way-tab" data-bs-toggle="pill" data-bs-target="#pills-one-way" type="button" role="tab" aria-selected="true">One Way</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link mb-0" id="pills-round-trip-tab" data-bs-toggle="pill" data-bs-target="#pills-round-trip" type="button" role="tab" aria-selected="false">Round Trip</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Nav tabs END -->
+
+                        <!-- Ticket class -->
+                        <div class="col-lg-3 ms-auto">
+                            <div class="form-control-bg-light form-fs-md">
+                                <select class="form-select js-choice" name="airGrade">
+                                    <option value="">Select Class</option>
+                                    <option th:value="A01" >Economy</option>
+                                    <option th:value="A02" >Business</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Ticket Travelers -->
+                        <div class="col-lg-3 ms-auto">
+                            <div class="form-control-bg-light form-fs-md">
+                                <select class="form-select js-choice" th:name="ea" th:value="${sch.ea}">
+                                    <option value="">Select Travelers</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Tab content START -->
+                        <div class="tab-content mt-4" id="pills-tabContent">
+                            <!-- One way tab START -->
+                            <div class="tab-pane fade show active" id="pills-one-way" role="tabpanel" aria-labelledby="pills-one-way-tab">
+                                <div class="row g-4">
+                                    <!-- Leaving From -->
+                                    <div class="col-md-6 col-lg-4 position-relative">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <!-- Input field -->
+                                            <label class="mb-1"><i class="bi bi-geo-alt me-2"></i>From</label>
+                                            <select class="form-select js-choice" data-search-enabled="true" name="oneFrom">
+                                                <option value="">Select location</option>
+                                                <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                         th:text="${list.ap_name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Going To -->
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <!-- Input field -->
+                                            <label class="mb-1"><i class="bi bi-send me-2"></i>To</label>
+                                            <select class="form-select js-choice" data-search-enabled="true" name="oneTo">
+                                                <option value="">Select location</option>
+                                                <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                         th:text="${list.ap_name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Departure -->
+                                    <div class="col-lg-4">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
+                                            <input type="text" class="form-control flatpickr" data-date-format="Ymd" placeholder="Select date" th:field="*{sch.oneFromDate}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 text-end pt-0">
+                                        <button type="submit" class="btn btn-primary mb-n4">Find ticket <i class="bi bi-arrow-right ps-3"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- One way tab END -->
+
+                            <!-- Round way tab END -->
+                            <div class="tab-pane fade" id="pills-round-trip" role="tabpanel" aria-labelledby="pills-round-trip-tab">
+                                <div class="row g-4">
+
+                                    <!-- Leaving From -->
+                                    <div class="col-md-6 col-xl-3 position-relative">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <!-- Input field -->
+                                            <label class="mb-1"><i class="bi bi-geo-alt me-2"></i>From</label>
+                                            <select class="form-select js-choice" data-search-enabled="true" name="roundFrom">
+                                                <option value="">Select location</option>
+                                                <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                         th:text="${list.ap_name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Going To -->
+                                    <div class="col-md-6 col-xl-3">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <!-- Input field -->
+                                            <label class="mb-1"><i class="bi bi-send me-2"></i>To</label>
+                                            <select class="form-select js-choice" data-search-enabled="true" name="roundTo">
+                                                <option value="">Select location</option>
+                                                <option  th:each="list : ${airport}" th:value="${list.ap_code}"
+                                                         th:text="${list.ap_name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Departure -->
+                                    <div class="col-md-6 col-xl-3">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
+                                            <input type="text" class="form-control flatpickr" data-date-format="Ymd" placeholder="Select date" name="roundFromDate" >
+                                        </div>
+                                    </div>
+
+                                    <!-- Return -->
+                                    <div class="col-md-6 col-xl-3">
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
+                                            <label class="mb-1"><i class="bi bi-calendar me-2"></i>Return</label>
+                                            <input type="text" class="form-control flatpickr" data-date-format="Ymd" placeholder="Select date" name="roundToDate">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 text-end pt-0">
+                                        <button type="submit" class="btn btn-primary mb-n4">Find ticket <i class="bi bi-arrow-right ps-3"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Round way tab END -->
+                        </div>
+                        <!-- Tab content END -->
+                    </div>
+                </form>
+                <!-- Booking from END -->
+            </div>
+        </div>
+    </section>
+
 <section class="pt-0 pt-lg-5">
     <div class="container">
 
@@ -86,7 +281,7 @@
                     <div class="card-body px-2">
                         <!-- Title -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title"><a th:href="@{/air/region(oneTo = 140, ea = 1, airGrade ='A01')} "class="stretched-link">제주도</a></h5>
+                            <h5 class="card-title"><a th:href="@{/air/region(oneFrom = 110, oneTo = 140, ea = 1, airGrade ='A01')} "class="stretched-link">제주도</a></h5>
                             <h6 class="mb-0">4.3<i class="fas fa-star text-warning ms-1"></i></h6>
                         </div>
                         <!-- Content -->
@@ -113,7 +308,7 @@
                     <div class="card-body px-2">
                         <!-- Title -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title"><a th:href="@{/air/region(oneTo = 130, ea = 1, airGrade ='A01')}" class="stretched-link">경주</a></h5>
+                            <h5 class="card-title"><a th:href="@{/air/region(oneFrom = 110, oneTo = 130, ea = 1, airGrade ='A01')}" class="stretched-link">경주</a></h5>
                             <h6 class="mb-0">4.6<i class="fas fa-star text-warning ms-1"></i></h6>
                         </div>
                         <!-- Content -->
@@ -140,7 +335,7 @@
                     <div class="card-body px-2">
                         <!-- Title -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title"><a th:href="@{/air/region(oneTo = 150, ea = 1, airGrade ='A01')} " class="stretched-link">여수</a></h5>
+                            <h5 class="card-title"><a th:href="@{/air/region(oneFrom = 110, oneTo = 150, ea = 1, airGrade ='A01')} " class="stretched-link">여수</a></h5>
                             <h6 class="mb-0">4.3<i class="fas fa-star text-warning ms-1"></i></h6>
                         </div>
                         <!-- Content -->
@@ -166,7 +361,7 @@
                     <div class="card-body px-2">
                         <!-- Title -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title"><a th:href="@{/air/region(oneTo = 120, ea = 1, airGrade ='A01')} " class="stretched-link">부산</a></h5>
+                            <h5 class="card-title"><a th:href="@{/air/region(oneFrom = 110, oneTo = 120, ea = 1, airGrade ='A01')} " class="stretched-link">부산</a></h5>
                             <h6 class="mb-0">4.3<i class="fas fa-star text-warning ms-1"></i></h6>
                         </div>
                         <!-- Content -->
@@ -286,6 +481,7 @@
         </div>
     </div>
 </section>
+</main>
 <!-- =======================
 Faqs END-->
 <div th:replace="fragments/footer :: footer">
@@ -295,6 +491,15 @@ Faqs END-->
 <!-- Vendors -->
 <script src="/bootstrap/vendor/tiny-slider/tiny-slider.js"></script>
 <script src="/bootstrap/vendor/purecounterjs/dist/purecounter_vanilla.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="/bootstrap/js/simple-scrollbar.min.js"></script>
+<script src="/bootstrap/js/prism.js"></script>
+<script src="/bootstrap/js/clipboard.min.js"></script>
+<script src="/bootstrap/vendor/flatpickr/js/flatpickr.min.js"></script>
+<script src="/bootstrap/vendor/choices/js/choices.min.js"></script>
 
 <!-- ThemeFunctions -->
 <script src="/bootstrap/js/functions.js"></script>
