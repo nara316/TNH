@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/")
 public class JoinController {
 
     private final JoinService joinService;
 
-    @GetMapping("/join")
+    @GetMapping("/joinForm")
     public String joinForm(MemberDTO memberDTO) {
         return "member/joinForm";
     }
 
-    @PostMapping("/join")
+    @PostMapping("/joinForm")
     public String join(@Validated @ModelAttribute("memberDTO") MemberjoinForm form, BindingResult bindingResult) {
 
         //인증에 실패했을 때
@@ -35,7 +35,7 @@ public class JoinController {
         return "login/loginForm";
     }
 
-    //아이디 중복 검사
+    /*아이디 중복 검사*/
     @PostMapping("/idCheck")
     @ResponseBody
     public int idCheck(String mem_id) {
@@ -43,7 +43,7 @@ public class JoinController {
         return cnt;
     }
 
-    //아이디 인증 메일 전송
+    /*아이디 인증 메일 전송*/
     @PostMapping("/mailCheck")
     @ResponseBody
     public boolean mailCheck(String mem_id) {
@@ -52,14 +52,14 @@ public class JoinController {
         return true;
     }
 
-    //이메일 인증번호 확인하는 메서드
+    /*이메일 인증번호 확인하는 메서드*/
     @PostMapping("/emailNumCheck")
     @ResponseBody
     public int emailNumCheck(String checkInput){
         return joinService.mailNumCheck(checkInput);
     }
 
-    //전화번호 중복 확인 메서드
+    /*전화번호 중복 확인 메서드*/
     @PostMapping("/mobileCheck")
     @ResponseBody
     public int moblieCheck(int mem_phone) {
@@ -67,14 +67,14 @@ public class JoinController {
         return pnt;
     }
 
-    @GetMapping("/find")
+    @GetMapping("/pwdFind")
     public String pwdFind(String mem_id) {
 
         return "member/pwdFindForm";
     }
 
-    //메일 보내면서 패스워드 바꾸는 메서드
-    @PostMapping("/pwdFind")
+    /*패스워드 초기화 메서드*/
+    @PostMapping("/pwdReset")
     @ResponseBody
     public String pwdFindEmail(String mem_id){
 
