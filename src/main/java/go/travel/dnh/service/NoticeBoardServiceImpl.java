@@ -5,19 +5,20 @@ import go.travel.dnh.domain.notice.NoticePageResponse;
 import go.travel.dnh.domain.notice.NoticePagination;
 import go.travel.dnh.domain.notice.NoticeSearchDTO;
 import go.travel.dnh.mapper.NoticeBoardMapper;
+import go.travel.dnh.repository.MemberLoginRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class NoticeBoardServiceImpl implements NoticeBoardService {
-
+    private final MemberLoginRepository memberLoginRepository;
     private final NoticeBoardMapper noticeBoardMapper;
     @Override
     public void write(NoticeDTO noticeDTO, MultipartFile file) throws Exception {
@@ -28,6 +29,10 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         file.transferTo(saveFile);
         noticeDTO.setN_filename(fileName);
         noticeDTO.setN_filepath("/files/"+fileName);
+        String adminId = SecurityContextHolder.getContext().getAuthentication().getName();
+        String adminName = memberLoginRepository.findById(adminId).getMem_name();
+        noticeDTO.setN_updatename(adminName);
+        noticeDTO.setN_uploadname(adminName);
         noticeBoardMapper.save(noticeDTO);
     }
     @Override
@@ -61,7 +66,9 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         file.transferTo(saveFile);
         noticeDTO.setN_filename(fileName);
         noticeDTO.setN_filepath("/files/"+fileName);
-
+        String adminId = SecurityContextHolder.getContext().getAuthentication().getName();
+        String adminName = memberLoginRepository.findById(adminId).getMem_name();
+        noticeDTO.setN_updatename(adminName);
         noticeBoardMapper.update(noticeDTO);
     }
 

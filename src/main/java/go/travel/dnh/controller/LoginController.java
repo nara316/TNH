@@ -36,7 +36,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class LoginController {
     private final JoinService joinService;
-    private final MemberLoginRepository memberLoginRepository;
     private final MemberLoginServiceImpl memberLoginService;
 
 
@@ -51,14 +50,15 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response){
         //로그인시 인증되어 SecurityContextHolder에 저장된 유저를 꺼내서 로그아웃시킴
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if(authentication != null){
-            new SecurityContextLogoutHandler().logout(request,response,authentication);
-        }
-
+        memberLoginService.logout(request,response);
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        if(authentication != null){
+//            new SecurityContextLogoutHandler().logout(request,response,authentication);
+//        }
         return "redirect:/";
     }
+
     @GetMapping("/oauth/update/{email}")
     public String oauthJoinAndUpdate(@PathVariable("email") String email, Model model, HttpSession httpSession) {
         email = httpSession.getAttribute("socialEmail").toString();
@@ -67,7 +67,7 @@ public class LoginController {
     }
     @PostMapping("/oauth/update/{email}")
     public String update(@Validated @ModelAttribute("memberDTO") MemberjoinForm form, BindingResult
-            bindingResult ,@PathVariable("email") String email, HttpSession httpSession, Model model) {
+            bindingResult , @PathVariable("email") String email, HttpSession httpSession, Model model) {
         email = httpSession.getAttribute("socialEmail").toString();
         if (bindingResult.hasErrors()) {
             return "login/oauthjoin";
@@ -78,35 +78,6 @@ public class LoginController {
         model.addAttribute("searchURL", "/");
         return "message";
     }
-    @GetMapping("/mypage")
-    public String MyPage(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication, Model model) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        MemberDTO findUser = memberLoginService.findById(username);
-//        MemberDTO findUser = memberLoginService.findMember(loginUser,authentication);
-        model.addAttribute("memberDTO", findUser);
-        return "login/mypage";
-    }
-
-    @PostMapping("/withdrawal")
-    public @ResponseBody boolean deleteMember( @RequestBody Map<String, Object> deleteUser, HttpServletRequest request, HttpServletResponse response)  {
-        memberLoginService.deleteMember(deleteUser);
-        logout(request, response);
-        return true;
-    }
-
-    @PostMapping("/mypage")
-    public String upDate(@Validated @ModelAttribute("memberDTO")updateForm updateForm,BindingResult bindingResult, Model model)  {
-        if(bindingResult.hasErrors()) {
-            return "login/mypage";
-        } else {
-            //성공했을 때
-            memberLoginService.updateUser(updateForm);
-            model.addAttribute("message", "회원 정보 수정이 완료되었습니다.");
-            model.addAttribute("searchURL", "/login/mypage");
-            return "message";
-        }
-    }
 
     }
-
 

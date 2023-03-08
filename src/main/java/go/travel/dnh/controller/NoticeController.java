@@ -53,18 +53,20 @@ public class NoticeController {
         model.addAttribute("searchURL", "/notice/list");
         return "message";
     }
-    @GetMapping("/list/modify/{nno}")
+    @GetMapping("/list/update/{nno}")
     public String boardModify(@PathVariable("nno") Integer nno,Model model) {
         model.addAttribute("board", noticeBoardService.boardView(nno));
         return "admin/notice/modify";
     }
 
     @PostMapping("/list/update/{nno}")
-    public String boardUpdate(@PathVariable("nno") Integer nno,NoticeDTO noticeDTO, MultipartFile file) throws Exception {
+    public String boardUpdate(@PathVariable("nno") Integer nno,NoticeDTO noticeDTO, MultipartFile file,Model model) throws Exception {
         NoticeDTO noticeTemp = noticeBoardService.boardView(nno);
         noticeTemp.setN_title(noticeDTO.getN_title());
         noticeTemp.setN_content(noticeDTO.getN_content());
         noticeBoardService.modifyBoard(noticeDTO, file);
-        return "redirect:/notice/list";
+        model.addAttribute("message", "글 수정이 완료되었습니다.");
+        model.addAttribute("searchURL", "/notice/list");
+        return "message";
     }
 }

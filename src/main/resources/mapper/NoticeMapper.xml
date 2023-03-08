@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="go.travel.dnh.mapper.NoticeBoardMapper">
     <insert id="save" parameterType="NoticeDTO">
-        insert into notice (n_title,n_content,n_filename,n_filepath) values (#{n_title}, #{n_content},#{n_filename},#{n_filepath});
+        insert into notice (n_title,n_content,n_filename,n_filepath, n_uploadname, n_updatename) values (#{n_title}, #{n_content},#{n_filename},#{n_filepath}, #{n_uploadname}, #{n_updatename});
     </insert>
     <select id="findAll" resultType="NoticeDTO" parameterType="go.travel.dnh.domain.notice.NoticeSearchDTO">
         select * from notice <include refid="search" />
@@ -15,7 +15,7 @@
         delete from notice where nno = #{nno}
     </delete>
     <update id="update" parameterType="NoticeDTO">
-        update notice set n_title = #{n_title}, n_content = #{n_content}, n_filepath = #{n_filepath}, n_filename = #{n_filename} where nno = #{nno}
+        update notice set n_title = #{n_title}, n_content = #{n_content}, n_filepath = #{n_filepath}, n_filename = #{n_filename},n_updatename = #{n_updatename}, n_up_date = now() where nno = #{nno}
     </update>
     <select id="count" parameterType="go.travel.dnh.domain.notice.NoticeSearchDTO" resultType="int">
         select count(*) from notice <include refid="search" />
