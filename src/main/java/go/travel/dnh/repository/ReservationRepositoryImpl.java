@@ -3,7 +3,6 @@ package go.travel.dnh.repository;
 import go.travel.dnh.domain.air.AirProductDTO;
 import go.travel.dnh.domain.reservation.AirReservationDTO;
 import go.travel.dnh.domain.reservation.AirReservationListDTO;
-import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.mapper.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -17,11 +16,6 @@ public class ReservationRepositoryImpl implements ReservationRepository{
     private final ReservationMapper reservationMapper;
 
     @Override
-    public List<ReservationDTO> getReservationList() {
-        return reservationMapper.getReservationList();
-    }
-
-    @Override
     public AirReservationListDTO getReservation(Long rno){
         return reservationMapper.getReservation(rno);
     }
@@ -29,11 +23,6 @@ public class ReservationRepositoryImpl implements ReservationRepository{
     @Override
     public AirReservationListDTO getReservationRound(Long rno){
         return reservationMapper.getReservationRound(rno);
-    }
-
-    @Override
-    public void insert(ReservationDTO reservationDTO) {
-        reservationMapper.insert(reservationDTO);
     }
 
     @Override

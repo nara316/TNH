@@ -278,7 +278,7 @@
                 (select ap_name from airport where ap_code = p.ar_to) ar_to,
                 (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code,
                 p.ar_from_date, p.ar_to_date
-        from air_product p, reservation2 res
+        from air_product p, reservation res
         where p.ano = res.out_ano and mno = #{mno};
     </select>
     <!--예약수량 조회-->

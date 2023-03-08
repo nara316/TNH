@@ -2,6 +2,33 @@
 <html lang="en">
 <head th:replace="fragments/refund :: refund">
 </head>
+<style>
+    .select {
+        padding: 15px 25px;
+    }
+    .select input[type=radio]{
+        display: none;
+    }
+    .select input[type=radio]+label{
+        display: inline-block;
+        cursor: pointer;
+        height: 30px;
+        width: 180px;
+        border: 1px solid #333;
+        line-height: 24px;
+        text-align: center;
+        font-weight:bold;
+        font-size: 15px;
+    }
+    .select input[type=radio]+label{
+        background-color: #fff;
+        color: #333;
+    }
+    .select input[type=radio]:checked+label{
+        background-color: #5143d9;
+        color: #fff;
+    }
+</style>
 <body class="dashboard">
 <div th:replace="fragments/nav :: nav"></div>
 <!-- **************** MAIN CONTENT START **************** -->
@@ -41,11 +68,11 @@ Main Content START -->
                             <br>
                             <div class="bg-light rounded-3 p-4">
                                 <!-- Card options -->
-                                <div>
-                                    <label><input type="radio" name="method" value="단순변심" onchange="getselect(this)"/>단순변심</label>
-                                    <label><input type="radio" name="method" value="취소 후 재구매" onchange="getselect(this)"/>취소 후 재구매</label>
-                                    <label><input type="radio" name="method" value="항공편 결항" onchange="getselect(this)"/>항공편 결항</label>
-                                    <label><input type="radio" name="method" value="기타" onchange="getselect(this)"/>기타</label>
+                                <div class="select">
+                                    <input type="radio" id="select1" name="method" value="단순변심" onchange="getselect(this)"/><label for="select1">단순변심</label>
+                                    <input type="radio" id="select2" name="method" value="취소 후 재구매" onchange="getselect(this)"/><label for="select2">취소 후 재구매</label>
+                                    <input type="radio" id="select3" name="method" value="항공편 결항" onchange="getselect(this)"/><label for="select3">항공편 결항</label>
+                                    <input type="radio" id="select4" name="method" value="기타" onchange="getselect(this)"/><label for="select4">기타</label>
                                 </div>
                                 <br>
                                     <!-- Buttons -->

@@ -11,8 +11,8 @@
 
     <!--회원등급 insert-->
     <insert id="insertMemberRole" parameterType="Integer">
-        insert into member_role (mno)
-        values (#{mno});
+        insert into member_role (mno, role_in_date, role_up_date)
+        values (#{mno}, now(), now());
     </insert>
 
     <!--아이디 기반 회원 찾기-->

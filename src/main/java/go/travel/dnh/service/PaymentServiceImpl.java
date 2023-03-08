@@ -3,15 +3,12 @@ package go.travel.dnh.service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.domain.pay.PayDTO;
 import go.travel.dnh.domain.pay.RefundDTO;
 import go.travel.dnh.domain.reservation.AirReservationListDTO;
-import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.repository.AirProductRepository;
 import go.travel.dnh.repository.PaymentRepository;
 import go.travel.dnh.repository.ReservationRepository;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

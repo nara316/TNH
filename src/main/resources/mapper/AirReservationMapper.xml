@@ -6,14 +6,14 @@
 
 
     <insert id="insertReservation" parameterType="AirReservationDTO">
-        insert into reservation2
-            (rno,  mno, out_ano, in_ano, arp_price, arp_count, arp_date)
-        values (#{rno}, #{mno}, #{out_ano}, #{in_ano}, #{arp_price}, #{arp_count}, now())
+        insert into reservation
+            (rno,  mno, out_ano, in_ano, arp_price, arp_count, arp_date, arp_up_date)
+        values (#{rno}, #{mno}, #{out_ano}, #{in_ano}, #{arp_price}, #{arp_count}, now(), now())
     </insert>
 
     <insert id="insertResDetail" parameterType="ReservationDetail">
 
-        insert into ReservationDetail
+        insert into reservation_detail
             ( rno, ko_name, en_lname, en_fname, birth, gender)
         values
             (#{rno}, #{ko_name}, #{en_lname}, #{en_fname}, #{birth}, #{gender})

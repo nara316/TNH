@@ -149,11 +149,9 @@ public class AirProductServiceImpl implements AirProductService{
         /*ar_res_cnt 개수 업데이트*/
         if(dto.getIn_ano()!=null){
             ar_res_cnt = airProductRepository.readCnt(dto.getIn_ano())-dto.getArp_count();
-            System.out.println("왕복"+ar_res_cnt);
             airProductRepository.updateResCnt(dto.getIn_ano(),ar_res_cnt);
         }
         ar_res_cnt = airProductRepository.readCnt(ano)-dto.getArp_count();
-        System.out.println("편도"+ar_res_cnt);
         airProductRepository.updateResCnt(ano,ar_res_cnt);
     }
 

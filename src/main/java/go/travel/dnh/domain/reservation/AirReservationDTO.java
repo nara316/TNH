@@ -21,6 +21,8 @@ public class AirReservationDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime arp_date;
     private String arp_state;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime arp_up_date;
 
 
 }

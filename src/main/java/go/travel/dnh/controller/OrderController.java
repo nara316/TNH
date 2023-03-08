@@ -1,7 +1,6 @@
 package go.travel.dnh.controller;
 
 import go.travel.dnh.domain.reservation.AirReservationListDTO;
-import go.travel.dnh.domain.reservation.ReservationDTO;
 import go.travel.dnh.service.PaymentService;
 import go.travel.dnh.service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
