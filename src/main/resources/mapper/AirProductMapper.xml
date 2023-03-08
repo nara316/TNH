@@ -238,7 +238,7 @@
         select
         <include refid="productColumns"/>
         from air_product p
-        where p.ar_from_date > now() and p.ar_sales_state = 'Y'
+        where  p.ar_sales_state = 'Y'
         and p.ar_to = #{oneTo}
         and p.ar_res_cnt > 1
         and p.agop_code = 'A01'
@@ -268,8 +268,6 @@
         from air_product p
         where p.ano = #{ano}
     </select>
-
-
 
 
     <select id="selectMyRes" resultMap="AirProductDTO">
