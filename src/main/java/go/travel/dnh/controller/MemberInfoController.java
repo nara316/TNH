@@ -6,11 +6,7 @@ import go.travel.dnh.domain.member.MemberDTO;
 import go.travel.dnh.domain.pay.PayDTO;
 import go.travel.dnh.domain.pay.RefundDTO;
 import go.travel.dnh.domain.reservation.AirReservationListDTO;
-import go.travel.dnh.service.JoinService;
-import go.travel.dnh.service.MemberLoginServiceImpl;
-import go.travel.dnh.service.PaymentService;
-import go.travel.dnh.service.ReservationService;
-import go.travel.dnh.validation.MemberjoinForm;
+import go.travel.dnh.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +28,9 @@ import java.util.Map;
 public class MemberInfoController {
 
     private final MemberLoginServiceImpl memberLoginService;
-    private final JoinService joinService;
     private final ReservationService reservationService;
     private final PaymentService paymentService;
+    private final RefundService refundService;
 
 
     @GetMapping("/mypage")
@@ -89,7 +84,7 @@ public class MemberInfoController {
         PayDTO payDTO = paymentService.readPay(paymentService.readPno(rno));
 
         if(payDTO !=null){
-            RefundDTO refundDTO = paymentService.readRefund(payDTO.getPno());
+            RefundDTO refundDTO = refundService.readRefund(payDTO.getPno());
             model.addAttribute("rflist",refundDTO);
         }
 

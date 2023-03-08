@@ -13,18 +13,18 @@ public interface ReservationService {
 
     void reservation(AirReservationDTO dto, ReservationDetail detail, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
 
-    public AirReservationListDTO getReservation(Long rno);
+    AirReservationListDTO getReservation(Long rno);
 
-    public AirReservationListDTO getReservationRound(Long rno);
+    AirReservationListDTO getReservationRound(Long rno);
 
-    public List<AirReservationDTO> readList(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
+    List<AirReservationDTO> readList(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
 
-    public List<AirReservationListDTO> selectMyRes(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
+    List<AirReservationListDTO> selectMyRes(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
 
-    public List<AirReservationListDTO> getReservationDetail(Long rno);
+    List<AirReservationListDTO> getReservationDetail(Long rno);
 
-    public void update(Long rno);
+    void update(Long rno);
 
-    public void updateRefund(Long rno);
+    void updateRefund(Long rno);
 
 }

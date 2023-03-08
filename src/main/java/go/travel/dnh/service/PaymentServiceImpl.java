@@ -4,7 +4,6 @@ package go.travel.dnh.service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import go.travel.dnh.domain.pay.PayDTO;
-import go.travel.dnh.domain.pay.RefundDTO;
 import go.travel.dnh.domain.reservation.AirReservationListDTO;
 import go.travel.dnh.repository.AirProductRepository;
 import go.travel.dnh.repository.PaymentRepository;
@@ -46,9 +45,6 @@ public class PaymentServiceImpl implements PaymentService{
 
     private final PaymentRepository paymentRepository;
     private final ReservationRepository reservationRepository;
-
-    private final AirProductRepository airProductRepository;
-    private Integer ar_res_cnt;
 
 
     @Override
@@ -179,50 +175,8 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
-    @Transactional
-    public int refund(String pno, String rf_reason) {
-        //pno로 db에 결제완료된 리스트가 있는지 확인하고 있으면 pay테이블은 update
-        //그리고 refund테이블에 Insert
-        //reservation 테이블도 업데이트
-
-        PayDTO payDTO = paymentRepository.readPay(pno);
-
-        if(payDTO!=null){
-            paymentRepository.updatePayState(pno);
-
-            RefundDTO refundDTO = new RefundDTO();
-            refundDTO.setRfno(payDTO.getPno());
-            refundDTO.setPno(payDTO.getPno());
-            refundDTO.setMno(payDTO.getMno());
-            refundDTO.setRf_reason(rf_reason);
-
-            paymentRepository.insertRefund(refundDTO);
-            reservationRepository.updateRefund(payDTO.getRno());
-            /*환불 성공시 air_res_cnt 수량 변경*/
-            /*ar_res_cnt 개수 업데이트*/
-            if(reservationRepository.getReservation(payDTO.getRno()).getIn_ano()!=null){
-                ar_res_cnt = reservationRepository.readCnt(reservationRepository.getReservation(payDTO.getRno()).getIn_ano())+reservationRepository.getReservation(payDTO.getRno()).getArp_count();
-                reservationRepository.updateResCnt(reservationRepository.getReservation(payDTO.getRno()).getIn_ano(),ar_res_cnt);
-            }
-            ar_res_cnt = reservationRepository.readCnt(reservationRepository.getReservation(payDTO.getRno()).getOut_ano())+reservationRepository.getReservation(payDTO.getRno()).getArp_count();
-            reservationRepository.updateResCnt(reservationRepository.getReservation(payDTO.getRno()).getOut_ano(),ar_res_cnt);
-        }
-
-        return 0;
-    }
-
-    @Override
-    public int readOneRefund(String pno) {
-        return paymentRepository.readOneRefund(pno);
-    }
-
-    @Override
     public String readPno(Long rno){
         return paymentRepository.readPno(rno);
     }
 
-    @Override
-    public RefundDTO readRefund(String pno){
-        return paymentRepository.readRefund(pno);
-    }
 }

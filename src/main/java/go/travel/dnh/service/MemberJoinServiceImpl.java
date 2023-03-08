@@ -5,17 +5,15 @@ import go.travel.dnh.repository.MemberJoinRepository;
 import go.travel.dnh.validation.MemberjoinForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.mail.internet.MimeMessage;
 import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class JoinServiceImpl implements JoinService{
+public class MemberJoinServiceImpl implements MemberJoinService {
 
     private final MemberJoinRepository memberJoinRepository;
     private final JavaMailSender mailSender;

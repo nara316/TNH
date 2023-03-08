@@ -16,17 +16,17 @@ public interface ReservationRepository {
 
     int readCnt(Integer ano);
 
-    public AirReservationListDTO getReservation(Long rno);
+    AirReservationListDTO getReservation(Long rno);
 
-    public AirReservationListDTO getReservationRound(Long rno);
+    AirReservationListDTO getReservationRound(Long rno);
 
-    public List<AirReservationDTO> readList(int mno);
+    List<AirReservationDTO> readList(int mno);
 
-    public List<AirReservationListDTO> selectMyRes(int mno);
+    List<AirReservationListDTO> selectMyRes(int mno);
 
-    public List<AirReservationListDTO> getReservationDetail(Long rno);
+    List<AirReservationListDTO> getReservationDetail(Long rno);
 
-    public void update(Long rno);
+    void update(Long rno);
 
-    public void updateRefund(Long rno);
+    void updateRefund(Long rno);
 }
