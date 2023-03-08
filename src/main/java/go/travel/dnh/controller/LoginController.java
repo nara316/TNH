@@ -32,14 +32,14 @@ import java.util.Date;
 import java.util.Map;
 
 @Controller
-@RequestMapping( "/login")
+@RequestMapping( "/")
 @RequiredArgsConstructor
 public class LoginController {
     private final JoinService joinService;
     private final MemberLoginServiceImpl memberLoginService;
 
 
-    @GetMapping("/loginForm")
+    @GetMapping("/login/loginForm")
     public String loginForm(@RequestParam(value = "error", required = false) String error,
                             @RequestParam(value = "exception", required = false) String exception,
                             Model model) {
@@ -51,21 +51,16 @@ public class LoginController {
     public String logout(HttpServletRequest request, HttpServletResponse response){
         //로그인시 인증되어 SecurityContextHolder에 저장된 유저를 꺼내서 로그아웃시킴
         memberLoginService.logout(request,response);
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//        if(authentication != null){
-//            new SecurityContextLogoutHandler().logout(request,response,authentication);
-//        }
-        return "redirect:/";
+        return "/";
     }
 
-    @GetMapping("/oauth/update/{email}")
+    @GetMapping("/login/oauth/update/{email}")
     public String oauthJoinAndUpdate(@PathVariable("email") String email, Model model, HttpSession httpSession) {
         email = httpSession.getAttribute("socialEmail").toString();
         model.addAttribute("memberDTO" , new MemberDTO());
         return "login/oauthjoin";
     }
-    @PostMapping("/oauth/update/{email}")
+    @PostMapping("/login/oauth/update/{email}")
     public String update(@Validated @ModelAttribute("memberDTO") MemberjoinForm form, BindingResult
             bindingResult , @PathVariable("email") String email, HttpSession httpSession, Model model) {
         email = httpSession.getAttribute("socialEmail").toString();
