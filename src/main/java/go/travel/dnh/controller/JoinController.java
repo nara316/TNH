@@ -1,7 +1,7 @@
 package go.travel.dnh.controller;
 
 import go.travel.dnh.domain.member.MemberDTO;
-import go.travel.dnh.service.JoinService;
+import go.travel.dnh.service.MemberJoinService;
 import go.travel.dnh.validation.MemberjoinForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class JoinController {
 
-    private final JoinService joinService;
+    private final MemberJoinService memberJoinService;
 
     @GetMapping("/joinForm")
     public String joinForm(MemberDTO memberDTO) {
@@ -31,7 +31,7 @@ public class JoinController {
         }
 
         //성공했을 때 로그인폼으로!
-        joinService.joinMember(form);
+        memberJoinService.joinMember(form);
         return "login/loginForm";
     }
 
@@ -39,7 +39,7 @@ public class JoinController {
     @PostMapping("/idCheck")
     @ResponseBody
     public int idCheck(String mem_id) {
-        int cnt = joinService.findMember(mem_id);
+        int cnt = memberJoinService.findMember(mem_id);
         return cnt;
     }
 
@@ -48,7 +48,7 @@ public class JoinController {
     @ResponseBody
     public boolean mailCheck(String mem_id) {
 
-        joinService.Sendmail(mem_id);
+        memberJoinService.Sendmail(mem_id);
         return true;
     }
 
@@ -56,14 +56,14 @@ public class JoinController {
     @PostMapping("/emailNumCheck")
     @ResponseBody
     public int emailNumCheck(String checkInput){
-        return joinService.mailNumCheck(checkInput);
+        return memberJoinService.mailNumCheck(checkInput);
     }
 
     /*전화번호 중복 확인 메서드*/
     @PostMapping("/mobileCheck")
     @ResponseBody
     public int moblieCheck(int mem_phone) {
-        int pnt = joinService.findMemberbyPhone(mem_phone);
+        int pnt = memberJoinService.findMemberbyPhone(mem_phone);
         return pnt;
     }
 
@@ -78,7 +78,7 @@ public class JoinController {
     @ResponseBody
     public String pwdFindEmail(String mem_id){
 
-        String randomPwd = joinService.sendPwdMail(mem_id);
+        String randomPwd = memberJoinService.sendPwdMail(mem_id);
 
         return randomPwd;
     }

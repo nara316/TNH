@@ -16,7 +16,7 @@ public interface MemberLoginService {
 
     MemberDTO findById(String mem_id);
 
-    public MemberDTO findMember(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
+    MemberDTO findMember(@AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
 
     void withdrawal(int mno, WithdrawalForm withdrawalForm);
 

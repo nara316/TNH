@@ -1,7 +1,6 @@
 package go.travel.dnh.repository;
 
 import go.travel.dnh.domain.pay.PayDTO;
-import go.travel.dnh.domain.pay.RefundDTO;
 import go.travel.dnh.mapper.PaymentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -35,23 +34,10 @@ public class PaymentRepositoryImpl implements PaymentRepository {
     }
 
     @Override
-    public void insertRefund(RefundDTO refundDTO) {
-        paymentMapper.insertRefund(refundDTO);
-    }
-
-    @Override
-    public int readOneRefund(String pno) {
-        return paymentMapper.readOneRefund(pno);
-    }
-
-    @Override
     public String readPno(Long rno){
         return paymentMapper.readPno(rno);
     }
 
-    @Override
-    public RefundDTO readRefund(String pno){
-        return paymentMapper.readRefund(pno);
-    }
+
 
 }

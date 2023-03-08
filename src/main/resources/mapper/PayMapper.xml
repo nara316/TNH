@@ -37,24 +37,5 @@
         WHERE pno = #{pno};
     </update>
 
-    <!--환불insert-->
-    <insert id="insertRefund" parameterType="RefundDTO">
-        insert into refund (rfno, pno, mno, rf_reason, rf_date, rf_up_date)
-        values ( #{rfno},#{pno},#{mno},#{rf_reason}, now(), now());
-    </insert>
-
-    <!--환불단건조회-->
-    <select id="readOneRefund" parameterType="String" resultType="int">
-        select count(*)
-        from refund
-        where pno = #{pno};
-    </select>
-
-    <!--환불단건상세조회-->
-    <select id="readRefund" parameterType="String" resultType="RefundDTO">
-        select rf_reason, rf_date, rf_state
-        from refund
-        where pno = #{pno};
-    </select>
 
 </mapper>

@@ -1,7 +1,6 @@
 package go.travel.dnh.service;
 
 import go.travel.dnh.domain.pay.PayDTO;
-import go.travel.dnh.domain.pay.RefundDTO;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,19 +11,14 @@ public interface PaymentService {
 
     int paymentInfo(String imp_uid, String access_token) throws IOException;
 
-    public void paymentCancle(String access_token, String imp_uid, int amount, String reason) throws IOException;
+    void paymentCancle(String access_token, String imp_uid, int amount, String reason) throws IOException;
 
-    public void insertPay(String imp_uid,Long merchant_uid,int totalPrice, String pay_method);
+    void insertPay(String imp_uid,Long merchant_uid,int totalPrice, String pay_method);
 
-    public List<PayDTO> readPayList();
+    List<PayDTO> readPayList();
 
-    public PayDTO readPay(String pno);
+    PayDTO readPay(String pno);
 
-    public int refund(String pno,String rf_reason);
+    String readPno(Long rno);
 
-    public int readOneRefund(String pno);
-
-    public String readPno(Long rno);
-
-    public RefundDTO readRefund(String pno);
 }
