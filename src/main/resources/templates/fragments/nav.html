@@ -29,7 +29,7 @@
             <a th:href="@{/login/logout}" class="nav-link small pb-2"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
           </li>
           <li class="nav-item" sec:authorize="isAnonymous()" >
-            <a th:href="@{/member/join}" class="nav-link small pb-2"><i class="fa-solid fa-right-to-bracket me-2"></i>Sign Up</a>
+            <a th:href="@{/joinForm}" class="nav-link small pb-2"><i class="fa-solid fa-right-to-bracket me-2"></i>Sign Up</a>
           </li>
           <li class="nav-item" sec:authorize="hasRole('[ADMIN]')" >
             <a th:href="@{/admin/main}" class="nav-link small pb-2"><i class="fa-solid fa-screwdriver-wrench me-2"></i>Admin Page</a>

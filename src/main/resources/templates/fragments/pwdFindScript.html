@@ -16,7 +16,7 @@
             let mem_id = $('#mem_id').val(); //등록한 이메일
 
             $.ajax({
-                url : "/member/idCheck",
+                url : "/idCheck",
                 type : "POST",
                 data : {mem_id : mem_id},
                 success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다
@@ -25,13 +25,13 @@
                         return false;
                     } else { // cnt가 0이면 회원이 없는거다
                         $.ajax({
-                            url: "/member/pwdFind",
+                            url: "/pwdReset",
                             type: 'POST',
                             data: { mem_id: mem_id },
                             success: function(randomPwd) {
                                 if(randomPwd!=null){
                                     alert("메일이 발송되었습니다. 임시 비밀번호로 로그인해주세요.");
-                                    window.location.href = "/login/loginForm";
+                                    window.location.href = "/loginForm";
                                 }
                             }
                         });

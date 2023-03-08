@@ -38,7 +38,7 @@
             $.ajax({
                 type:'post',
                 data:{mem_id:mem_id},
-                url:"/member/mailCheck",
+                url:"/mailCheck",
                 success:function(){
                     input.attr("disabled",false);
                     input.attr("oninput","mailNumCheck()");
@@ -82,7 +82,7 @@
             }
 
             $.ajax({
-                url: "/member/idCheck", //Controller에서 요청 받을 주소
+                url: "/idCheck", //Controller에서 요청 받을 주소
                 type: 'post', //POST 방식으로 전달
                 data: {mem_id: mem},
                 success: function (cnt) { //컨트롤러에서 넘어온 cnt값을 받는다
@@ -123,7 +123,7 @@
             }
 
             $.ajax({
-                url: "/member/mobileCheck", //Controller에서 요청 받을 주소
+                url: "/mobileCheck", //Controller에서 요청 받을 주소
                 type: 'post', //POST 방식으로 전달
                 data: {mem_phone: mem},
                 success: function (pnt) { //컨트롤러에서 넘어온 cnt값을 받는다
