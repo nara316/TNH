@@ -38,8 +38,5 @@ public interface AirProductMapper {
 
 
     AirProductDTO selectRes(Integer ano);
-    void updateResCnt(Integer ano, Integer ar_res_cnt);
-
-    int readCnt(Integer ano);
 
 }
