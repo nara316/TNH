@@ -207,7 +207,7 @@
                                     </div>
                                     <div class="col-md-6" th:if="${plist?.pno!=null}">
                                         <label class="form-label">결제 일자</label><br>
-                                        <label class="form-label" id="font" th:text="${#dates.format(plist?.pay_date, 'yyyy-MM-dd')}"></label>
+                                        <label class="form-label" id="font" th:text="${#temporals.format(plist?.pay_date, 'yyyy-MM-dd')}"></label>
                                     </div>
                                     <hr class="bg-primary opacity-5 position-relative">
                                 </div>
@@ -237,7 +237,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">환불요청 일자</label><br>
-                                        <label class="form-label" id="font" th:text="${#dates.format(rflist?.rf_date, 'yyyy-MM-dd')}"></label>
+                                        <label class="form-label" id="font" th:text="${#temporals.format(rflist?.rf_date, 'yyyy-MM-dd')}"></label>
                                     </div>
                                     <hr class="bg-primary opacity-5 position-relative">
                                 </div>

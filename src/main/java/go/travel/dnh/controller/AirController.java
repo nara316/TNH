@@ -251,28 +251,6 @@ public class AirController {
         }
     }
 
-
-
-    //예약정보 저장하기
-//    @PostMapping("/reservation")
-//    public String reservation(AirReservationDTO dto, @ModelAttribute("reservationDetails") ReservationDetail reservationDetails, Model m, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
-//        airProductService.reservation(dto,reservationDetails,loginUser,authentication);
-//        AirProductDTO outDTO = airProductService.readRes(dto.getOut_ano());
-//        AirProductDTO inDTO = airProductService.readRes(dto.getIn_ano());
-//        AirReservationDTO resDTO = dto;
-//
-//
-//
-//        m.addAttribute("resDTO", resDTO);
-//        m.addAttribute("outDTO", outDTO);
-//        m.addAttribute("inDTO", inDTO);
-//
-//        if(inDTO==null){
-//            return "air/order-oneway";}
-//        else
-//            return "air/order-round";
-//    }
-
     /*예약DB 저장*/
     @PostMapping("/reservation")
     public String reservation(AirReservationDTO dto, @ModelAttribute("reservationDetails") ReservationDetail reservationDetails, Model m, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication) {
@@ -285,7 +263,5 @@ public class AirController {
         m.addAttribute("revList", revList);
         return "order/bookingList";
     }
-
-
 
 }

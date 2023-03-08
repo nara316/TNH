@@ -5,42 +5,42 @@
 <mapper namespace="go.travel.dnh.mapper.PaymentMapper">
     <!--결제완료건 insert-->
     <insert id="insertPay" parameterType="PayDTO">
-        insert into Pay (pno, rno, mno, pay_tot_price, pay_date, pay_method)
+        insert into pay (pno, rno, mno, pay_tot_price, pay_date, pay_method)
         values ( #{pno},#{rno},#{mno},#{pay_tot_price}, now(), #{pay_method});
     </insert>
 
     <!--전체 결제완료 목록 조회-->
     <select id="read" resultType="PayDTO">
         select pno, rno, mno, pay_tot_price, pay_date, pay_state
-        from Pay
+        from pay
         order by pno;
     </select>
 
     <!--결제 단건 조회-->
     <select id="readOne" parameterType="String" resultType="PayDTO">
         select pno, rno, mno, pay_tot_price, pay_date, pay_state, pay_method
-        from Pay
+        from pay
         where pno = #{pno};
     </select>
 
     <!--pno 조회-->
     <select id="readPno" parameterType="Long" resultType="String">
         select pno
-        from Pay
+        from pay
         where rno = #{rno};
     </select>
 
     <!--결제취소 시 결제상태 변경-->
     <update id="update" parameterType="String">
-        UPDATE Pay
-        SET pay_state = '결제 취소'
+        UPDATE pay
+        SET pay_state = '결제 취소', pay_up_date = now()
         WHERE pno = #{pno};
     </update>
 
     <!--환불insert-->
     <insert id="insertRefund" parameterType="RefundDTO">
-        insert into refund (rfno, pno, mno, rf_reason, rf_date)
-        values ( #{rfno},#{pno},#{mno},#{rf_reason}, now());
+        insert into refund (rfno, pno, mno, rf_reason, rf_date, rf_up_date)
+        values ( #{rfno},#{pno},#{mno},#{rf_reason}, now(), now());
     </insert>
 
     <!--환불단건조회-->

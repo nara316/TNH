@@ -32,10 +32,10 @@ public class JoinController {
 
         //성공했을 때 로그인폼으로!
         joinService.joinMember(form);
-        return "member/loginForm";
+        return "login/loginForm";
     }
 
-    // 아이디 중복 검사
+    //아이디 중복 검사
     @PostMapping("/idCheck")
     @ResponseBody
     public int idCheck(String mem_id) {
