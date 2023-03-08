@@ -33,19 +33,7 @@ public interface AirProductRepository {
     List<AirportDTO> airportList();
     List<AirlineDTO> airlineList();
 
-    /////////////////////////예약
     //선택한 항공권 예약화면에 보여주기
     AirProductDTO resRead(Integer ano);
-    //예약저장
-    int reservation(AirReservationDTO dto);
-
-    int resDetail(ReservationDetail detail);
-
-    void updateResCnt(Integer ano, Integer ar_res_cnt);
-
-    int readCnt(Integer ano);
-
-
-
 
 }

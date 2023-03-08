@@ -4,6 +4,37 @@
 
 <mapper namespace="go.travel.dnh.mapper.ReservationMapper">
 
+    <!--예약 인서트-->
+    <insert id="insertReservation" parameterType="AirReservationDTO">
+        insert into reservation
+        (rno,  mno, out_ano, in_ano, arp_price, arp_count, arp_date, arp_up_date)
+        values (#{rno}, #{mno}, #{out_ano}, #{in_ano}, #{arp_price}, #{arp_count}, now(), now())
+    </insert>
+
+    <!--예약디테일 인서트-->
+    <insert id="insertResDetail" parameterType="ReservationDetail">
+
+        insert into reservation_detail
+            ( rno, ko_name, en_lname, en_fname, birth, gender)
+        values
+            (#{rno}, #{ko_name}, #{en_lname}, #{en_fname}, #{birth}, #{gender})
+
+    </insert>
+
+    <!--예약수량 조회-->
+    <select id="readCnt" parameterType="Integer" resultType="int">
+        select ar_res_cnt
+        from air_product
+        where ano = #{ano};
+    </select>
+
+    <!--예약시 수량업데이트-->
+    <update id="updateResCnt" parameterType="Integer">
+        UPDATE air_product
+        SET ar_res_cnt = #{ar_res_cnt}
+        WHERE ano = #{ano};
+    </update>
+
     <!--결제 및 예약상세 예약단건조회-->
     <select id="getReservation" parameterType="Long" resultType="AirReservationListDTO">
         select res.rno, res.mno, res.arp_count, res.arp_price, p.ar_from_date, p.ar_to_date,

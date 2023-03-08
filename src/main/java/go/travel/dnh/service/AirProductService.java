@@ -1,11 +1,7 @@
 package go.travel.dnh.service;
 
-import go.travel.dnh.domain.User.LoginUser;
 import go.travel.dnh.domain.air.*;
-import go.travel.dnh.domain.reservation.AirReservationDTO;
-import go.travel.dnh.domain.reservation.ReservationDetail;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
 
 import java.util.List;
 
@@ -38,13 +34,7 @@ public interface AirProductService {
 
     List<AirlineDTO> getListAirline();
 
-
-    //예약
-
+    /*예약*/
     AirProductDTO readRes(Integer ano);
-
-    void reservation(AirReservationDTO dto, ReservationDetail detail, @AuthenticationPrincipal LoginUser loginUser, Authentication authentication);
-
-
 
 }

@@ -268,29 +268,4 @@
         from air_product p
         where p.ano = #{ano}
     </select>
-
-
-
-
-    <select id="selectMyRes" resultMap="AirProductDTO">
-        select
-                (select ap_name from airport  where ap_code = p.ar_from) ar_from,
-                (select ap_name from airport where ap_code = p.ar_to) ar_to,
-                (select agop_name from air_grade_option where agop_code = p.agop_code) agop_code,
-                p.ar_from_date, p.ar_to_date
-        from air_product p, reservation res
-        where p.ano = res.out_ano and mno = #{mno};
-    </select>
-    <!--예약수량 조회-->
-    <select id="readCnt" parameterType="Integer" resultType="int">
-        select ar_res_cnt
-        from air_product
-        where ano = #{ano};
-    </select>
-    <!--예약시 수량빼기-->
-    <update id="updateResCnt" parameterType="Integer">
-        UPDATE air_product
-        SET ar_res_cnt = #{ar_res_cnt}
-        WHERE ano = #{ano};
-    </update>
 </mapper>

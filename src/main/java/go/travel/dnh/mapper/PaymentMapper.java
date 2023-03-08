@@ -9,19 +9,19 @@ import java.util.List;
 @Mapper
 public interface PaymentMapper {
 
-    public void insertPay(PayDTO payDTO);
+    void insertPay(PayDTO payDTO);
 
-    public List<PayDTO> read();
+    List<PayDTO> read();
 
-    public PayDTO readOne(String pno);
+    PayDTO readOne(String pno);
 
-    public void update(String pno);
+    void update(String pno);
 
-    public void insertRefund(RefundDTO refundDTO);
+    void insertRefund(RefundDTO refundDTO);
 
-    public int readOneRefund(String pno);
+    int readOneRefund(String pno);
 
-    public String readPno(Long rno);
+    String readPno(Long rno);
 
-    public RefundDTO readRefund(String pno);
+    RefundDTO readRefund(String pno);
 }
