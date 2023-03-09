@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,8 +30,18 @@ class NoticeBoardServiceTest {
     }
     @Test
     void delete() {
-        for (int i = 1; i <219 ; i++) {
+        for (int i = 633; i <=636 ; i++) {
             noticeBoardService.boardDelete(i);
+        }
+    }
+    @Test
+    void insert() {
+        for (int i = 1; i < 5 ; i++) {
+            NoticeDTO noticeDTO = new NoticeDTO();
+            noticeDTO.setNno(i);
+            noticeDTO.setN_title("공지 TEST" + i);
+            noticeDTO.setN_content("Hello, World");
+            noticeBoardMapper.save(noticeDTO);
         }
     }
 
