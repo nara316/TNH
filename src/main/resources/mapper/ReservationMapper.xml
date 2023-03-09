@@ -25,7 +25,7 @@
     <select id="readCnt" parameterType="Integer" resultType="int">
         select ar_res_cnt
         from air_product
-        where ano = #{ano};
+        where ano = #{ano}
     </select>
 
     <!--예약시 수량업데이트-->
