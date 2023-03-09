@@ -364,7 +364,6 @@ var e = {
                   gutter: sliderSpace,
                   edgePadding: sliderEdge,
                   speed: sliderSpeed,
-                  autoWidth: sliderautoWidth,
                   controls: sliderArrow,
                   nav: sliderDots,
                   autoplay: sliderAutoPlay,
