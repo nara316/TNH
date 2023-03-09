@@ -28,8 +28,6 @@ import java.util.*;
 public class AirController {
 
     private final AirProductService airProductService;
-    private final MemberLoginService memberLoginService;
-    private final ReservationService reservationService;
 
 
     //항공권 전체 목록
@@ -44,6 +42,11 @@ public class AirController {
     public String region(@ModelAttribute("sch") final SearchDTO sch, Model m){
         PagingResponse<AirProductDTO> listRegion = airProductService.indexSearch(sch);
         List<AirportDTO> airportList = airProductService.getListAirport();
+
+        String from = airport(sch.getOneFrom());
+        String to = airport(sch.getOneTo());
+        m.addAttribute("fromAP",from);
+        m.addAttribute("toAP",to);
         m.addAttribute("airOneWay", listRegion);
         m.addAttribute("airport",airportList);
 
@@ -79,18 +82,13 @@ public class AirController {
 
             m.addAttribute("airOneWay", listOneWay);
 
-            String from = "";
-            String to = "";
-            for (int i = 0; i < airportList.size(); i++) {
-                if(sch.getOneFrom().equals(airportList.get(i).getAp_code())){
-                    from = airportList.get(i).getAp_name();
-                } else if(sch.getOneTo().equals(airportList.get(i).getAp_code())){
-                    to = airportList.get(i).getAp_name();
-                }
-            }
+
+            String from = airport(sch.getOneFrom());
+            String to = airport(sch.getOneTo());
 
             m.addAttribute("fromAP",from);
             m.addAttribute("toAP",to);
+
             return "/air/search-list-oneway";
 
         }
@@ -109,15 +107,9 @@ public class AirController {
             m.addAttribute("airFrom", listFrom);
             m.addAttribute("airTo", listTo);
 
-            String from = "";
-            String to = "";
-            for (int i = 0; i < airportList.size(); i++) {
-                if(sch.getRoundFrom().equals(airportList.get(i).getAp_code())){
-                    from = airportList.get(i).getAp_name();
-                } else if(sch.getRoundTo().equals(airportList.get(i).getAp_code())){
-                    to = airportList.get(i).getAp_name();
-                }
-            }
+            String from = airport(sch.getRoundFrom());
+            String to = airport(sch.getRoundTo());
+
             m.addAttribute("fromAP",from);
             m.addAttribute("toAP",to);
             return "/air/search-list-round";
@@ -136,15 +128,9 @@ public class AirController {
 
         m.addAttribute("airport", airportList);
 
-        String from = "";
-        String to = "";
-        for (int i = 0; i < airportList.size(); i++) {
-            if(sch.getOneFrom().equals(airportList.get(i).getAp_code())){
-                from = airportList.get(i).getAp_name();
-            } else if(sch.getOneTo().equals(airportList.get(i).getAp_code())){
-                to = airportList.get(i).getAp_name();
-            }
-        }
+
+        String from = airport(sch.getOneFrom());
+        String to = airport(sch.getOneTo());
 
         m.addAttribute("fromAP",from);
         m.addAttribute("toAP",to);
@@ -165,15 +151,9 @@ public class AirController {
 
         m.addAttribute("airport", airportList);
 
-        String from = "";
-        String to = "";
-        for (int i = 0; i < airportList.size(); i++) {
-            if(sch.getRoundFrom().equals(airportList.get(i).getAp_code())){
-                from = airportList.get(i).getAp_name();
-            } else if(sch.getRoundTo().equals(airportList.get(i).getAp_code())){
-                to = airportList.get(i).getAp_name();
-            }
-        }
+        String from = airport(sch.getRoundFrom());
+        String to = airport(sch.getRoundTo());
+
         m.addAttribute("fromAP",from);
         m.addAttribute("toAP",to);
 
@@ -224,5 +204,19 @@ public class AirController {
         m.addAttribute("airport",airportList);
         return "air/search-list-round";
     }
+
+
+    public String airport(Integer airportCode){
+        List<AirportDTO> airportList = airProductService.getListAirport();
+
+        String apCode = "";
+        for (int i = 0; i < airportList.size(); i++) {
+            if(airportCode.equals(airportList.get(i).getAp_code())){
+                apCode = airportList.get(i).getAp_name();
+            }
+        }
+        return apCode;
+    }
+
 
 }
